@@ -1,27 +1,39 @@
 aid: smithery
-name: Smithery
-description: 'Integrate your AI with 5963 skills and extensions built by the community. '
-type: Index
-position: Consumer
-access: 3rd-Party
-image: https://kinlane-productions.s3.amazonaws.com/apis-json/apis-json-logo.jpg
-tags:
-  - API
-created: '2025-08-19'
-modified: '2025-08-19'
 url: >-
   https://raw.githubusercontent.com/api-evangelist/smithery/refs/heads/main/apis.yml
-specificationVersion: '0.19'
 apis:
   - aid: smithery:smithery
     name: Smithery
-    description: 'Integrate your AI with 5963 skills and extensions built by the community. '
-    humanURL: ' https://smithery.ai/'
     tags:
-      - API
+      - Artificial Intelligence
+      - Large Language Models
+      - MCP
+    humanURL: ' https://smithery.ai/'
     properties:
-      - type: Documentation
-        url: ' https://smithery.ai/'
+      - url: ' https://smithery.ai/'
+        type: Documentation
+    description: 'Integrate your AI with 5963 skills and extensions built by the community. '
+name: Smithery
+tags:
+  - Artificial Intelligence
+  - Large Language Models
+  - MCP
+type: Contract
+image: https://kinlane-productions.s3.amazonaws.com/apis-json/apis-json-logo.jpg
+access: 3rd-Party
+created: '2025-08-19'
+modified: '2025-09-02'
+position: Consuming
+description: >-
+  Smithery is a platform to help developers find and ship language model
+  extensions compatible with the Model Context Protocol Specification. Our
+  mission is to make language models extensions accessible and accelerate the
+  development of agentic AI.
 maintainers:
   - FN: Kin Lane
     email: info@apievangelist.com
+specificationVersion: '0.19'
+common:
+  - name: GitHub Organization
+    url: https://github.com/smithery-ai
+    type: GitHubOrganization
