@@ -21,6 +21,38 @@ tags:
 type: Contract
 image: https://kinlane-productions.s3.amazonaws.com/apis-json/apis-json-logo.jpg
 access: 3rd-Party
+common:
+  - url: https://github.com/smithery-ai
+    name: GitHub Organization
+    type: GitHubOrganization
+  - name: Introduction - Smithery Documentation
+    description: 'null'
+    url: https://smithery.ai/docs
+    type: Documentation
+  - name: Smithery CLI - Smithery Documentation
+    description: 'null'
+    url: https://smithery.ai/docs/concepts/cli
+    type: CLI
+  - name: Smithery - Extend your agents capabilities
+    description: 'null'
+    url: https://smithery.ai/
+    type: Website
+  - name: Introduction - Smithery Documentation
+    description: 'null'
+    url: https://smithery.ai/docs
+    type: Documentation
+  - name: List/Search servers - Smithery Documentation
+    description: 'null'
+    url: https://smithery.ai/docs/api-reference/servers/listsearch-servers
+    type: Documentation
+  - name: Smithery - Extend your agents capabilities
+    description: 'null'
+    url: https://smithery.ai/playground
+    type: Playground
+  - name: Smithery Blog - The Infrastructure for AI Agents
+    description: 'null'
+    url: https://smithery.ai/blog
+    type: Blog
 created: '2025-08-19'
 modified: '2025-09-02'
 position: Consuming
@@ -33,7 +65,3 @@ maintainers:
   - FN: Kin Lane
     email: info@apievangelist.com
 specificationVersion: '0.19'
-common:
-  - name: GitHub Organization
-    url: https://github.com/smithery-ai
-    type: GitHubOrganization
