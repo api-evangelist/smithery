@@ -12,7 +12,8 @@ apis:
     properties:
       - url: ' https://smithery.ai/'
         type: Documentation
-    description: 'Integrate your AI with 5963 skills and extensions built by the community. '
+    description: >-
+      Integrate your AI with 5963 skills and extensions built by the community.
 name: Smithery
 tags:
   - Artificial Intelligence
