@@ -1,0 +1,45 @@
+{
+  "request": {
+    "method": "GET",
+    "url": "https://api.smithery.ai/servers",
+    "headers": {
+      "Authorization": "Bearer your-api-key-here"
+    },
+    "parameters": {
+      "q": "github file management",
+      "page": 1,
+      "pageSize": 5
+    }
+  },
+  "response": {
+    "status": 200,
+    "body": {
+      "servers": [
+        {
+          "qualifiedName": "anthropics/github-mcp-server",
+          "displayName": "GitHub MCP Server",
+          "description": "Official GitHub MCP server for accessing repositories, issues, PRs, and more",
+          "iconUrl": "https://smithery.ai/icons/anthropics/github-mcp-server.png",
+          "isVerified": true,
+          "useCount": 45230,
+          "namespace": "anthropics"
+        },
+        {
+          "qualifiedName": "octocat/file-browser",
+          "displayName": "File Browser MCP",
+          "description": "Browse and manage files in GitHub repositories via MCP tools",
+          "iconUrl": null,
+          "isVerified": false,
+          "useCount": 1204,
+          "namespace": "octocat"
+        }
+      ],
+      "pagination": {
+        "currentPage": 1,
+        "pageSize": 5,
+        "totalPages": 12,
+        "totalCount": 58
+      }
+    }
+  }
+}

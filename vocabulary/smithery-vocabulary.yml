@@ -1,0 +1,104 @@
+vocabulary:
+  name: Smithery Vocabulary
+  description: >-
+    Domain vocabulary for the Smithery MCP server registry and AI agent extension
+    platform, covering key terms, concepts, and patterns for Model Context Protocol
+    server management and skill discovery.
+  version: "1.0.0"
+  created: "2026-05-02"
+  modified: "2026-05-02"
+  tags:
+    - Artificial Intelligence
+    - MCP
+    - AI Agents
+
+terms:
+  - term: MCP (Model Context Protocol)
+    definition: >-
+      An open protocol that enables language models to access external tools,
+      data sources, and services through a standardized interface. MCP servers
+      expose tools that AI agents can discover and call.
+    synonyms: [Model Context Protocol, MCP protocol]
+
+  - term: MCP Server
+    definition: >-
+      A service that implements the Model Context Protocol and exposes tools,
+      resources, and prompts that AI agents can use to accomplish tasks.
+    synonyms: [MCP extension, capability server]
+
+  - term: Qualified Name
+    definition: >-
+      A unique identifier for an MCP server in Smithery, combining the namespace
+      and server name in the format "namespace/server-name".
+    synonyms: [fully qualified name, server identifier]
+
+  - term: Namespace
+    definition: >-
+      A container for organizing MCP servers and skills in Smithery. Every
+      server and skill belongs to a namespace, which can be a user or organization.
+    synonyms: [organization, owner, workspace]
+
+  - term: Skill
+    definition: >-
+      A reusable, prompt-based capability in Smithery that guides AI agents
+      to perform specific tasks. Skills are backed by GitHub repositories.
+    synonyms: [AI skill, prompt capability, agent skill]
+
+  - term: Connection
+    definition: >-
+      A link to an MCP server instance that maintains session state and enables
+      tool invocation. Connections can be HTTP-based or use Uplink for local servers.
+    synonyms: [session, MCP connection]
+
+  - term: Tool
+    definition: >-
+      A discrete callable function exposed by an MCP server that an AI agent
+      can invoke to perform an action or retrieve data.
+    synonyms: [MCP tool, capability, function]
+
+  - term: Trigger
+    definition: >-
+      An event subscription mechanism in MCP that allows agents to receive
+      notifications when specific events occur in a connected server.
+    synonyms: [webhook, event subscription, notification]
+
+  - term: Release
+    definition: >-
+      A versioned deployment of an MCP server package in the Smithery platform,
+      including build artifacts, pipeline logs, and deployment status.
+    synonyms: [version, deployment, publish]
+
+  - term: Uplink
+    definition: >-
+      A Smithery feature that allows locally-running MCP servers to be exposed
+      through the Smithery platform without requiring a public deployment.
+    synonyms: [local tunnel, local exposure]
+
+  - term: Service Token
+    definition: >-
+      A scoped authentication credential for machine-to-machine API access
+      in Smithery, supporting fine-grained permission control.
+    synonyms: [API token, service credential, M2M token]
+
+authentication:
+  - method: Bearer Token
+    description: >-
+      Primary authentication method. Smithery API keys are used as Bearer tokens
+      in the Authorization header. Keys are managed at smithery.ai/account/api-keys.
+  - method: OAuth 2.0
+    description: >-
+      Supported for client authorization flows, enabling third-party applications
+      to access Smithery on behalf of users.
+
+server_types:
+  - type: HTTP Server
+    description: MCP server accessible via HTTP/HTTPS endpoints deployed in the cloud
+  - type: Stdio Server
+    description: MCP server running as a local process via standard I/O
+  - type: Uplink Server
+    description: Locally running MCP server exposed through Smithery's Uplink tunnel
+
+connection_types:
+  - http
+  - stdio
+  - uplink

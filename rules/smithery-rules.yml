@@ -1,0 +1,70 @@
+extends: spectral:oas
+rules:
+  smithery-operation-ids:
+    description: All operations must have an operationId
+    severity: error
+    given: "$.paths[*][*]"
+    then:
+      field: operationId
+      function: truthy
+
+  smithery-operation-tags:
+    description: All operations must have at least one tag
+    severity: warn
+    given: "$.paths[*][*]"
+    then:
+      field: tags
+      function: truthy
+
+  smithery-summary-title-case:
+    description: Operation summaries must use Title Case
+    severity: warn
+    given: "$.paths[*][*].summary"
+    then:
+      function: pattern
+      functionOptions:
+        match: "^[A-Z][a-zA-Z0-9 ]*$"
+
+  smithery-bearer-auth:
+    description: API must define Bearer token authentication
+    severity: error
+    given: "$.components.securitySchemes"
+    then:
+      function: truthy
+
+  smithery-qualified-name-paths:
+    description: Server paths should use {qualifiedName} parameter for namespace/server identification
+    severity: warn
+    given: "$.paths"
+    then:
+      function: pattern
+      functionOptions:
+        match: "qualifiedName|namespace|slug"
+
+  smithery-error-responses:
+    description: All operations must define at least a 4xx error response
+    severity: warn
+    given: "$.paths[*][post,put,patch,delete]"
+    then:
+      field: responses
+      function: truthy
+
+  smithery-no-trailing-slashes:
+    description: API paths must not have trailing slashes
+    severity: warn
+    given: "$.paths"
+    then:
+      function: pattern
+      functionOptions:
+        notMatch: "/$"
+
+  smithery-content-type-json:
+    description: Request bodies must use application/json content type
+    severity: warn
+    given: "$.paths[*][post,put,patch].requestBody.content"
+    then:
+      function: schema
+      functionOptions:
+        schema:
+          type: object
+          minProperties: 1

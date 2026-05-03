@@ -1,0 +1,207 @@
+naftiko: "1.0.0-alpha1"
+
+info:
+  label: Smithery MCP Server Discovery
+  description: >-
+    Workflow capability for discovering, evaluating, and managing Model Context
+    Protocol servers in the Smithery registry. Used by AI developers and platform
+    engineers to find the right MCP capabilities, explore server details, browse
+    skills, and manage server releases.
+  tags:
+    - Smithery
+    - MCP
+    - AI Agents
+    - Registry
+    - Discovery
+    - Developer Tools
+  created: "2026-05-02"
+  modified: "2026-05-02"
+
+binds:
+  - namespace: env
+    keys:
+      SMITHERY_API_KEY: SMITHERY_API_KEY
+
+capability:
+  consumes:
+    - import: smithery-registry
+      location: ./shared/registry-api.yaml
+
+  exposes:
+    - type: rest
+      port: 8080
+      namespace: mcp-discovery-api
+      description: Unified REST API for MCP server discovery and management.
+      resources:
+        - path: /v1/servers
+          name: servers
+          description: MCP server registry search and discovery
+          operations:
+            - method: GET
+              name: list-servers
+              description: Search and browse MCP servers in the registry
+              call: "smithery-registry.list-servers"
+              with:
+                q: "rest.q"
+                page: "rest.page"
+                pageSize: "rest.pageSize"
+              outputParameters:
+                - type: object
+                  mapping: "$."
+        - path: /v1/servers/{qualifiedName}
+          name: server
+          description: Individual MCP server details
+          operations:
+            - method: GET
+              name: get-server
+              description: Get full server details including tools and resources
+              call: "smithery-registry.get-server"
+              with:
+                qualifiedName: "rest.qualifiedName"
+              outputParameters:
+                - type: object
+                  mapping: "$."
+        - path: /v1/servers/{qualifiedName}/releases
+          name: releases
+          description: Server release history
+          operations:
+            - method: GET
+              name: list-releases
+              description: List releases for a server
+              call: "smithery-registry.list-releases"
+              with:
+                qualifiedName: "rest.qualifiedName"
+              outputParameters:
+                - type: object
+                  mapping: "$."
+        - path: /v1/skills
+          name: skills
+          description: Reusable AI skills
+          operations:
+            - method: GET
+              name: list-skills
+              description: Search and browse available skills
+              call: "smithery-registry.list-skills"
+              with:
+                q: "rest.q"
+                page: "rest.page"
+              outputParameters:
+                - type: object
+                  mapping: "$."
+        - path: /v1/skills/{namespace}/{slug}
+          name: skill
+          description: Individual skill details
+          operations:
+            - method: GET
+              name: get-skill
+              description: Get skill details
+              call: "smithery-registry.get-skill"
+              with:
+                namespace: "rest.namespace"
+                slug: "rest.slug"
+              outputParameters:
+                - type: object
+                  mapping: "$."
+        - path: /v1/health
+          name: health
+          description: Service health
+          operations:
+            - method: GET
+              name: check-health
+              description: Check service health status
+              call: "smithery-registry.check-health"
+              outputParameters:
+                - type: object
+                  mapping: "$."
+
+    - type: mcp
+      port: 9080
+      namespace: mcp-discovery-mcp
+      transport: http
+      description: MCP server for AI-assisted MCP server and skill discovery.
+      tools:
+        - name: search-servers
+          description: >-
+            Search the Smithery registry for MCP servers by name, description,
+            or capabilities using full-text and semantic search
+          hints:
+            readOnly: true
+            openWorld: true
+          call: "smithery-registry.list-servers"
+          with:
+            q: "tools.q"
+            page: "tools.page"
+            pageSize: "tools.pageSize"
+          outputParameters:
+            - type: object
+              mapping: "$."
+        - name: get-server-details
+          description: >-
+            Get complete details about a specific MCP server including its tools,
+            resources, connection methods, and configuration
+          hints:
+            readOnly: true
+            openWorld: true
+          call: "smithery-registry.get-server"
+          with:
+            qualifiedName: "tools.qualifiedName"
+          outputParameters:
+            - type: object
+              mapping: "$."
+        - name: list-server-releases
+          description: List the release history and versions for an MCP server
+          hints:
+            readOnly: true
+            openWorld: true
+          call: "smithery-registry.list-releases"
+          with:
+            qualifiedName: "tools.qualifiedName"
+          outputParameters:
+            - type: object
+              mapping: "$."
+        - name: search-skills
+          description: >-
+            Search for reusable prompt-based skills that extend AI agent capabilities
+          hints:
+            readOnly: true
+            openWorld: true
+          call: "smithery-registry.list-skills"
+          with:
+            q: "tools.q"
+            page: "tools.page"
+          outputParameters:
+            - type: object
+              mapping: "$."
+        - name: get-skill-details
+          description: Get detailed information about a specific Smithery skill
+          hints:
+            readOnly: true
+            openWorld: true
+          call: "smithery-registry.get-skill"
+          with:
+            namespace: "tools.namespace"
+            slug: "tools.slug"
+          outputParameters:
+            - type: object
+              mapping: "$."
+        - name: create-service-token
+          description: Create a service token for machine-to-machine API authentication
+          hints:
+            readOnly: false
+            destructive: false
+          call: "smithery-registry.create-token"
+          with:
+            name: "tools.name"
+            scopes: "tools.scopes"
+          outputParameters:
+            - type: object
+              mapping: "$."
+        - name: check-registry-health
+          description: Check whether the Smithery registry service is operational
+          hints:
+            readOnly: true
+            openWorld: true
+          call: "smithery-registry.check-health"
+          outputParameters:
+            - type: object
+              mapping: "$."

@@ -1,53 +1,53 @@
-# Smithery (smithery)
-Smithery is a platform to help developers find and ship language model extensions compatible with the Model Context Protocol Specification. Our mission is to make language models extensions accessible and accelerate the development of agentic AI.
+# Smithery
 
-**URL:** [Visit APIs.json URL](https://raw.githubusercontent.com/api-evangelist/smithery/refs/heads/main/apis.yml)
-
-## Scope
-
-- **Type:** Contract 
-- **Position:** Consuming 
-- **Access:** 3rd-Party 
-
-## Tags:
-
- - Artificial Intelligence, Large Language Models, MCP
-
-## Timestamps
-
-- **Created:** 2025-08-19 
-- **Modified:** 2025-09-02 
+Smithery is a platform for discovering, deploying, and managing Model Context Protocol (MCP) servers and skills. It provides a registry of 6000+ community-built MCP extensions that AI agents can use to access external tools, data sources, and services. The platform offers APIs for server management, skill discovery, connection management, and AI-agent integration.
 
 ## APIs
 
-### Smithery
-Integrate your AI with 5963 skills and extensions built by the community. 
+| API | Description |
+|-----|-------------|
+| [Registry API](openapi/smithery-openapi.json) | MCP server registry, skills, connections, namespaces, tokens |
 
-**Human URL:** [ https://smithery.ai/]( https://smithery.ai/)
+## Artifacts
 
+### OpenAPI Specifications
+- [smithery-openapi.json](openapi/smithery-openapi.json) — Full Registry API specification (official Smithery OpenAPI)
 
-#### Tags:
+### Capabilities
+- [mcp-server-discovery.yaml](capabilities/mcp-server-discovery.yaml) — MCP server and skill discovery workflow
 
- - Artificial Intelligence, Large Language Models, MCP
+#### Shared Definitions
+- [capabilities/shared/registry-api.yaml](capabilities/shared/registry-api.yaml) — Registry API capability definition
 
-#### Properties
+### Rules
+- [smithery-rules.yml](rules/smithery-rules.yml) — Spectral ruleset for Smithery API conventions
 
-- [Documentation]( https://smithery.ai/)
+### JSON Schema
+- [smithery-server-schema.json](json-schema/smithery-server-schema.json) — MCP Server entity schema
+- [smithery-skill-schema.json](json-schema/smithery-skill-schema.json) — Skill entity schema
 
-## Common Properties
+### JSON Structure
+- [smithery-server-structure.json](json-structure/smithery-server-structure.json) — MCP server object structure
 
-- [GitHubOrganization](https://github.com/smithery-ai)
+### JSON-LD
+- [smithery-context.jsonld](json-ld/smithery-context.jsonld) — Linked data context for MCP concepts
+
+### Examples
+- [smithery-list-servers-example.json](examples/smithery-list-servers-example.json) — List servers request/response
+
+### Vocabulary
+- [smithery-vocabulary.yml](vocabulary/smithery-vocabulary.yml) — MCP and Smithery platform vocabulary
+
+## Authentication
+
+- **Bearer Token** — API keys from smithery.ai/account/api-keys used as Bearer tokens
+- **OAuth 2.0** — Supported for client authorization flows
+
+## Developer Resources
+
 - [Documentation](https://smithery.ai/docs)
 - [CLI](https://smithery.ai/docs/concepts/cli)
-- [Website](https://smithery.ai/)
-- [Documentation](https://smithery.ai/docs)
-- [Documentation](https://smithery.ai/docs/api-reference/servers/listsearch-servers)
+- [GitHub Organization](https://github.com/smithery-ai)
 - [Playground](https://smithery.ai/playground)
 - [Blog](https://smithery.ai/blog)
-
-## Maintainers
-
-**FN:** Kin Lane
-
-**Email:** info@apievangelist.com
-
+- [OpenAPI Spec](https://smithery.ai/docs/openapi.json)

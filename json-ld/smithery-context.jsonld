@@ -1,0 +1,31 @@
+{
+  "@context": {
+    "@vocab": "https://schema.org/",
+    "smithery": "https://api.smithery.ai/vocab#",
+    "Server": "SoftwareApplication",
+    "Skill": "CreativeWork",
+    "Connection": "smithery:Connection",
+    "Namespace": "Organization",
+    "qualifiedName": "identifier",
+    "displayName": "name",
+    "description": "description",
+    "iconUrl": "image",
+    "isVerified": "smithery:isVerified",
+    "useCount": "interactionCount",
+    "namespace": "smithery:namespace",
+    "tools": "smithery:tools",
+    "connections": "smithery:connections",
+    "slug": "smithery:slug",
+    "githubUrl": "codeRepository",
+    "tags": "keywords",
+    "releases": "smithery:releases",
+    "releaseId": "smithery:releaseId",
+    "createdAt": "dateCreated",
+    "updatedAt": "dateModified",
+    "mcpVersion": "smithery:mcpVersion",
+    "toolName": "smithery:toolName",
+    "inputSchema": "smithery:inputSchema",
+    "scopes": "smithery:scopes",
+    "token": "smithery:token"
+  }
+}

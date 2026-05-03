@@ -1,0 +1,84 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://api.smithery.ai/schemas/server",
+  "title": "Smithery MCP Server",
+  "description": "A Model Context Protocol server in the Smithery registry",
+  "type": "object",
+  "required": ["qualifiedName", "displayName"],
+  "properties": {
+    "qualifiedName": {
+      "type": "string",
+      "description": "Unique server identifier in namespace/server-name format",
+      "pattern": "^[a-z0-9-]+/[a-z0-9-]+$"
+    },
+    "displayName": {
+      "type": "string",
+      "description": "Human-readable display name for the server"
+    },
+    "description": {
+      "type": "string",
+      "description": "Description of what the server does and its capabilities"
+    },
+    "iconUrl": {
+      "type": "string",
+      "format": "uri",
+      "description": "URL to the server's icon image"
+    },
+    "isVerified": {
+      "type": "boolean",
+      "description": "Whether the server has been verified by Smithery"
+    },
+    "useCount": {
+      "type": "integer",
+      "minimum": 0,
+      "description": "Number of times the server has been used/installed"
+    },
+    "namespace": {
+      "type": "string",
+      "description": "The namespace (organization or user) that owns this server"
+    },
+    "tools": {
+      "type": "array",
+      "description": "Tools exposed by this MCP server",
+      "items": {
+        "$ref": "#/definitions/Tool"
+      }
+    },
+    "connections": {
+      "type": "array",
+      "description": "Available connection methods for this server",
+      "items": {
+        "$ref": "#/definitions/Connection"
+      }
+    },
+    "createdAt": {
+      "type": "string",
+      "format": "date-time"
+    },
+    "updatedAt": {
+      "type": "string",
+      "format": "date-time"
+    }
+  },
+  "definitions": {
+    "Tool": {
+      "type": "object",
+      "properties": {
+        "name": {"type": "string"},
+        "description": {"type": "string"},
+        "inputSchema": {"type": "object"}
+      }
+    },
+    "Connection": {
+      "type": "object",
+      "properties": {
+        "type": {
+          "type": "string",
+          "enum": ["http", "stdio", "uplink"]
+        },
+        "url": {"type": "string", "format": "uri"},
+        "configSchema": {"type": "object"}
+      }
+    }
+  }
+}

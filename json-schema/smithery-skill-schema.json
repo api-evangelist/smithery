@@ -1,0 +1,44 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://api.smithery.ai/schemas/skill",
+  "title": "Smithery Skill",
+  "description": "A reusable prompt-based skill in the Smithery registry",
+  "type": "object",
+  "required": ["namespace", "slug", "displayName"],
+  "properties": {
+    "namespace": {
+      "type": "string",
+      "description": "The namespace that owns this skill"
+    },
+    "slug": {
+      "type": "string",
+      "description": "URL-safe identifier for the skill within its namespace"
+    },
+    "displayName": {
+      "type": "string",
+      "description": "Human-readable display name for the skill"
+    },
+    "description": {
+      "type": "string",
+      "description": "Description of what the skill does"
+    },
+    "tags": {
+      "type": "array",
+      "items": {"type": "string"},
+      "description": "Tags for categorizing and discovering the skill"
+    },
+    "githubUrl": {
+      "type": "string",
+      "format": "uri",
+      "description": "GitHub repository backing this skill"
+    },
+    "createdAt": {
+      "type": "string",
+      "format": "date-time"
+    },
+    "updatedAt": {
+      "type": "string",
+      "format": "date-time"
+    }
+  }
+}
