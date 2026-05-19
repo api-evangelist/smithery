@@ -18,7 +18,7 @@ tags:
   - AI Agents
   - Developer Tools
 created: '2025-08-19'
-modified: '2026-05-02'
+modified: '2026-05-19'
 url: >-
   https://raw.githubusercontent.com/api-evangelist/smithery/refs/heads/main/apis.yml
 specificationVersion: '0.19'
@@ -83,6 +83,9 @@ common:
     url: https://github.com/smithery-ai/cli
     type: SDK
 
+  - name: MCP Server
+    url: https://github.com/smithery-ai/smithery-cli-mcp
+    type: MCPServer
 maintainers:
   - FN: Kin Lane
     email: kin@apievangelist.com
