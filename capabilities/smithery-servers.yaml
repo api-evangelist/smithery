@@ -1,0 +1,933 @@
+naftiko: 1.0.0-alpha2
+info:
+  label: Smithery Platform API — servers
+  description: 'Smithery Platform API — servers. 18 operations. Lead operation: List all servers. Self-contained Naftiko capability
+    covering one Smithery business surface.'
+  tags:
+  - Smithery
+  - servers
+  created: '2026-05-19'
+  modified: '2026-05-19'
+binds:
+- namespace: env
+  keys:
+    SMITHERY_API_KEY: SMITHERY_API_KEY
+capability:
+  consumes:
+  - type: http
+    namespace: smithery-servers
+    baseUri: https://api.smithery.ai
+    description: Smithery Platform API — servers business capability. Self-contained, no shared references.
+    resources:
+    - name: servers
+      path: /servers
+      operations:
+      - name: getservers
+        method: GET
+        description: List all servers
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: q
+          in: query
+          type: string
+          description: Search query for full-text and semantic search across server names and descriptions.
+        - name: page
+          in: query
+          type: integer
+          description: Page number (1-indexed).
+        - name: pageSize
+          in: query
+          type: integer
+          description: Number of results per page (default 10, max 100).
+        - name: topK
+          in: query
+          type: integer
+          description: Maximum number of candidate results to consider from the search index before pagination.
+        - name: fields
+          in: query
+          type: string
+          description: Comma-separated list of fields to include in response
+        - name: ids
+          in: query
+          type: array
+          description: Filter by specific server IDs.
+        - name: qualifiedName
+          in: query
+          type: string
+          description: 'Exact match on the server''s qualified name (e.g. "smithery/hello-world"). Deprecated: use GET /servers/:namespace/:server
+            instead.'
+        - name: namespace
+          in: query
+          type: string
+          description: Filter by the namespace that owns the server.
+        - name: remote
+          in: query
+          type: string
+          description: Filter by remote status. Remote servers are accessed via URL; non-remote servers run locally via stdio.
+        - name: isDeployed
+          in: query
+          type: string
+          description: Filter by deployment status. Deployed servers are hosted on Smithery infrastructure.
+        - name: verified
+          in: query
+          type: string
+          description: Filter to only verified servers.
+        - name: ownerId
+          in: query
+          type: string
+          description: Filter by the server owner's user ID.
+        - name: repoOwner
+          in: query
+          type: string
+          description: Filter by GitHub repository owner from repository_url.
+        - name: repoName
+          in: query
+          type: string
+          description: Filter by GitHub repository name from repository_url.
+        - name: seed
+          in: query
+          type: integer
+          description: Random seed for deterministic pagination. When provided, results use a stable sort order that is consistent
+            across pages for the same seed value.
+    - name: servers-qualifiedName
+      path: /servers/{qualifiedName}
+      operations:
+      - name: getserversnamespace
+        method: GET
+        description: Get a server
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: qualifiedName
+          in: path
+          type: string
+          description: The server's qualified name (e.g. 'namespace/server' or 'namespace' for namespace-only servers). Use
+            %2F to encode the slash.
+          required: true
+      - name: putserversnamespace
+        method: PUT
+        description: Create a server
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: qualifiedName
+          in: path
+          type: string
+          description: The server's qualified name (e.g. 'namespace/server' or 'namespace' for namespace-only servers). Use
+            %2F to encode the slash.
+          required: true
+        - name: body
+          in: body
+          type: object
+          description: Request body (JSON).
+          required: false
+      - name: patchserversnamespace
+        method: PATCH
+        description: Update a server
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: qualifiedName
+          in: path
+          type: string
+          description: The server's qualified name (e.g. 'namespace/server' or 'namespace' for namespace-only servers). Use
+            %2F to encode the slash.
+          required: true
+        - name: body
+          in: body
+          type: object
+          description: Request body (JSON).
+          required: false
+      - name: deleteserversnamespace
+        method: DELETE
+        description: Delete a server
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: qualifiedName
+          in: path
+          type: string
+          description: The server's qualified name (e.g. 'namespace/server' or 'namespace' for namespace-only servers). Use
+            %2F to encode the slash.
+          required: true
+    - name: servers-qualifiedName-download
+      path: /servers/{qualifiedName}/download
+      operations:
+      - name: getserversnamespacedownload
+        method: GET
+        description: Download server bundle
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: qualifiedName
+          in: path
+          type: string
+          description: The server's qualified name (e.g. 'namespace/server' or 'namespace' for namespace-only servers). Use
+            %2F to encode the slash.
+          required: true
+    - name: servers-qualifiedName-icon
+      path: /servers/{qualifiedName}/icon
+      operations:
+      - name: putserversnamespaceicon
+        method: PUT
+        description: Upload server icon
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: qualifiedName
+          in: path
+          type: string
+          description: The server's qualified name (e.g. 'namespace/server' or 'namespace' for namespace-only servers). Use
+            %2F to encode the slash.
+          required: true
+      - name: deleteserversnamespaceicon
+        method: DELETE
+        description: Delete server icon
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: qualifiedName
+          in: path
+          type: string
+          description: The server's qualified name (e.g. 'namespace/server' or 'namespace' for namespace-only servers). Use
+            %2F to encode the slash.
+          required: true
+      - name: getserversnamespaceicon
+        method: GET
+        description: Get server icon
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: qualifiedName
+          in: path
+          type: string
+          description: The server's qualified name (e.g. 'namespace/server' or 'namespace' for namespace-only servers). Use
+            %2F to encode the slash.
+          required: true
+    - name: servers-qualifiedName-logs
+      path: /servers/{qualifiedName}/logs
+      operations:
+      - name: getserversnamespacelogs
+        method: GET
+        description: List runtime logs
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: from
+          in: query
+          type: string
+          description: Start of time range (ISO 8601).
+        - name: to
+          in: query
+          type: string
+          description: End of time range (ISO 8601).
+        - name: limit
+          in: query
+          type: integer
+          description: Max invocations to return. Defaults to 20.
+        - name: search
+          in: query
+          type: string
+          description: Text search across log messages.
+        - name: qualifiedName
+          in: path
+          type: string
+          description: The server's qualified name (e.g. 'namespace/server' or 'namespace' for namespace-only servers). Use
+            %2F to encode the slash.
+          required: true
+    - name: servers-qualifiedName-releases
+      path: /servers/{qualifiedName}/releases
+      operations:
+      - name: putserversnamespacereleases
+        method: PUT
+        description: Publish a server
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: qualifiedName
+          in: path
+          type: string
+          description: The server's qualified name (e.g. 'namespace/server' or 'namespace' for namespace-only servers). Use
+            %2F to encode the slash.
+          required: true
+        - name: body
+          in: body
+          type: object
+          description: Request body (JSON).
+          required: false
+      - name: getserversnamespacereleases
+        method: GET
+        description: List releases
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: page
+          in: query
+          type: integer
+        - name: pageSize
+          in: query
+          type: integer
+        - name: qualifiedName
+          in: path
+          type: string
+          description: The server's qualified name (e.g. 'namespace/server' or 'namespace' for namespace-only servers). Use
+            %2F to encode the slash.
+          required: true
+    - name: servers-qualifiedName-releases-id
+      path: /servers/{qualifiedName}/releases/{id}
+      operations:
+      - name: getserversnamespacereleasesid
+        method: GET
+        description: Get a release
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: qualifiedName
+          in: path
+          type: string
+          description: The server's qualified name (e.g. 'namespace/server' or 'namespace' for namespace-only servers). Use
+            %2F to encode the slash.
+          required: true
+        - name: id
+          in: path
+          type: string
+          required: true
+    - name: servers-qualifiedName-releases-id-resume
+      path: /servers/{qualifiedName}/releases/{id}/resume
+      operations:
+      - name: postserversnamespacereleasesidresume
+        method: POST
+        description: Resume a release
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: qualifiedName
+          in: path
+          type: string
+          description: The server's qualified name (e.g. 'namespace/server' or 'namespace' for namespace-only servers). Use
+            %2F to encode the slash.
+          required: true
+        - name: id
+          in: path
+          type: string
+          required: true
+    - name: servers-qualifiedName-releases-id-stream
+      path: /servers/{qualifiedName}/releases/{id}/stream
+      operations:
+      - name: getserversnamespacereleasesidstream
+        method: GET
+        description: Stream release logs
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: qualifiedName
+          in: path
+          type: string
+          description: The server's qualified name (e.g. 'namespace/server' or 'namespace' for namespace-only servers). Use
+            %2F to encode the slash.
+          required: true
+        - name: id
+          in: path
+          type: string
+          required: true
+    - name: servers-qualifiedName-secrets
+      path: /servers/{qualifiedName}/secrets
+      operations:
+      - name: getserversnamespacesecrets
+        method: GET
+        description: List secrets
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: qualifiedName
+          in: path
+          type: string
+          description: The server's qualified name (e.g. 'namespace/server' or 'namespace' for namespace-only servers). Use
+            %2F to encode the slash.
+          required: true
+      - name: putserversnamespacesecrets
+        method: PUT
+        description: Set a secret
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: qualifiedName
+          in: path
+          type: string
+          description: The server's qualified name (e.g. 'namespace/server' or 'namespace' for namespace-only servers). Use
+            %2F to encode the slash.
+          required: true
+        - name: body
+          in: body
+          type: object
+          description: Request body (JSON).
+          required: false
+    - name: servers-qualifiedName-secrets-secretName
+      path: /servers/{qualifiedName}/secrets/{secretName}
+      operations:
+      - name: deleteserversnamespacesecretssecretname
+        method: DELETE
+        description: Delete a secret
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: qualifiedName
+          in: path
+          type: string
+          description: The server's qualified name (e.g. 'namespace/server' or 'namespace' for namespace-only servers). Use
+            %2F to encode the slash.
+          required: true
+        - name: secretName
+          in: path
+          type: string
+          required: true
+    authentication:
+      type: bearer
+      token: '{{env.SMITHERY_API_KEY}}'
+  exposes:
+  - type: rest
+    namespace: smithery-servers-rest
+    port: 8080
+    description: REST adapter for Smithery Platform API — servers. One Spectral-compliant resource per consumed operation,
+      prefixed with /v1.
+    resources:
+    - path: /v1/servers
+      name: servers
+      description: REST surface for servers.
+      operations:
+      - method: GET
+        name: getservers
+        description: List all servers
+        call: smithery-servers.getservers
+        with:
+          q: rest.q
+          page: rest.page
+          pageSize: rest.pageSize
+          topK: rest.topK
+          fields: rest.fields
+          ids: rest.ids
+          qualifiedName: rest.qualifiedName
+          namespace: rest.namespace
+          remote: rest.remote
+          isDeployed: rest.isDeployed
+          verified: rest.verified
+          ownerId: rest.ownerId
+          repoOwner: rest.repoOwner
+          repoName: rest.repoName
+          seed: rest.seed
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /v1/servers/{qualifiedname}
+      name: servers-qualifiedname
+      description: REST surface for servers-qualifiedName.
+      operations:
+      - method: GET
+        name: getserversnamespace
+        description: Get a server
+        call: smithery-servers.getserversnamespace
+        with:
+          qualifiedName: rest.qualifiedName
+        outputParameters:
+        - type: object
+          mapping: $.
+      - method: PUT
+        name: putserversnamespace
+        description: Create a server
+        call: smithery-servers.putserversnamespace
+        with:
+          qualifiedName: rest.qualifiedName
+          body: rest.body
+        outputParameters:
+        - type: object
+          mapping: $.
+      - method: PATCH
+        name: patchserversnamespace
+        description: Update a server
+        call: smithery-servers.patchserversnamespace
+        with:
+          qualifiedName: rest.qualifiedName
+          body: rest.body
+        outputParameters:
+        - type: object
+          mapping: $.
+      - method: DELETE
+        name: deleteserversnamespace
+        description: Delete a server
+        call: smithery-servers.deleteserversnamespace
+        with:
+          qualifiedName: rest.qualifiedName
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /v1/servers/{qualifiedname}/download
+      name: servers-qualifiedname-download
+      description: REST surface for servers-qualifiedName-download.
+      operations:
+      - method: GET
+        name: getserversnamespacedownload
+        description: Download server bundle
+        call: smithery-servers.getserversnamespacedownload
+        with:
+          qualifiedName: rest.qualifiedName
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /v1/servers/{qualifiedname}/icon
+      name: servers-qualifiedname-icon
+      description: REST surface for servers-qualifiedName-icon.
+      operations:
+      - method: PUT
+        name: putserversnamespaceicon
+        description: Upload server icon
+        call: smithery-servers.putserversnamespaceicon
+        with:
+          qualifiedName: rest.qualifiedName
+        outputParameters:
+        - type: object
+          mapping: $.
+      - method: DELETE
+        name: deleteserversnamespaceicon
+        description: Delete server icon
+        call: smithery-servers.deleteserversnamespaceicon
+        with:
+          qualifiedName: rest.qualifiedName
+        outputParameters:
+        - type: object
+          mapping: $.
+      - method: GET
+        name: getserversnamespaceicon
+        description: Get server icon
+        call: smithery-servers.getserversnamespaceicon
+        with:
+          qualifiedName: rest.qualifiedName
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /v1/servers/{qualifiedname}/logs
+      name: servers-qualifiedname-logs
+      description: REST surface for servers-qualifiedName-logs.
+      operations:
+      - method: GET
+        name: getserversnamespacelogs
+        description: List runtime logs
+        call: smithery-servers.getserversnamespacelogs
+        with:
+          from: rest.from
+          to: rest.to
+          limit: rest.limit
+          search: rest.search
+          qualifiedName: rest.qualifiedName
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /v1/servers/{qualifiedname}/releases
+      name: servers-qualifiedname-releases
+      description: REST surface for servers-qualifiedName-releases.
+      operations:
+      - method: PUT
+        name: putserversnamespacereleases
+        description: Publish a server
+        call: smithery-servers.putserversnamespacereleases
+        with:
+          qualifiedName: rest.qualifiedName
+          body: rest.body
+        outputParameters:
+        - type: object
+          mapping: $.
+      - method: GET
+        name: getserversnamespacereleases
+        description: List releases
+        call: smithery-servers.getserversnamespacereleases
+        with:
+          page: rest.page
+          pageSize: rest.pageSize
+          qualifiedName: rest.qualifiedName
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /v1/servers/{qualifiedname}/releases/{id}
+      name: servers-qualifiedname-releases-id
+      description: REST surface for servers-qualifiedName-releases-id.
+      operations:
+      - method: GET
+        name: getserversnamespacereleasesid
+        description: Get a release
+        call: smithery-servers.getserversnamespacereleasesid
+        with:
+          qualifiedName: rest.qualifiedName
+          id: rest.id
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /v1/servers/{qualifiedname}/releases/{id}/resume
+      name: servers-qualifiedname-releases-id-resume
+      description: REST surface for servers-qualifiedName-releases-id-resume.
+      operations:
+      - method: POST
+        name: postserversnamespacereleasesidresume
+        description: Resume a release
+        call: smithery-servers.postserversnamespacereleasesidresume
+        with:
+          qualifiedName: rest.qualifiedName
+          id: rest.id
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /v1/servers/{qualifiedname}/releases/{id}/stream
+      name: servers-qualifiedname-releases-id-stream
+      description: REST surface for servers-qualifiedName-releases-id-stream.
+      operations:
+      - method: GET
+        name: getserversnamespacereleasesidstream
+        description: Stream release logs
+        call: smithery-servers.getserversnamespacereleasesidstream
+        with:
+          qualifiedName: rest.qualifiedName
+          id: rest.id
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /v1/servers/{qualifiedname}/secrets
+      name: servers-qualifiedname-secrets
+      description: REST surface for servers-qualifiedName-secrets.
+      operations:
+      - method: GET
+        name: getserversnamespacesecrets
+        description: List secrets
+        call: smithery-servers.getserversnamespacesecrets
+        with:
+          qualifiedName: rest.qualifiedName
+        outputParameters:
+        - type: object
+          mapping: $.
+      - method: PUT
+        name: putserversnamespacesecrets
+        description: Set a secret
+        call: smithery-servers.putserversnamespacesecrets
+        with:
+          qualifiedName: rest.qualifiedName
+          body: rest.body
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /v1/servers/{qualifiedname}/secrets/{secretname}
+      name: servers-qualifiedname-secrets-secretname
+      description: REST surface for servers-qualifiedName-secrets-secretName.
+      operations:
+      - method: DELETE
+        name: deleteserversnamespacesecretssecretname
+        description: Delete a secret
+        call: smithery-servers.deleteserversnamespacesecretssecretname
+        with:
+          qualifiedName: rest.qualifiedName
+          secretName: rest.secretName
+        outputParameters:
+        - type: object
+          mapping: $.
+  - type: mcp
+    namespace: smithery-servers-mcp
+    port: 9090
+    transport: http
+    description: MCP adapter for Smithery Platform API — servers. One tool per consumed operation, routed inline through this
+      capability's consumes block.
+    tools:
+    - name: list-all-servers
+      description: List all servers
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: true
+      call: smithery-servers.getservers
+      with:
+        q: tools.q
+        page: tools.page
+        pageSize: tools.pageSize
+        topK: tools.topK
+        fields: tools.fields
+        ids: tools.ids
+        qualifiedName: tools.qualifiedName
+        namespace: tools.namespace
+        remote: tools.remote
+        isDeployed: tools.isDeployed
+        verified: tools.verified
+        ownerId: tools.ownerId
+        repoOwner: tools.repoOwner
+        repoName: tools.repoName
+        seed: tools.seed
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: get-server
+      description: Get a server
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: true
+      call: smithery-servers.getserversnamespace
+      with:
+        qualifiedName: tools.qualifiedName
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: create-server
+      description: Create a server
+      hints:
+        readOnly: false
+        destructive: false
+        idempotent: true
+      call: smithery-servers.putserversnamespace
+      with:
+        qualifiedName: tools.qualifiedName
+        body: tools.body
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: update-server
+      description: Update a server
+      hints:
+        readOnly: false
+        destructive: false
+        idempotent: true
+      call: smithery-servers.patchserversnamespace
+      with:
+        qualifiedName: tools.qualifiedName
+        body: tools.body
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: delete-server
+      description: Delete a server
+      hints:
+        readOnly: false
+        destructive: true
+        idempotent: true
+      call: smithery-servers.deleteserversnamespace
+      with:
+        qualifiedName: tools.qualifiedName
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: download-server-bundle
+      description: Download server bundle
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: true
+      call: smithery-servers.getserversnamespacedownload
+      with:
+        qualifiedName: tools.qualifiedName
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: upload-server-icon
+      description: Upload server icon
+      hints:
+        readOnly: false
+        destructive: false
+        idempotent: true
+      call: smithery-servers.putserversnamespaceicon
+      with:
+        qualifiedName: tools.qualifiedName
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: delete-server-icon
+      description: Delete server icon
+      hints:
+        readOnly: false
+        destructive: true
+        idempotent: true
+      call: smithery-servers.deleteserversnamespaceicon
+      with:
+        qualifiedName: tools.qualifiedName
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: get-server-icon
+      description: Get server icon
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: true
+      call: smithery-servers.getserversnamespaceicon
+      with:
+        qualifiedName: tools.qualifiedName
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: list-runtime-logs
+      description: List runtime logs
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: true
+      call: smithery-servers.getserversnamespacelogs
+      with:
+        from: tools.from
+        to: tools.to
+        limit: tools.limit
+        search: tools.search
+        qualifiedName: tools.qualifiedName
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: publish-server
+      description: Publish a server
+      hints:
+        readOnly: false
+        destructive: false
+        idempotent: true
+      call: smithery-servers.putserversnamespacereleases
+      with:
+        qualifiedName: tools.qualifiedName
+        body: tools.body
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: list-releases
+      description: List releases
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: true
+      call: smithery-servers.getserversnamespacereleases
+      with:
+        page: tools.page
+        pageSize: tools.pageSize
+        qualifiedName: tools.qualifiedName
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: get-release
+      description: Get a release
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: true
+      call: smithery-servers.getserversnamespacereleasesid
+      with:
+        qualifiedName: tools.qualifiedName
+        id: tools.id
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: resume-release
+      description: Resume a release
+      hints:
+        readOnly: false
+        destructive: false
+        idempotent: false
+      call: smithery-servers.postserversnamespacereleasesidresume
+      with:
+        qualifiedName: tools.qualifiedName
+        id: tools.id
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: stream-release-logs
+      description: Stream release logs
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: true
+      call: smithery-servers.getserversnamespacereleasesidstream
+      with:
+        qualifiedName: tools.qualifiedName
+        id: tools.id
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: list-secrets
+      description: List secrets
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: true
+      call: smithery-servers.getserversnamespacesecrets
+      with:
+        qualifiedName: tools.qualifiedName
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: set-secret
+      description: Set a secret
+      hints:
+        readOnly: false
+        destructive: false
+        idempotent: true
+      call: smithery-servers.putserversnamespacesecrets
+      with:
+        qualifiedName: tools.qualifiedName
+        body: tools.body
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: delete-secret
+      description: Delete a secret
+      hints:
+        readOnly: false
+        destructive: true
+        idempotent: true
+      call: smithery-servers.deleteserversnamespacesecretssecretname
+      with:
+        qualifiedName: tools.qualifiedName
+        secretName: tools.secretName
+      outputParameters:
+      - type: object
+        mapping: $.

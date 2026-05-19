@@ -1,0 +1,450 @@
+naftiko: 1.0.0-alpha2
+info:
+  label: Smithery Platform API — skills
+  description: 'Smithery Platform API — skills. 8 operations. Lead operation: List or search skills. Self-contained Naftiko
+    capability covering one Smithery business surface.'
+  tags:
+  - Smithery
+  - skills
+  created: '2026-05-19'
+  modified: '2026-05-19'
+binds:
+- namespace: env
+  keys:
+    SMITHERY_API_KEY: SMITHERY_API_KEY
+capability:
+  consumes:
+  - type: http
+    namespace: smithery-skills
+    baseUri: https://api.smithery.ai
+    description: Smithery Platform API — skills business capability. Self-contained, no shared references.
+    resources:
+    - name: skills
+      path: /skills
+      operations:
+      - name: getskills
+        method: GET
+        description: List or search skills
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: q
+          in: query
+          type: string
+          description: Search query for full-text and semantic search across skill names and descriptions.
+        - name: category
+          in: query
+          type: string
+          description: Filter by skill category (e.g. 'code', 'data', 'web').
+        - name: namespace
+          in: query
+          type: string
+          description: Filter by the namespace that owns the skill.
+        - name: slug
+          in: query
+          type: string
+          description: 'Filter by exact skill slug within a namespace. Deprecated: use GET /skills/:namespace/:slug instead.'
+        - name: ownerId
+          in: query
+          type: string
+          description: Filter by the skill owner's organization ID.
+        - name: verified
+          in: query
+          type: boolean
+          description: Filter by whether the skill's namespace is verified.
+        - name: page
+          in: query
+          type: integer
+          description: Page number (1-indexed).
+        - name: pageSize
+          in: query
+          type: integer
+          description: Number of results per page (default 20, max 100).
+        - name: topK
+          in: query
+          type: integer
+          description: Maximum number of candidate results to consider from the search index before pagination.
+        - name: fields
+          in: query
+          type: string
+          description: Comma-separated list of fields to include in response
+      - name: postskills
+        method: POST
+        description: Create a new skill (deprecated)
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: body
+          in: body
+          type: object
+          description: Request body (JSON).
+          required: false
+    - name: skills-namespace-slug
+      path: /skills/{namespace}/{slug}
+      operations:
+      - name: getskillsnamespaceslug
+        method: GET
+        description: Get a skill
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: namespace
+          in: path
+          type: string
+          required: true
+        - name: slug
+          in: path
+          type: string
+          required: true
+      - name: putskillsnamespaceslug
+        method: PUT
+        description: Create or update a skill
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: namespace
+          in: path
+          type: string
+          required: true
+        - name: slug
+          in: path
+          type: string
+          required: true
+        - name: body
+          in: body
+          type: object
+          description: Request body (JSON).
+          required: true
+      - name: deleteskillsnamespaceslug
+        method: DELETE
+        description: Delete a skill
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: namespace
+          in: path
+          type: string
+          required: true
+        - name: slug
+          in: path
+          type: string
+          required: true
+    - name: skills-namespace-slug-download
+      path: /skills/{namespace}/{slug}/download
+      operations:
+      - name: getskillsnamespaceslugdownload
+        method: GET
+        description: Download skill bundle
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: namespace
+          in: path
+          type: string
+          required: true
+        - name: slug
+          in: path
+          type: string
+          required: true
+    - name: skills-namespace-slug-sync
+      path: /skills/{namespace}/{slug}/sync
+      operations:
+      - name: postskillsnamespaceslugsync
+        method: POST
+        description: Sync skill metadata from GitHub (deprecated)
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: namespace
+          in: path
+          type: string
+          required: true
+        - name: slug
+          in: path
+          type: string
+          required: true
+    - name: skills-namespace-slug-upload
+      path: /skills/{namespace}/{slug}/upload
+      operations:
+      - name: putskillsnamespaceslugupload
+        method: PUT
+        description: Upload a skill bundle
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: namespace
+          in: path
+          type: string
+          required: true
+        - name: slug
+          in: path
+          type: string
+          required: true
+        - name: body
+          in: body
+          type: object
+          description: Request body (JSON).
+          required: true
+    authentication:
+      type: bearer
+      token: '{{env.SMITHERY_API_KEY}}'
+  exposes:
+  - type: rest
+    namespace: smithery-skills-rest
+    port: 8080
+    description: REST adapter for Smithery Platform API — skills. One Spectral-compliant resource per consumed operation,
+      prefixed with /v1.
+    resources:
+    - path: /v1/skills
+      name: skills
+      description: REST surface for skills.
+      operations:
+      - method: GET
+        name: getskills
+        description: List or search skills
+        call: smithery-skills.getskills
+        with:
+          q: rest.q
+          category: rest.category
+          namespace: rest.namespace
+          slug: rest.slug
+          ownerId: rest.ownerId
+          verified: rest.verified
+          page: rest.page
+          pageSize: rest.pageSize
+          topK: rest.topK
+          fields: rest.fields
+        outputParameters:
+        - type: object
+          mapping: $.
+      - method: POST
+        name: postskills
+        description: Create a new skill (deprecated)
+        call: smithery-skills.postskills
+        with:
+          body: rest.body
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /v1/skills/{namespace}/{slug}
+      name: skills-namespace-slug
+      description: REST surface for skills-namespace-slug.
+      operations:
+      - method: GET
+        name: getskillsnamespaceslug
+        description: Get a skill
+        call: smithery-skills.getskillsnamespaceslug
+        with:
+          namespace: rest.namespace
+          slug: rest.slug
+        outputParameters:
+        - type: object
+          mapping: $.
+      - method: PUT
+        name: putskillsnamespaceslug
+        description: Create or update a skill
+        call: smithery-skills.putskillsnamespaceslug
+        with:
+          namespace: rest.namespace
+          slug: rest.slug
+          body: rest.body
+        outputParameters:
+        - type: object
+          mapping: $.
+      - method: DELETE
+        name: deleteskillsnamespaceslug
+        description: Delete a skill
+        call: smithery-skills.deleteskillsnamespaceslug
+        with:
+          namespace: rest.namespace
+          slug: rest.slug
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /v1/skills/{namespace}/{slug}/download
+      name: skills-namespace-slug-download
+      description: REST surface for skills-namespace-slug-download.
+      operations:
+      - method: GET
+        name: getskillsnamespaceslugdownload
+        description: Download skill bundle
+        call: smithery-skills.getskillsnamespaceslugdownload
+        with:
+          namespace: rest.namespace
+          slug: rest.slug
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /v1/skills/{namespace}/{slug}/sync
+      name: skills-namespace-slug-sync
+      description: REST surface for skills-namespace-slug-sync.
+      operations:
+      - method: POST
+        name: postskillsnamespaceslugsync
+        description: Sync skill metadata from GitHub (deprecated)
+        call: smithery-skills.postskillsnamespaceslugsync
+        with:
+          namespace: rest.namespace
+          slug: rest.slug
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /v1/skills/{namespace}/{slug}/upload
+      name: skills-namespace-slug-upload
+      description: REST surface for skills-namespace-slug-upload.
+      operations:
+      - method: PUT
+        name: putskillsnamespaceslugupload
+        description: Upload a skill bundle
+        call: smithery-skills.putskillsnamespaceslugupload
+        with:
+          namespace: rest.namespace
+          slug: rest.slug
+          body: rest.body
+        outputParameters:
+        - type: object
+          mapping: $.
+  - type: mcp
+    namespace: smithery-skills-mcp
+    port: 9090
+    transport: http
+    description: MCP adapter for Smithery Platform API — skills. One tool per consumed operation, routed inline through this
+      capability's consumes block.
+    tools:
+    - name: list-search-skills
+      description: List or search skills
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: true
+      call: smithery-skills.getskills
+      with:
+        q: tools.q
+        category: tools.category
+        namespace: tools.namespace
+        slug: tools.slug
+        ownerId: tools.ownerId
+        verified: tools.verified
+        page: tools.page
+        pageSize: tools.pageSize
+        topK: tools.topK
+        fields: tools.fields
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: create-new-skill-deprecated
+      description: Create a new skill (deprecated)
+      hints:
+        readOnly: false
+        destructive: false
+        idempotent: false
+      call: smithery-skills.postskills
+      with:
+        body: tools.body
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: get-skill
+      description: Get a skill
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: true
+      call: smithery-skills.getskillsnamespaceslug
+      with:
+        namespace: tools.namespace
+        slug: tools.slug
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: create-update-skill
+      description: Create or update a skill
+      hints:
+        readOnly: false
+        destructive: false
+        idempotent: true
+      call: smithery-skills.putskillsnamespaceslug
+      with:
+        namespace: tools.namespace
+        slug: tools.slug
+        body: tools.body
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: delete-skill
+      description: Delete a skill
+      hints:
+        readOnly: false
+        destructive: true
+        idempotent: true
+      call: smithery-skills.deleteskillsnamespaceslug
+      with:
+        namespace: tools.namespace
+        slug: tools.slug
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: download-skill-bundle
+      description: Download skill bundle
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: true
+      call: smithery-skills.getskillsnamespaceslugdownload
+      with:
+        namespace: tools.namespace
+        slug: tools.slug
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: sync-skill-metadata-github-deprecated
+      description: Sync skill metadata from GitHub (deprecated)
+      hints:
+        readOnly: false
+        destructive: false
+        idempotent: false
+      call: smithery-skills.postskillsnamespaceslugsync
+      with:
+        namespace: tools.namespace
+        slug: tools.slug
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: upload-skill-bundle
+      description: Upload a skill bundle
+      hints:
+        readOnly: false
+        destructive: false
+        idempotent: true
+      call: smithery-skills.putskillsnamespaceslugupload
+      with:
+        namespace: tools.namespace
+        slug: tools.slug
+        body: tools.body
+      outputParameters:
+      - type: object
+        mapping: $.

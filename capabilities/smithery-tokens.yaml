@@ -1,0 +1,80 @@
+naftiko: 1.0.0-alpha2
+info:
+  label: Smithery Platform API — tokens
+  description: 'Smithery Platform API — tokens. 1 operations. Lead operation: Create a service token. Self-contained Naftiko
+    capability covering one Smithery business surface.'
+  tags:
+  - Smithery
+  - tokens
+  created: '2026-05-19'
+  modified: '2026-05-19'
+binds:
+- namespace: env
+  keys:
+    SMITHERY_API_KEY: SMITHERY_API_KEY
+capability:
+  consumes:
+  - type: http
+    namespace: smithery-tokens
+    baseUri: https://api.smithery.ai
+    description: Smithery Platform API — tokens business capability. Self-contained, no shared references.
+    resources:
+    - name: tokens
+      path: /tokens
+      operations:
+      - name: posttokens
+        method: POST
+        description: Create a service token
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: body
+          in: body
+          type: object
+          description: Request body (JSON).
+          required: false
+    authentication:
+      type: bearer
+      token: '{{env.SMITHERY_API_KEY}}'
+  exposes:
+  - type: rest
+    namespace: smithery-tokens-rest
+    port: 8080
+    description: REST adapter for Smithery Platform API — tokens. One Spectral-compliant resource per consumed operation,
+      prefixed with /v1.
+    resources:
+    - path: /v1/tokens
+      name: tokens
+      description: REST surface for tokens.
+      operations:
+      - method: POST
+        name: posttokens
+        description: Create a service token
+        call: smithery-tokens.posttokens
+        with:
+          body: rest.body
+        outputParameters:
+        - type: object
+          mapping: $.
+  - type: mcp
+    namespace: smithery-tokens-mcp
+    port: 9090
+    transport: http
+    description: MCP adapter for Smithery Platform API — tokens. One tool per consumed operation, routed inline through this
+      capability's consumes block.
+    tools:
+    - name: create-service-token
+      description: Create a service token
+      hints:
+        readOnly: false
+        destructive: false
+        idempotent: false
+      call: smithery-tokens.posttokens
+      with:
+        body: tools.body
+      outputParameters:
+      - type: object
+        mapping: $.

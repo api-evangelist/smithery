@@ -1,0 +1,167 @@
+naftiko: 1.0.0-alpha2
+info:
+  label: Smithery Platform API — organizations
+  description: 'Smithery Platform API — organizations. 3 operations. Lead operation: Create a team API key. Self-contained
+    Naftiko capability covering one Smithery business surface.'
+  tags:
+  - Smithery
+  - organizations
+  created: '2026-05-19'
+  modified: '2026-05-19'
+binds:
+- namespace: env
+  keys:
+    SMITHERY_API_KEY: SMITHERY_API_KEY
+capability:
+  consumes:
+  - type: http
+    namespace: smithery-organizations
+    baseUri: https://api.smithery.ai
+    description: Smithery Platform API — organizations business capability. Self-contained, no shared references.
+    resources:
+    - name: organizations-orgId-api-keys
+      path: /organizations/{orgId}/api-keys
+      operations:
+      - name: postorganizationsorgidapikeys
+        method: POST
+        description: Create a team API key
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: orgId
+          in: path
+          type: string
+          required: true
+        - name: body
+          in: body
+          type: object
+          description: Request body (JSON).
+          required: false
+      - name: getorganizationsorgidapikeys
+        method: GET
+        description: List team API keys
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: orgId
+          in: path
+          type: string
+          required: true
+    - name: organizations-orgId-api-keys-keyId
+      path: /organizations/{orgId}/api-keys/{keyId}
+      operations:
+      - name: deleteorganizationsorgidapikeyskeyid
+        method: DELETE
+        description: Revoke a team API key
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: orgId
+          in: path
+          type: string
+          required: true
+        - name: keyId
+          in: path
+          type: string
+          required: true
+    authentication:
+      type: bearer
+      token: '{{env.SMITHERY_API_KEY}}'
+  exposes:
+  - type: rest
+    namespace: smithery-organizations-rest
+    port: 8080
+    description: REST adapter for Smithery Platform API — organizations. One Spectral-compliant resource per consumed operation,
+      prefixed with /v1.
+    resources:
+    - path: /v1/organizations/{orgid}/api-keys
+      name: organizations-orgid-api-keys
+      description: REST surface for organizations-orgId-api-keys.
+      operations:
+      - method: POST
+        name: postorganizationsorgidapikeys
+        description: Create a team API key
+        call: smithery-organizations.postorganizationsorgidapikeys
+        with:
+          orgId: rest.orgId
+          body: rest.body
+        outputParameters:
+        - type: object
+          mapping: $.
+      - method: GET
+        name: getorganizationsorgidapikeys
+        description: List team API keys
+        call: smithery-organizations.getorganizationsorgidapikeys
+        with:
+          orgId: rest.orgId
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /v1/organizations/{orgid}/api-keys/{keyid}
+      name: organizations-orgid-api-keys-keyid
+      description: REST surface for organizations-orgId-api-keys-keyId.
+      operations:
+      - method: DELETE
+        name: deleteorganizationsorgidapikeyskeyid
+        description: Revoke a team API key
+        call: smithery-organizations.deleteorganizationsorgidapikeyskeyid
+        with:
+          orgId: rest.orgId
+          keyId: rest.keyId
+        outputParameters:
+        - type: object
+          mapping: $.
+  - type: mcp
+    namespace: smithery-organizations-mcp
+    port: 9090
+    transport: http
+    description: MCP adapter for Smithery Platform API — organizations. One tool per consumed operation, routed inline through
+      this capability's consumes block.
+    tools:
+    - name: create-team-api-key
+      description: Create a team API key
+      hints:
+        readOnly: false
+        destructive: false
+        idempotent: false
+      call: smithery-organizations.postorganizationsorgidapikeys
+      with:
+        orgId: tools.orgId
+        body: tools.body
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: list-team-api-keys
+      description: List team API keys
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: true
+      call: smithery-organizations.getorganizationsorgidapikeys
+      with:
+        orgId: tools.orgId
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: revoke-team-api-key
+      description: Revoke a team API key
+      hints:
+        readOnly: false
+        destructive: true
+        idempotent: true
+      call: smithery-organizations.deleteorganizationsorgidapikeyskeyid
+      with:
+        orgId: tools.orgId
+        keyId: tools.keyId
+      outputParameters:
+      - type: object
+        mapping: $.

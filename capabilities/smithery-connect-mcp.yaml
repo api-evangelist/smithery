@@ -1,0 +1,85 @@
+naftiko: 1.0.0-alpha2
+info:
+  label: Smithery Platform API — connect.mcp
+  description: 'Smithery Platform API — connect.mcp. 1 operations. Lead operation: MCP endpoint. Self-contained Naftiko capability
+    covering one Smithery business surface.'
+  tags:
+  - Smithery
+  - connect.mcp
+  created: '2026-05-19'
+  modified: '2026-05-19'
+binds:
+- namespace: env
+  keys:
+    SMITHERY_API_KEY: SMITHERY_API_KEY
+capability:
+  consumes:
+  - type: http
+    namespace: smithery-connect-mcp
+    baseUri: https://api.smithery.ai
+    description: Smithery Platform API — connect.mcp business capability. Self-contained, no shared references.
+    resources:
+    - name: connect-namespace-connectionId-mcp
+      path: /connect/{namespace}/{connectionId}/mcp
+      operations:
+      - name: postnamespaceconnectionidmcp
+        method: POST
+        description: MCP endpoint
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: namespace
+          in: path
+          type: string
+          required: true
+        - name: connectionId
+          in: path
+          type: string
+          required: true
+    authentication:
+      type: bearer
+      token: '{{env.SMITHERY_API_KEY}}'
+  exposes:
+  - type: rest
+    namespace: smithery-connect-mcp-rest
+    port: 8080
+    description: REST adapter for Smithery Platform API — connect.mcp. One Spectral-compliant resource per consumed operation,
+      prefixed with /v1.
+    resources:
+    - path: /v1/connect/{namespace}/{connectionid}/mcp
+      name: connect-namespace-connectionid-mcp
+      description: REST surface for connect-namespace-connectionId-mcp.
+      operations:
+      - method: POST
+        name: postnamespaceconnectionidmcp
+        description: MCP endpoint
+        call: smithery-connect-mcp.postnamespaceconnectionidmcp
+        with:
+          namespace: rest.namespace
+          connectionId: rest.connectionId
+        outputParameters:
+        - type: object
+          mapping: $.
+  - type: mcp
+    namespace: smithery-connect-mcp-mcp
+    port: 9090
+    transport: http
+    description: MCP adapter for Smithery Platform API — connect.mcp. One tool per consumed operation, routed inline through
+      this capability's consumes block.
+    tools:
+    - name: mcp-endpoint
+      description: MCP endpoint
+      hints:
+        readOnly: false
+        destructive: false
+        idempotent: false
+      call: smithery-connect-mcp.postnamespaceconnectionidmcp
+      with:
+        namespace: tools.namespace
+        connectionId: tools.connectionId
+      outputParameters:
+      - type: object
+        mapping: $.

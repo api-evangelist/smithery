@@ -1,0 +1,797 @@
+naftiko: 1.0.0-alpha2
+info:
+  label: Smithery Platform API — connect
+  description: 'Smithery Platform API — connect. 16 operations. Lead operation: Create connection. Self-contained Naftiko
+    capability covering one Smithery business surface.'
+  tags:
+  - Smithery
+  - connect
+  created: '2026-05-19'
+  modified: '2026-05-19'
+binds:
+- namespace: env
+  keys:
+    SMITHERY_API_KEY: SMITHERY_API_KEY
+capability:
+  consumes:
+  - type: http
+    namespace: smithery-connect
+    baseUri: https://api.smithery.ai
+    description: Smithery Platform API — connect business capability. Self-contained, no shared references.
+    resources:
+    - name: connect-namespace
+      path: /connect/{namespace}
+      operations:
+      - name: postnamespace
+        method: POST
+        description: Create connection
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: namespace
+          in: path
+          type: string
+          required: true
+        - name: body
+          in: body
+          type: object
+          description: Request body (JSON).
+          required: false
+      - name: getnamespace
+        method: GET
+        description: List connections
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: limit
+          in: query
+          type: integer
+          description: Maximum number of items to return (default 100, max 100)
+        - name: cursor
+          in: query
+          type: string
+          description: Pagination cursor from previous response's nextCursor
+        - name: name
+          in: query
+          type: string
+          description: Filter by exact connection name
+        - name: mcpUrl
+          in: query
+          type: string
+          description: Filter by exact MCP server URL
+        - name: namespace
+          in: path
+          type: string
+          required: true
+    - name: connect-namespace-.subscriptions
+      path: /connect/{namespace}/.subscriptions
+      operations:
+      - name: getsmitheryrunnamespacesubscriptions
+        method: GET
+        description: List namespace subscriptions
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: namespace
+          in: path
+          type: string
+          required: true
+      - name: postsmitheryrunnamespacesubscriptions
+        method: POST
+        description: Create namespace subscription
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: namespace
+          in: path
+          type: string
+          required: true
+    - name: connect-namespace-.subscriptions-subscriptionId
+      path: /connect/{namespace}/.subscriptions/{subscriptionId}
+      operations:
+      - name: deletesmitheryrunnamespacesubscriptionssubscriptionid
+        method: DELETE
+        description: Delete namespace subscription
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: namespace
+          in: path
+          type: string
+          required: true
+        - name: subscriptionId
+          in: path
+          type: string
+          required: true
+    - name: connect-namespace-connectionId
+      path: /connect/{namespace}/{connectionId}
+      operations:
+      - name: putnamespaceconnectionid
+        method: PUT
+        description: Create or update connection
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: namespace
+          in: path
+          type: string
+          required: true
+        - name: connectionId
+          in: path
+          type: string
+          required: true
+        - name: body
+          in: body
+          type: object
+          description: Request body (JSON).
+          required: false
+      - name: getnamespaceconnectionid
+        method: GET
+        description: Get connection
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: namespace
+          in: path
+          type: string
+          required: true
+        - name: connectionId
+          in: path
+          type: string
+          required: true
+      - name: deletenamespaceconnectionid
+        method: DELETE
+        description: Delete connection
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: namespace
+          in: path
+          type: string
+          required: true
+        - name: connectionId
+          in: path
+          type: string
+          required: true
+    - name: connect-namespace-connectionId-.subscriptions
+      path: /connect/{namespace}/{connectionId}/.subscriptions
+      operations:
+      - name: getsmitheryrunnamespaceconnectionidsubscriptions
+        method: GET
+        description: List connection subscriptions
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: namespace
+          in: path
+          type: string
+          required: true
+        - name: connectionId
+          in: path
+          type: string
+          required: true
+      - name: postsmitheryrunnamespaceconnectionidsubscriptions
+        method: POST
+        description: Create connection subscription
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: namespace
+          in: path
+          type: string
+          required: true
+        - name: connectionId
+          in: path
+          type: string
+          required: true
+    - name: connect-namespace-connectionId-.subscriptions-subscriptionId
+      path: /connect/{namespace}/{connectionId}/.subscriptions/{subscriptionId}
+      operations:
+      - name: deletesmitheryrunnamespaceconnectionidsubscriptionssubscriptionid
+        method: DELETE
+        description: Delete connection subscription
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: namespace
+          in: path
+          type: string
+          required: true
+        - name: connectionId
+          in: path
+          type: string
+          required: true
+        - name: subscriptionId
+          in: path
+          type: string
+          required: true
+    - name: connect-namespace-connectionId-.triggers
+      path: /connect/{namespace}/{connectionId}/.triggers
+      operations:
+      - name: getsmitheryrunnamespaceconnectionidtriggers
+        method: GET
+        description: List triggers
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: namespace
+          in: path
+          type: string
+          required: true
+        - name: connectionId
+          in: path
+          type: string
+          required: true
+    - name: connect-namespace-connectionId-.triggers-triggerName
+      path: /connect/{namespace}/{connectionId}/.triggers/{triggerName}
+      operations:
+      - name: getsmitheryrunnamespaceconnectionidtriggerstriggername
+        method: GET
+        description: Get trigger
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: namespace
+          in: path
+          type: string
+          required: true
+        - name: connectionId
+          in: path
+          type: string
+          required: true
+        - name: triggerName
+          in: path
+          type: string
+          required: true
+      - name: postsmitheryrunnamespaceconnectionidtriggerstriggername
+        method: POST
+        description: Create trigger instance
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: namespace
+          in: path
+          type: string
+          required: true
+        - name: connectionId
+          in: path
+          type: string
+          required: true
+        - name: triggerName
+          in: path
+          type: string
+          required: true
+    - name: connect-namespace-connectionId-.triggers-triggerName-triggerId
+      path: /connect/{namespace}/{connectionId}/.triggers/{triggerName}/{triggerId}
+      operations:
+      - name: getsmitheryrunnamespaceconnectionidtriggerstriggernametriggerid
+        method: GET
+        description: Get trigger instance
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: namespace
+          in: path
+          type: string
+          required: true
+        - name: connectionId
+          in: path
+          type: string
+          required: true
+        - name: triggerName
+          in: path
+          type: string
+          required: true
+        - name: triggerId
+          in: path
+          type: string
+          required: true
+      - name: deletesmitheryrunnamespaceconnectionidtriggerstriggernametriggerid
+        method: DELETE
+        description: Delete trigger instance
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: namespace
+          in: path
+          type: string
+          required: true
+        - name: connectionId
+          in: path
+          type: string
+          required: true
+        - name: triggerName
+          in: path
+          type: string
+          required: true
+        - name: triggerId
+          in: path
+          type: string
+          required: true
+    authentication:
+      type: bearer
+      token: '{{env.SMITHERY_API_KEY}}'
+  exposes:
+  - type: rest
+    namespace: smithery-connect-rest
+    port: 8080
+    description: REST adapter for Smithery Platform API — connect. One Spectral-compliant resource per consumed operation,
+      prefixed with /v1.
+    resources:
+    - path: /v1/connect/{namespace}
+      name: connect-namespace
+      description: REST surface for connect-namespace.
+      operations:
+      - method: POST
+        name: postnamespace
+        description: Create connection
+        call: smithery-connect.postnamespace
+        with:
+          namespace: rest.namespace
+          body: rest.body
+        outputParameters:
+        - type: object
+          mapping: $.
+      - method: GET
+        name: getnamespace
+        description: List connections
+        call: smithery-connect.getnamespace
+        with:
+          limit: rest.limit
+          cursor: rest.cursor
+          name: rest.name
+          mcpUrl: rest.mcpUrl
+          namespace: rest.namespace
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /v1/connect/{namespace}/subscriptions
+      name: connect-namespace-subscriptions
+      description: REST surface for connect-namespace-.subscriptions.
+      operations:
+      - method: GET
+        name: getsmitheryrunnamespacesubscriptions
+        description: List namespace subscriptions
+        call: smithery-connect.getsmitheryrunnamespacesubscriptions
+        with:
+          namespace: rest.namespace
+        outputParameters:
+        - type: object
+          mapping: $.
+      - method: POST
+        name: postsmitheryrunnamespacesubscriptions
+        description: Create namespace subscription
+        call: smithery-connect.postsmitheryrunnamespacesubscriptions
+        with:
+          namespace: rest.namespace
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /v1/connect/{namespace}/subscriptions/{subscriptionid}
+      name: connect-namespace-subscriptions-subscriptionid
+      description: REST surface for connect-namespace-.subscriptions-subscriptionId.
+      operations:
+      - method: DELETE
+        name: deletesmitheryrunnamespacesubscriptionssubscriptionid
+        description: Delete namespace subscription
+        call: smithery-connect.deletesmitheryrunnamespacesubscriptionssubscriptionid
+        with:
+          namespace: rest.namespace
+          subscriptionId: rest.subscriptionId
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /v1/connect/{namespace}/{connectionid}
+      name: connect-namespace-connectionid
+      description: REST surface for connect-namespace-connectionId.
+      operations:
+      - method: PUT
+        name: putnamespaceconnectionid
+        description: Create or update connection
+        call: smithery-connect.putnamespaceconnectionid
+        with:
+          namespace: rest.namespace
+          connectionId: rest.connectionId
+          body: rest.body
+        outputParameters:
+        - type: object
+          mapping: $.
+      - method: GET
+        name: getnamespaceconnectionid
+        description: Get connection
+        call: smithery-connect.getnamespaceconnectionid
+        with:
+          namespace: rest.namespace
+          connectionId: rest.connectionId
+        outputParameters:
+        - type: object
+          mapping: $.
+      - method: DELETE
+        name: deletenamespaceconnectionid
+        description: Delete connection
+        call: smithery-connect.deletenamespaceconnectionid
+        with:
+          namespace: rest.namespace
+          connectionId: rest.connectionId
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /v1/connect/{namespace}/{connectionid}/subscriptions
+      name: connect-namespace-connectionid-subscriptions
+      description: REST surface for connect-namespace-connectionId-.subscriptions.
+      operations:
+      - method: GET
+        name: getsmitheryrunnamespaceconnectionidsubscriptions
+        description: List connection subscriptions
+        call: smithery-connect.getsmitheryrunnamespaceconnectionidsubscriptions
+        with:
+          namespace: rest.namespace
+          connectionId: rest.connectionId
+        outputParameters:
+        - type: object
+          mapping: $.
+      - method: POST
+        name: postsmitheryrunnamespaceconnectionidsubscriptions
+        description: Create connection subscription
+        call: smithery-connect.postsmitheryrunnamespaceconnectionidsubscriptions
+        with:
+          namespace: rest.namespace
+          connectionId: rest.connectionId
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /v1/connect/{namespace}/{connectionid}/subscriptions/{subscriptionid}
+      name: connect-namespace-connectionid-subscriptions-subscriptionid
+      description: REST surface for connect-namespace-connectionId-.subscriptions-subscriptionId.
+      operations:
+      - method: DELETE
+        name: deletesmitheryrunnamespaceconnectionidsubscriptionssubscriptionid
+        description: Delete connection subscription
+        call: smithery-connect.deletesmitheryrunnamespaceconnectionidsubscriptionssubscriptionid
+        with:
+          namespace: rest.namespace
+          connectionId: rest.connectionId
+          subscriptionId: rest.subscriptionId
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /v1/connect/{namespace}/{connectionid}/triggers
+      name: connect-namespace-connectionid-triggers
+      description: REST surface for connect-namespace-connectionId-.triggers.
+      operations:
+      - method: GET
+        name: getsmitheryrunnamespaceconnectionidtriggers
+        description: List triggers
+        call: smithery-connect.getsmitheryrunnamespaceconnectionidtriggers
+        with:
+          namespace: rest.namespace
+          connectionId: rest.connectionId
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /v1/connect/{namespace}/{connectionid}/triggers/{triggername}
+      name: connect-namespace-connectionid-triggers-triggername
+      description: REST surface for connect-namespace-connectionId-.triggers-triggerName.
+      operations:
+      - method: GET
+        name: getsmitheryrunnamespaceconnectionidtriggerstriggername
+        description: Get trigger
+        call: smithery-connect.getsmitheryrunnamespaceconnectionidtriggerstriggername
+        with:
+          namespace: rest.namespace
+          connectionId: rest.connectionId
+          triggerName: rest.triggerName
+        outputParameters:
+        - type: object
+          mapping: $.
+      - method: POST
+        name: postsmitheryrunnamespaceconnectionidtriggerstriggername
+        description: Create trigger instance
+        call: smithery-connect.postsmitheryrunnamespaceconnectionidtriggerstriggername
+        with:
+          namespace: rest.namespace
+          connectionId: rest.connectionId
+          triggerName: rest.triggerName
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /v1/connect/{namespace}/{connectionid}/triggers/{triggername}/{triggerid}
+      name: connect-namespace-connectionid-triggers-triggername-triggerid
+      description: REST surface for connect-namespace-connectionId-.triggers-triggerName-triggerId.
+      operations:
+      - method: GET
+        name: getsmitheryrunnamespaceconnectionidtriggerstriggernametriggerid
+        description: Get trigger instance
+        call: smithery-connect.getsmitheryrunnamespaceconnectionidtriggerstriggernametriggerid
+        with:
+          namespace: rest.namespace
+          connectionId: rest.connectionId
+          triggerName: rest.triggerName
+          triggerId: rest.triggerId
+        outputParameters:
+        - type: object
+          mapping: $.
+      - method: DELETE
+        name: deletesmitheryrunnamespaceconnectionidtriggerstriggernametriggerid
+        description: Delete trigger instance
+        call: smithery-connect.deletesmitheryrunnamespaceconnectionidtriggerstriggernametriggerid
+        with:
+          namespace: rest.namespace
+          connectionId: rest.connectionId
+          triggerName: rest.triggerName
+          triggerId: rest.triggerId
+        outputParameters:
+        - type: object
+          mapping: $.
+  - type: mcp
+    namespace: smithery-connect-mcp
+    port: 9090
+    transport: http
+    description: MCP adapter for Smithery Platform API — connect. One tool per consumed operation, routed inline through this
+      capability's consumes block.
+    tools:
+    - name: create-connection
+      description: Create connection
+      hints:
+        readOnly: false
+        destructive: false
+        idempotent: false
+      call: smithery-connect.postnamespace
+      with:
+        namespace: tools.namespace
+        body: tools.body
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: list-connections
+      description: List connections
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: true
+      call: smithery-connect.getnamespace
+      with:
+        limit: tools.limit
+        cursor: tools.cursor
+        name: tools.name
+        mcpUrl: tools.mcpUrl
+        namespace: tools.namespace
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: list-namespace-subscriptions
+      description: List namespace subscriptions
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: true
+      call: smithery-connect.getsmitheryrunnamespacesubscriptions
+      with:
+        namespace: tools.namespace
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: create-namespace-subscription
+      description: Create namespace subscription
+      hints:
+        readOnly: false
+        destructive: false
+        idempotent: false
+      call: smithery-connect.postsmitheryrunnamespacesubscriptions
+      with:
+        namespace: tools.namespace
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: delete-namespace-subscription
+      description: Delete namespace subscription
+      hints:
+        readOnly: false
+        destructive: true
+        idempotent: true
+      call: smithery-connect.deletesmitheryrunnamespacesubscriptionssubscriptionid
+      with:
+        namespace: tools.namespace
+        subscriptionId: tools.subscriptionId
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: create-update-connection
+      description: Create or update connection
+      hints:
+        readOnly: false
+        destructive: false
+        idempotent: true
+      call: smithery-connect.putnamespaceconnectionid
+      with:
+        namespace: tools.namespace
+        connectionId: tools.connectionId
+        body: tools.body
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: get-connection
+      description: Get connection
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: true
+      call: smithery-connect.getnamespaceconnectionid
+      with:
+        namespace: tools.namespace
+        connectionId: tools.connectionId
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: delete-connection
+      description: Delete connection
+      hints:
+        readOnly: false
+        destructive: true
+        idempotent: true
+      call: smithery-connect.deletenamespaceconnectionid
+      with:
+        namespace: tools.namespace
+        connectionId: tools.connectionId
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: list-connection-subscriptions
+      description: List connection subscriptions
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: true
+      call: smithery-connect.getsmitheryrunnamespaceconnectionidsubscriptions
+      with:
+        namespace: tools.namespace
+        connectionId: tools.connectionId
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: create-connection-subscription
+      description: Create connection subscription
+      hints:
+        readOnly: false
+        destructive: false
+        idempotent: false
+      call: smithery-connect.postsmitheryrunnamespaceconnectionidsubscriptions
+      with:
+        namespace: tools.namespace
+        connectionId: tools.connectionId
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: delete-connection-subscription
+      description: Delete connection subscription
+      hints:
+        readOnly: false
+        destructive: true
+        idempotent: true
+      call: smithery-connect.deletesmitheryrunnamespaceconnectionidsubscriptionssubscriptionid
+      with:
+        namespace: tools.namespace
+        connectionId: tools.connectionId
+        subscriptionId: tools.subscriptionId
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: list-triggers
+      description: List triggers
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: true
+      call: smithery-connect.getsmitheryrunnamespaceconnectionidtriggers
+      with:
+        namespace: tools.namespace
+        connectionId: tools.connectionId
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: get-trigger
+      description: Get trigger
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: true
+      call: smithery-connect.getsmitheryrunnamespaceconnectionidtriggerstriggername
+      with:
+        namespace: tools.namespace
+        connectionId: tools.connectionId
+        triggerName: tools.triggerName
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: create-trigger-instance
+      description: Create trigger instance
+      hints:
+        readOnly: false
+        destructive: false
+        idempotent: false
+      call: smithery-connect.postsmitheryrunnamespaceconnectionidtriggerstriggername
+      with:
+        namespace: tools.namespace
+        connectionId: tools.connectionId
+        triggerName: tools.triggerName
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: get-trigger-instance
+      description: Get trigger instance
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: true
+      call: smithery-connect.getsmitheryrunnamespaceconnectionidtriggerstriggernametriggerid
+      with:
+        namespace: tools.namespace
+        connectionId: tools.connectionId
+        triggerName: tools.triggerName
+        triggerId: tools.triggerId
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: delete-trigger-instance
+      description: Delete trigger instance
+      hints:
+        readOnly: false
+        destructive: true
+        idempotent: true
+      call: smithery-connect.deletesmitheryrunnamespaceconnectionidtriggerstriggernametriggerid
+      with:
+        namespace: tools.namespace
+        connectionId: tools.connectionId
+        triggerName: tools.triggerName
+        triggerId: tools.triggerId
+      outputParameters:
+      - type: object
+        mapping: $.
