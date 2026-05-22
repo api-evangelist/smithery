@@ -1,0 +1,52 @@
+{
+  "request": {
+    "method": "GET",
+    "url": "https://api.smithery.ai/servers/smithery%2Fhello-world",
+    "headers": {
+      "Authorization": "Bearer your-api-key-here"
+    }
+  },
+  "response": {
+    "status": 200,
+    "body": {
+      "qualifiedName": "smithery/hello-world",
+      "displayName": "Hello World",
+      "description": "A minimal MCP server demonstrating the Smithery publishing workflow",
+      "iconUrl": "https://smithery.ai/icons/smithery/hello-world.png",
+      "isVerified": true,
+      "useCount": 1248,
+      "namespace": "smithery",
+      "remote": true,
+      "isDeployed": true,
+      "connections": [
+        {
+          "type": "http",
+          "url": "https://server.smithery.ai/@smithery/hello-world/mcp",
+          "configSchema": {
+            "type": "object",
+            "properties": {
+              "greeting": {
+                "type": "string",
+                "description": "Greeting to use when invoked"
+              }
+            }
+          }
+        }
+      ],
+      "tools": [
+        {
+          "name": "say-hello",
+          "description": "Return a greeting message",
+          "inputSchema": {
+            "type": "object",
+            "properties": {
+              "name": {"type": "string"}
+            }
+          }
+        }
+      ],
+      "createdAt": "2025-06-01T10:15:00Z",
+      "updatedAt": "2026-05-10T08:30:00Z"
+    }
+  }
+}

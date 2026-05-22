@@ -1,0 +1,39 @@
+{
+  "request": {
+    "method": "GET",
+    "url": "https://api.smithery.ai/connect/acme/conn_01HZ8X3K7QJ9N0V5R6T8W2Y4P1/.triggers",
+    "headers": {
+      "Authorization": "Bearer your-api-key-here"
+    }
+  },
+  "response": {
+    "status": 200,
+    "body": {
+      "triggers": [
+        {
+          "name": "issue_opened",
+          "description": "Fires when a new issue is opened in any watched repository",
+          "schema": {
+            "type": "object",
+            "properties": {
+              "owner": {"type": "string"},
+              "repo": {"type": "string"}
+            }
+          }
+        },
+        {
+          "name": "pr_review_requested",
+          "description": "Fires when a pull request review is requested",
+          "schema": {
+            "type": "object",
+            "properties": {
+              "owner": {"type": "string"},
+              "repo": {"type": "string"},
+              "reviewer": {"type": "string"}
+            }
+          }
+        }
+      ]
+    }
+  }
+}

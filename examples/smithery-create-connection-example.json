@@ -1,0 +1,37 @@
+{
+  "request": {
+    "method": "POST",
+    "url": "https://api.smithery.ai/connect/acme",
+    "headers": {
+      "Authorization": "Bearer your-api-key-here",
+      "Content-Type": "application/json"
+    },
+    "body": {
+      "name": "github-prod",
+      "mcpUrl": "https://server.smithery.ai/@smithery/github/mcp",
+      "config": {
+        "scope": "repo,read:org"
+      },
+      "metadata": {
+        "userId": "user_123",
+        "environment": "production"
+      }
+    }
+  },
+  "response": {
+    "status": 201,
+    "body": {
+      "connectionId": "conn_01HZ8X3K7QJ9N0V5R6T8W2Y4P1",
+      "namespace": "acme",
+      "name": "github-prod",
+      "mcpUrl": "https://server.smithery.ai/@smithery/github/mcp",
+      "status": "pending_authorization",
+      "authorizationUrl": "https://smithery.ai/authorize?connection=conn_01HZ8X3K7QJ9N0V5R6T8W2Y4P1",
+      "metadata": {
+        "userId": "user_123",
+        "environment": "production"
+      },
+      "createdAt": "2026-05-22T11:30:00Z"
+    }
+  }
+}

@@ -1,72 +1,124 @@
 vocabulary:
   name: Smithery Vocabulary
   description: >-
-    Domain vocabulary for the Smithery MCP server registry and AI agent extension
-    platform, covering key terms, concepts, and patterns for Model Context Protocol
-    server management and skill discovery.
-  version: "1.0.0"
+    Domain vocabulary for the Smithery MCP server registry, the Connect gateway,
+    and the AI-agent extension platform. Covers terms drawn from the Smithery
+    OpenAPI (smithery.ai/docs/openapi.json — 55 operations across 35 paths)
+    and the docs site (smithery.ai/docs).
+  version: "1.1.0"
   created: "2026-05-02"
-  modified: "2026-05-02"
+  modified: "2026-05-22"
   tags:
     - Artificial Intelligence
     - MCP
     - AI Agents
+    - Registry
+    - Connect
+    - Skills
 
 terms:
   - term: MCP (Model Context Protocol)
     definition: >-
       An open protocol that enables language models to access external tools,
       data sources, and services through a standardized interface. MCP servers
-      expose tools that AI agents can discover and call.
+      expose tools, prompts, and resources that AI agents can discover and call.
     synonyms: [Model Context Protocol, MCP protocol]
 
   - term: MCP Server
     definition: >-
       A service that implements the Model Context Protocol and exposes tools,
       resources, and prompts that AI agents can use to accomplish tasks.
+      In Smithery, servers are identified by a qualifiedName (namespace/server-name).
     synonyms: [MCP extension, capability server]
 
   - term: Qualified Name
     definition: >-
       A unique identifier for an MCP server in Smithery, combining the namespace
-      and server name in the format "namespace/server-name".
+      and server name in the format "namespace/server-name". Encoded as
+      %2F when used in path parameters.
     synonyms: [fully qualified name, server identifier]
 
   - term: Namespace
     definition: >-
       A container for organizing MCP servers and skills in Smithery. Every
       server and skill belongs to a namespace, which can be a user or organization.
+      Namespaces can be searched, listed, created, and deleted via the API.
     synonyms: [organization, owner, workspace]
 
   - term: Skill
     definition: >-
       A reusable, prompt-based capability in Smithery that guides AI agents
-      to perform specific tasks. Skills are backed by GitHub repositories.
+      to perform specific tasks. Skills are backed by GitHub repositories and
+      published under a namespace/slug.
     synonyms: [AI skill, prompt capability, agent skill]
+
+  - term: Slug
+    definition: >-
+      URL-safe identifier for a skill within its namespace. Combined with
+      the namespace it forms the skill's canonical address (namespace/slug).
+    synonyms: [skill slug]
 
   - term: Connection
     definition: >-
-      A link to an MCP server instance that maintains session state and enables
-      tool invocation. Connections can be HTTP-based or use Uplink for local servers.
+      A long-lived session to an MCP server, established through the Connect API.
+      Each connection persists OAuth credentials, custom metadata, and the bound
+      MCP server URL until it is explicitly terminated.
     synonyms: [session, MCP connection]
+
+  - term: Connect Gateway
+    definition: >-
+      The Smithery surface that bundles all connections in a namespace behind
+      a single MCP endpoint at mcp.smithery.run/{namespace}. It manages OAuth
+      with upstream providers, credential storage, and authentication for agents.
+    synonyms: [mcp.smithery.run, Connect API gateway]
+
+  - term: MCP Endpoint
+    definition: >-
+      POST /connect/{namespace}/{connectionId}/mcp — the streamable-HTTP transport
+      endpoint that proxies MCP JSON-RPC traffic to the upstream server bound to
+      a connection.
+    synonyms: [Connect MCP endpoint, streamable MCP endpoint]
 
   - term: Tool
     definition: >-
       A discrete callable function exposed by an MCP server that an AI agent
-      can invoke to perform an action or retrieve data.
+      can invoke to perform an action or retrieve data. Smithery indexes tools
+      across registered servers for cross-server search.
     synonyms: [MCP tool, capability, function]
 
   - term: Trigger
     definition: >-
       An event subscription mechanism in MCP that allows agents to receive
-      notifications when specific events occur in a connected server.
-    synonyms: [webhook, event subscription, notification]
+      notifications when specific events occur in a connected server. Triggers
+      are scoped to a connection and named per-server.
+    synonyms: [event, server trigger]
+
+  - term: Trigger Instance
+    definition: >-
+      A concrete instantiation of a named trigger on a specific connection,
+      filtering events by the schema parameters of that trigger.
+    synonyms: [trigger subscription instance]
+
+  - term: Subscription
+    definition: >-
+      A registered listener for triggers on either a namespace or a connection
+      scope. Created via POST /connect/{namespace}/.subscriptions or
+      POST /connect/{namespace}/{connectionId}/.subscriptions.
+    synonyms: [event subscription, listener]
 
   - term: Release
     definition: >-
-      A versioned deployment of an MCP server package in the Smithery platform,
-      including build artifacts, pipeline logs, and deployment status.
+      A versioned deployment of an MCP server in Smithery, including build
+      artifacts, pipeline logs, and deployment status. Releases can be streamed
+      live or resumed after failure.
     synonyms: [version, deployment, publish]
+
+  - term: Server Card
+    definition: >-
+      A metadata document at /.well-known/mcp/server-card.json that lets a
+      remote MCP server publish its serverInfo, authentication, tools, prompts,
+      and resources so Smithery's scanner can index it without manual entry.
+    synonyms: [well-known card, MCP server card]
 
   - term: Uplink
     definition: >-
@@ -74,27 +126,58 @@ terms:
       through the Smithery platform without requiring a public deployment.
     synonyms: [local tunnel, local exposure]
 
+  - term: MCPB Bundle
+    definition: >-
+      A pre-built MCP server package distributed by Smithery for clients to
+      download and run locally as a stdio process.
+    synonyms: [server bundle, local MCP package]
+
   - term: Service Token
     definition: >-
-      A scoped authentication credential for machine-to-machine API access
-      in Smithery, supporting fine-grained permission control.
-    synonyms: [API token, service credential, M2M token]
+      A scoped, time-limited authentication credential for machine-to-machine
+      or browser/mobile access. Service tokens are issued via POST /tokens
+      and constrained to specific connections, namespaces, or actions.
+    synonyms: [scoped token, M2M token, browser token]
+
+  - term: API Key
+    definition: >-
+      A long-lived Smithery credential managed at smithery.ai/account/api-keys,
+      sent as a Bearer token. Backend use only. Team API keys are scoped to an
+      organization and managed via /organizations/{orgId}/api-keys.
+    synonyms: [bearer token, account key]
+
+  - term: Managed Domain
+    definition: >-
+      A custom hostname Smithery operates on behalf of a published server,
+      handled via /servers/{qualifiedName}/domains.
+    synonyms: [custom domain]
+
+  - term: Deep Link
+    definition: >-
+      A URL pattern that routes a user directly into a Connect-API flow on
+      Smithery, used by AI-agent clients to bootstrap connections.
+    synonyms: [Connect deep link]
 
 authentication:
-  - method: Bearer Token
+  - method: Bearer Token (API Key)
     description: >-
       Primary authentication method. Smithery API keys are used as Bearer tokens
       in the Authorization header. Keys are managed at smithery.ai/account/api-keys.
-  - method: OAuth 2.0
+  - method: Service Token
     description: >-
-      Supported for client authorization flows, enabling third-party applications
-      to access Smithery on behalf of users.
+      Scoped, time-limited tokens issued via POST /tokens for browsers, mobile
+      apps, and agents. Used by the Connect MCP endpoint.
+  - method: OAuth 2.0 (Upstream)
+    description: >-
+      Smithery manages OAuth with upstream providers on the user's behalf when
+      a connection is created. Smithery handles client registration via
+      Client ID Metadata Documents.
 
 server_types:
   - type: HTTP Server
-    description: MCP server accessible via HTTP/HTTPS endpoints deployed in the cloud
+    description: MCP server accessible via streamable HTTP/HTTPS endpoints deployed in the cloud
   - type: Stdio Server
-    description: MCP server running as a local process via standard I/O
+    description: MCP server running as a local process via standard I/O (distributed as MCPB bundle)
   - type: Uplink Server
     description: Locally running MCP server exposed through Smithery's Uplink tunnel
 
@@ -102,3 +185,39 @@ connection_types:
   - http
   - stdio
   - uplink
+
+api_tag_groups:
+  - tag: servers
+    operations: 18
+    description: Browse the registry, CRUD on servers, releases, logs, secrets, icons
+  - tag: skills
+    operations: 8
+    description: Discover, publish, and download reusable prompt-based skills
+  - tag: tools
+    operations: 0
+    description: Reserved for cross-server tool search (consumed by other endpoints)
+  - tag: tokens
+    operations: 1
+    description: Create scoped service tokens for delegated access
+  - tag: namespaces
+    operations: 5
+    description: Search, create, and delete namespaces
+  - tag: organizations
+    operations: 3
+    description: Manage team API keys
+  - tag: connect
+    operations: 16
+    description: Lifecycle of connections, subscriptions, and triggers
+  - tag: connect.mcp
+    operations: 1
+    description: MCP streamable-HTTP endpoint for proxying agent traffic
+  - tag: general
+    operations: 1
+    description: Health check
+
+scale:
+  registry: 6000+ community-built MCP extensions (per Smithery positioning)
+  github_org_repos: 36 public repositories at github.com/smithery-ai
+  cli_stars: 725
+  cli_license: AGPL-3.0
+  typescript_sdk: "@smithery/api (generated by Stainless)"

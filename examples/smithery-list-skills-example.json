@@ -1,0 +1,51 @@
+{
+  "request": {
+    "method": "GET",
+    "url": "https://api.smithery.ai/skills",
+    "headers": {
+      "Authorization": "Bearer your-api-key-here"
+    },
+    "parameters": {
+      "q": "code review",
+      "category": "code",
+      "verified": true,
+      "page": 1,
+      "pageSize": 10
+    }
+  },
+  "response": {
+    "status": 200,
+    "body": {
+      "skills": [
+        {
+          "namespace": "smithery",
+          "slug": "code-review-assistant",
+          "displayName": "Code Review Assistant",
+          "description": "Skill that walks an agent through a structured PR review",
+          "category": "code",
+          "tags": ["review", "github", "static-analysis"],
+          "githubUrl": "https://github.com/smithery-ai/skills/tree/main/code-review-assistant",
+          "createdAt": "2026-01-15T12:00:00Z",
+          "updatedAt": "2026-05-12T09:00:00Z"
+        },
+        {
+          "namespace": "community",
+          "slug": "security-audit",
+          "displayName": "Security Audit",
+          "description": "Guides the agent through OWASP-style review of changed files",
+          "category": "code",
+          "tags": ["security", "owasp", "review"],
+          "githubUrl": "https://github.com/community/security-audit",
+          "createdAt": "2026-02-20T14:30:00Z",
+          "updatedAt": "2026-04-29T11:45:00Z"
+        }
+      ],
+      "pagination": {
+        "currentPage": 1,
+        "pageSize": 10,
+        "totalPages": 4,
+        "totalCount": 37
+      }
+    }
+  }
+}

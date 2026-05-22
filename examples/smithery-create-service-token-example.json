@@ -1,0 +1,32 @@
+{
+  "request": {
+    "method": "POST",
+    "url": "https://api.smithery.ai/tokens",
+    "headers": {
+      "Authorization": "Bearer your-api-key-here",
+      "Content-Type": "application/json"
+    },
+    "body": {
+      "name": "browser-session-user-123",
+      "scopes": [
+        "connect:acme:github-prod:invoke"
+      ],
+      "expiresIn": 3600,
+      "metadata": {
+        "userId": "user_123"
+      }
+    }
+  },
+  "response": {
+    "status": 201,
+    "body": {
+      "tokenId": "tkn_01HZ8XBC4PQR9V0K2M4N6T8X1Y",
+      "token": "smt_live_eyJhbGciOiJIUzI1NiJ9.scopedServiceToken.signature",
+      "scopes": [
+        "connect:acme:github-prod:invoke"
+      ],
+      "expiresAt": "2026-05-22T12:30:00Z",
+      "createdAt": "2026-05-22T11:30:00Z"
+    }
+  }
+}

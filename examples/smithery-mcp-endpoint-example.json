@@ -1,0 +1,38 @@
+{
+  "request": {
+    "method": "POST",
+    "url": "https://api.smithery.ai/connect/acme/conn_01HZ8X3K7QJ9N0V5R6T8W2Y4P1/mcp",
+    "headers": {
+      "Authorization": "Bearer smt_live_eyJhbGciOiJIUzI1NiJ9.scopedServiceToken.signature",
+      "Content-Type": "application/json",
+      "Accept": "application/json, text/event-stream"
+    },
+    "body": {
+      "jsonrpc": "2.0",
+      "id": 1,
+      "method": "tools/call",
+      "params": {
+        "name": "list_repositories",
+        "arguments": {
+          "owner": "smithery-ai",
+          "type": "public"
+        }
+      }
+    }
+  },
+  "response": {
+    "status": 200,
+    "body": {
+      "jsonrpc": "2.0",
+      "id": 1,
+      "result": {
+        "content": [
+          {
+            "type": "text",
+            "text": "Found 36 public repositories in smithery-ai including cli, typescript-api, registry, agent.pw, mouseless, and smithery-cookbook."
+          }
+        ]
+      }
+    }
+  }
+}
