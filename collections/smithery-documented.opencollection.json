@@ -1,0 +1,1489 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Smithery Platform API",
+    "version": "1.0.0"
+  },
+  "request": {
+    "auth": {
+      "type": "bearer",
+      "token": "{{bearerToken}}"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Default",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Health check",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.smithery.ai/health"
+          },
+          "docs": "Check if the service is running"
+        }
+      ]
+    },
+    {
+      "info": {
+        "name": "servers",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Get a server",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.smithery.ai/servers/:qualifiedName",
+            "params": [
+              {
+                "name": "qualifiedName",
+                "value": "",
+                "type": "path",
+                "description": "The server's qualified name (e.g. 'namespace/server' or 'namespace' for namespace-only servers). Use %2F to encode the slash."
+              }
+            ]
+          },
+          "docs": "Retrieve server details including connections, tools, and security status."
+        },
+        {
+          "info": {
+            "name": "Create a server",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "https://api.smithery.ai/servers/:qualifiedName",
+            "params": [
+              {
+                "name": "qualifiedName",
+                "value": "",
+                "type": "path",
+                "description": "The server's qualified name (e.g. 'namespace/server' or 'namespace' for namespace-only servers). Use %2F to encode the slash."
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Create a new server. Idempotent — returns success if the server already exists and is owned by the caller."
+        },
+        {
+          "info": {
+            "name": "Update a server",
+            "type": "http"
+          },
+          "http": {
+            "method": "PATCH",
+            "url": "https://api.smithery.ai/servers/:qualifiedName",
+            "params": [
+              {
+                "name": "qualifiedName",
+                "value": "",
+                "type": "path",
+                "description": "The server's qualified name (e.g. 'namespace/server' or 'namespace' for namespace-only servers). Use %2F to encode the slash."
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Update server metadata such as display name, description, repository, icon, or visibility."
+        },
+        {
+          "info": {
+            "name": "Delete a server",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://api.smithery.ai/servers/:qualifiedName",
+            "params": [
+              {
+                "name": "qualifiedName",
+                "value": "",
+                "type": "path",
+                "description": "The server's qualified name (e.g. 'namespace/server' or 'namespace' for namespace-only servers). Use %2F to encode the slash."
+              }
+            ]
+          },
+          "docs": "Permanently delete a server, its releases, and associated resources."
+        },
+        {
+          "info": {
+            "name": "Download server bundle",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.smithery.ai/servers/:qualifiedName/download",
+            "params": [
+              {
+                "name": "qualifiedName",
+                "value": "",
+                "type": "path",
+                "description": "The server's qualified name (e.g. 'namespace/server' or 'namespace' for namespace-only servers). Use %2F to encode the slash."
+              }
+            ]
+          },
+          "docs": "Download the MCPB bundle for the latest successful stdio release."
+        },
+        {
+          "info": {
+            "name": "List releases",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.smithery.ai/servers/:qualifiedName/releases",
+            "params": [
+              {
+                "name": "page",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "pageSize",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "qualifiedName",
+                "value": "",
+                "type": "path",
+                "description": "The server's qualified name (e.g. 'namespace/server' or 'namespace' for namespace-only servers). Use %2F to encode the slash."
+              }
+            ]
+          },
+          "docs": "List releases ordered by most recent first. Logs are omitted — fetch a specific release to see logs."
+        },
+        {
+          "info": {
+            "name": "Publish a server",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "https://api.smithery.ai/servers/:qualifiedName/releases",
+            "params": [
+              {
+                "name": "qualifiedName",
+                "value": "",
+                "type": "path",
+                "description": "The server's qualified name (e.g. 'namespace/server' or 'namespace' for namespace-only servers). Use %2F to encode the slash."
+              }
+            ],
+            "body": {
+              "type": "multipart-form",
+              "data": [
+                {
+                  "name": "payload",
+                  "type": "text",
+                  "value": ""
+                },
+                {
+                  "name": "module",
+                  "type": "text",
+                  "value": ""
+                },
+                {
+                  "name": "sourcemap",
+                  "type": "text",
+                  "value": ""
+                },
+                {
+                  "name": "bundle",
+                  "type": "text",
+                  "value": ""
+                }
+              ]
+            }
+          },
+          "docs": "Submit a release via multipart form. Supports hosted (JS module upload), external (URL), and stdio (MCPB bundle) release types."
+        },
+        {
+          "info": {
+            "name": "Get a release",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.smithery.ai/servers/:qualifiedName/releases/:id",
+            "params": [
+              {
+                "name": "qualifiedName",
+                "value": "",
+                "type": "path",
+                "description": "The server's qualified name (e.g. 'namespace/server' or 'namespace' for namespace-only servers). Use %2F to encode the slash."
+              },
+              {
+                "name": "id",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "Retrieve release details including status, git metadata, pipeline logs, and MCP endpoint URL."
+        },
+        {
+          "info": {
+            "name": "Stream release logs",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.smithery.ai/servers/:qualifiedName/releases/:id/stream",
+            "params": [
+              {
+                "name": "qualifiedName",
+                "value": "",
+                "type": "path",
+                "description": "The server's qualified name (e.g. 'namespace/server' or 'namespace' for namespace-only servers). Use %2F to encode the slash."
+              },
+              {
+                "name": "id",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "Real-time SSE stream of release logs and status updates."
+        },
+        {
+          "info": {
+            "name": "Resume a release",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.smithery.ai/servers/:qualifiedName/releases/:id/resume",
+            "params": [
+              {
+                "name": "qualifiedName",
+                "value": "",
+                "type": "path",
+                "description": "The server's qualified name (e.g. 'namespace/server' or 'namespace' for namespace-only servers). Use %2F to encode the slash."
+              },
+              {
+                "name": "id",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "Resume a paused release (e.g. after OAuth authorization). Use id='latest' to resume the most recent one."
+        },
+        {
+          "info": {
+            "name": "List runtime logs",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.smithery.ai/servers/:qualifiedName/logs",
+            "params": [
+              {
+                "name": "from",
+                "value": "",
+                "type": "query",
+                "description": "Start of time range (ISO 8601)."
+              },
+              {
+                "name": "to",
+                "value": "",
+                "type": "query",
+                "description": "End of time range (ISO 8601)."
+              },
+              {
+                "name": "limit",
+                "value": "",
+                "type": "query",
+                "description": "Max invocations to return. Defaults to 20."
+              },
+              {
+                "name": "search",
+                "value": "",
+                "type": "query",
+                "description": "Text search across log messages."
+              },
+              {
+                "name": "qualifiedName",
+                "value": "",
+                "type": "path",
+                "description": "The server's qualified name (e.g. 'namespace/server' or 'namespace' for namespace-only servers). Use %2F to encode the slash."
+              }
+            ]
+          },
+          "docs": "Fetch recent runtime logs grouped by invocation."
+        },
+        {
+          "info": {
+            "name": "List secrets",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.smithery.ai/servers/:qualifiedName/secrets",
+            "params": [
+              {
+                "name": "qualifiedName",
+                "value": "",
+                "type": "path",
+                "description": "The server's qualified name (e.g. 'namespace/server' or 'namespace' for namespace-only servers). Use %2F to encode the slash."
+              }
+            ]
+          },
+          "docs": "List secret names. Values are not returned."
+        },
+        {
+          "info": {
+            "name": "Set a secret",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "https://api.smithery.ai/servers/:qualifiedName/secrets",
+            "params": [
+              {
+                "name": "qualifiedName",
+                "value": "",
+                "type": "path",
+                "description": "The server's qualified name (e.g. 'namespace/server' or 'namespace' for namespace-only servers). Use %2F to encode the slash."
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Create or update a secret value."
+        },
+        {
+          "info": {
+            "name": "Delete a secret",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://api.smithery.ai/servers/:qualifiedName/secrets/:secretName",
+            "params": [
+              {
+                "name": "qualifiedName",
+                "value": "",
+                "type": "path",
+                "description": "The server's qualified name (e.g. 'namespace/server' or 'namespace' for namespace-only servers). Use %2F to encode the slash."
+              },
+              {
+                "name": "secretName",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "Remove a secret by name."
+        },
+        {
+          "info": {
+            "name": "Get server icon",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.smithery.ai/servers/:qualifiedName/icon",
+            "params": [
+              {
+                "name": "qualifiedName",
+                "value": "",
+                "type": "path",
+                "description": "The server's qualified name (e.g. 'namespace/server' or 'namespace' for namespace-only servers). Use %2F to encode the slash."
+              }
+            ]
+          },
+          "docs": "Retrieve the server's icon image. Returns the image directly with appropriate content type."
+        },
+        {
+          "info": {
+            "name": "Upload server icon",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "https://api.smithery.ai/servers/:qualifiedName/icon",
+            "params": [
+              {
+                "name": "qualifiedName",
+                "value": "",
+                "type": "path",
+                "description": "The server's qualified name (e.g. 'namespace/server' or 'namespace' for namespace-only servers). Use %2F to encode the slash."
+              }
+            ]
+          },
+          "docs": "Upload or replace the server icon. Accepts a single image file via multipart/form-data. Max 1MB. Supported formats: PNG, JPEG, GIF, SVG, WebP."
+        },
+        {
+          "info": {
+            "name": "Delete server icon",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://api.smithery.ai/servers/:qualifiedName/icon",
+            "params": [
+              {
+                "name": "qualifiedName",
+                "value": "",
+                "type": "path",
+                "description": "The server's qualified name (e.g. 'namespace/server' or 'namespace' for namespace-only servers). Use %2F to encode the slash."
+              }
+            ]
+          },
+          "docs": "Remove the server's icon."
+        },
+        {
+          "info": {
+            "name": "Infer a tool output schema",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.smithery.ai/servers/:qualifiedName/experimental/tools/:toolName/output-schema",
+            "params": [
+              {
+                "name": "qualifiedName",
+                "value": "",
+                "type": "path",
+                "description": "The server's qualified name (e.g. 'namespace/server' or 'namespace' for namespace-only servers). Use %2F to encode the slash."
+              },
+              {
+                "name": "toolName",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "Infer a best-effort Zod schema from recent successful Tinybird tool outputs. All discovered object fields are marked optional."
+        },
+        {
+          "info": {
+            "name": "List all servers",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.smithery.ai/servers",
+            "params": [
+              {
+                "name": "q",
+                "value": "",
+                "type": "query",
+                "description": "Search query for full-text and semantic search across server names and descriptions."
+              },
+              {
+                "name": "page",
+                "value": "",
+                "type": "query",
+                "description": "Page number (1-indexed)."
+              },
+              {
+                "name": "pageSize",
+                "value": "",
+                "type": "query",
+                "description": "Number of results per page (default 10, max 100)."
+              },
+              {
+                "name": "topK",
+                "value": "",
+                "type": "query",
+                "description": "Maximum number of candidate results to consider from the search index before pagination. The server applies a hard cap of 500 to keep the rerank window bounded; pass `seed` for stable deep pagination."
+              },
+              {
+                "name": "fields",
+                "value": "",
+                "type": "query",
+                "description": "Comma-separated list of fields to include in response"
+              },
+              {
+                "name": "ids",
+                "value": "",
+                "type": "query",
+                "description": "Filter by specific server IDs."
+              },
+              {
+                "name": "qualifiedName",
+                "value": "",
+                "type": "query",
+                "description": "Exact match on the server's qualified name (e.g. \"smithery/hello-world\"). Deprecated: use GET /servers/:namespace/:server instead."
+              },
+              {
+                "name": "namespace",
+                "value": "",
+                "type": "query",
+                "description": "Filter by the namespace that owns the server."
+              },
+              {
+                "name": "remote",
+                "value": "",
+                "type": "query",
+                "description": "Filter by remote status. Remote servers are accessed via URL; non-remote servers run locally via stdio."
+              },
+              {
+                "name": "isDeployed",
+                "value": "",
+                "type": "query",
+                "description": "Filter by deployment status. Deployed servers are hosted on Smithery infrastructure."
+              },
+              {
+                "name": "verified",
+                "value": "",
+                "type": "query",
+                "description": "Filter to only verified servers."
+              },
+              {
+                "name": "smitheryManaged",
+                "value": "",
+                "type": "query",
+                "description": "Filter to servers whose namespace is owned by the Smithery org."
+              },
+              {
+                "name": "ownerId",
+                "value": "",
+                "type": "query",
+                "description": "Filter by the server owner's user ID."
+              },
+              {
+                "name": "repoOwner",
+                "value": "",
+                "type": "query",
+                "description": "Filter by GitHub repository owner from repository_url."
+              },
+              {
+                "name": "repoName",
+                "value": "",
+                "type": "query",
+                "description": "Filter by GitHub repository name from repository_url."
+              },
+              {
+                "name": "seed",
+                "value": "",
+                "type": "query",
+                "description": "Random seed for deterministic pagination. When provided, results use a stable sort order that is consistent across pages for the same seed value."
+              }
+            ]
+          },
+          "docs": "Search and browse public MCP servers in the Smithery registry. Supports full-text and semantic search via the `q` parameter, and filtering by deployment status, verification, ownership, and more."
+        }
+      ]
+    },
+    {
+      "info": {
+        "name": "domains",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "List domains",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.smithery.ai/servers/:qualifiedName/domains",
+            "params": [
+              {
+                "name": "qualifiedName",
+                "value": "",
+                "type": "path",
+                "description": "The server's qualified name (e.g. 'namespace/server' or 'namespace' for namespace-only servers). Use %2F to encode the slash."
+              }
+            ]
+          },
+          "docs": "List the domains for a server."
+        },
+        {
+          "info": {
+            "name": "Update managed domain",
+            "type": "http"
+          },
+          "http": {
+            "method": "PATCH",
+            "url": "https://api.smithery.ai/servers/:qualifiedName/domains/:domainId",
+            "params": [
+              {
+                "name": "qualifiedName",
+                "value": "",
+                "type": "path",
+                "description": "The server's qualified name (e.g. 'namespace/server' or 'namespace' for namespace-only servers). Use %2F to encode the slash."
+              },
+              {
+                "name": "domainId",
+                "value": "",
+                "type": "path"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Update the managed run.tools slug for a server."
+        }
+      ]
+    },
+    {
+      "info": {
+        "name": "skills",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "List or search skills",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.smithery.ai/skills",
+            "params": [
+              {
+                "name": "q",
+                "value": "",
+                "type": "query",
+                "description": "Search query for full-text and semantic search across skill names and descriptions."
+              },
+              {
+                "name": "category",
+                "value": "",
+                "type": "query",
+                "description": "Filter by skill category (e.g. 'code', 'data', 'web')."
+              },
+              {
+                "name": "namespace",
+                "value": "",
+                "type": "query",
+                "description": "Filter by the namespace that owns the skill."
+              },
+              {
+                "name": "slug",
+                "value": "",
+                "type": "query",
+                "description": "Filter by exact skill slug within a namespace. Deprecated: use GET /skills/:namespace/:slug instead."
+              },
+              {
+                "name": "ownerId",
+                "value": "",
+                "type": "query",
+                "description": "Filter by the skill owner's organization ID."
+              },
+              {
+                "name": "verified",
+                "value": "",
+                "type": "query",
+                "description": "Filter by whether the skill's namespace is verified."
+              },
+              {
+                "name": "page",
+                "value": "",
+                "type": "query",
+                "description": "Page number (1-indexed)."
+              },
+              {
+                "name": "pageSize",
+                "value": "",
+                "type": "query",
+                "description": "Number of results per page (default 20, max 100)."
+              },
+              {
+                "name": "topK",
+                "value": "",
+                "type": "query",
+                "description": "Maximum number of candidate results to consider from the search index before pagination. The server applies a hard cap of 500 to keep the rerank window bounded; pass `seed` for stable deep pagination."
+              },
+              {
+                "name": "fields",
+                "value": "",
+                "type": "query",
+                "description": "Comma-separated list of fields to include in response"
+              },
+              {
+                "name": "seed",
+                "value": "",
+                "type": "query",
+                "description": "Random seed for deterministic pagination. When provided, results use a stable sort order that is consistent across pages for the same seed value."
+              }
+            ]
+          },
+          "docs": "Search and browse reusable prompt-based skills. Supports full-text and semantic search via the `q` parameter, and filtering by category, namespace, or slug."
+        },
+        {
+          "info": {
+            "name": "Create a new skill (deprecated)",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.smithery.ai/skills",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "**Deprecated:** Use PUT /skills/{namespace}/{slug} instead. Create a new skill by linking a GitHub repository containing a SKILL.md file."
+        },
+        {
+          "info": {
+            "name": "Get a skill",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.smithery.ai/skills/:namespace/:slug",
+            "params": [
+              {
+                "name": "namespace",
+                "value": "",
+                "type": "path"
+              },
+              {
+                "name": "slug",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "Get a single skill by its namespace and slug."
+        },
+        {
+          "info": {
+            "name": "Create or update a skill",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "https://api.smithery.ai/skills/:namespace/:slug",
+            "params": [
+              {
+                "name": "namespace",
+                "value": "",
+                "type": "path"
+              },
+              {
+                "name": "slug",
+                "value": "",
+                "type": "path"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Idempotent endpoint to create or update a GitHub-backed skill. Send application/json with `gitUrl`."
+        },
+        {
+          "info": {
+            "name": "Delete a skill",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://api.smithery.ai/skills/:namespace/:slug",
+            "params": [
+              {
+                "name": "namespace",
+                "value": "",
+                "type": "path"
+              },
+              {
+                "name": "slug",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "Delete a skill by namespace and slug. Requires ownership of the namespace."
+        },
+        {
+          "info": {
+            "name": "Download skill bundle",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.smithery.ai/skills/:namespace/:slug/download",
+            "params": [
+              {
+                "name": "namespace",
+                "value": "",
+                "type": "path"
+              },
+              {
+                "name": "slug",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "Download a ZIP bundle containing all skill files."
+        },
+        {
+          "info": {
+            "name": "Sync skill metadata from GitHub (deprecated)",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.smithery.ai/skills/:namespace/:slug/sync",
+            "params": [
+              {
+                "name": "namespace",
+                "value": "",
+                "type": "path"
+              },
+              {
+                "name": "slug",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "**Deprecated:** Use PUT /skills/{namespace}/{slug} instead. Refetch SKILL.md and repository stars from GitHub and update the skill record."
+        },
+        {
+          "info": {
+            "name": "Upload a skill bundle",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "https://api.smithery.ai/skills/:namespace/:slug/upload",
+            "params": [
+              {
+                "name": "namespace",
+                "value": "",
+                "type": "path"
+              },
+              {
+                "name": "slug",
+                "value": "",
+                "type": "path"
+              }
+            ],
+            "body": {
+              "type": "multipart-form",
+              "data": [
+                {
+                  "name": "archive",
+                  "type": "text",
+                  "value": ""
+                }
+              ]
+            }
+          },
+          "docs": "Upload or replace a skill bundle via multipart/form-data with an `archive` file."
+        }
+      ]
+    },
+    {
+      "info": {
+        "name": "tokens",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Create a service token",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.smithery.ai/tokens",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Create a service token for machine-to-machine authentication. Accepts API key or bearer token. Optionally apply restrictions."
+        }
+      ]
+    },
+    {
+      "info": {
+        "name": "namespaces",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Get user's namespaces or search namespaces",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.smithery.ai/namespaces",
+            "params": [
+              {
+                "name": "q",
+                "value": "",
+                "type": "query",
+                "description": "Text search query (prefix match on name)"
+              },
+              {
+                "name": "ownerId",
+                "value": "",
+                "type": "query",
+                "description": "Filter by owner ID"
+              },
+              {
+                "name": "hasServers",
+                "value": "",
+                "type": "query",
+                "description": "Filter namespaces with servers"
+              },
+              {
+                "name": "hasSkills",
+                "value": "",
+                "type": "query",
+                "description": "Filter namespaces with skills"
+              },
+              {
+                "name": "page",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "pageSize",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "fields",
+                "value": "",
+                "type": "query",
+                "description": "Comma-separated list of fields to include in response"
+              }
+            ]
+          },
+          "docs": "When called without query params, returns the authenticated user's namespaces (backwards compatible). When query params are provided, searches public namespaces with pagination. Use ownerId to filter by owner, hasServers/hasSkills to filter by content, q for text search."
+        },
+        {
+          "info": {
+            "name": "Create a new namespace with generated name",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.smithery.ai/namespaces"
+          },
+          "docs": "Create a new namespace with a server-generated human-readable name, owned by the authenticated user"
+        },
+        {
+          "info": {
+            "name": "Create a new namespace",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "https://api.smithery.ai/namespaces/:name",
+            "params": [
+              {
+                "name": "name",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "Create a new namespace owned by the authenticated user or an organization. This endpoint is idempotent - if the namespace already exists and is owned by the user/org, returns success. Pass organizationId in the request body to create an org-owned namespace."
+        },
+        {
+          "info": {
+            "name": "Delete a namespace",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://api.smithery.ai/namespaces/:name",
+            "params": [
+              {
+                "name": "name",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "Delete a namespace owned by the authenticated user. The namespace must not contain any servers. Skills and connections in the namespace will be deleted automatically."
+        },
+        {
+          "info": {
+            "name": "Create a server under a namespace (deprecated)",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "https://api.smithery.ai/namespaces/:namespace/servers/:server",
+            "params": [
+              {
+                "name": "server",
+                "value": "",
+                "type": "path"
+              },
+              {
+                "name": "namespace",
+                "value": "",
+                "type": "path"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "**Deprecated:** Use PUT /servers/{namespace}/{server} instead. Create a new server under the specified namespace. This endpoint is idempotent."
+        }
+      ]
+    },
+    {
+      "info": {
+        "name": "organizations",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "List team API keys",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.smithery.ai/organizations/:orgId/api-keys",
+            "params": [
+              {
+                "name": "orgId",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "Returns all API keys belonging to the organization. Requires admin role. Key values are not included in the response."
+        },
+        {
+          "info": {
+            "name": "Create a team API key",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.smithery.ai/organizations/:orgId/api-keys",
+            "params": [
+              {
+                "name": "orgId",
+                "value": "",
+                "type": "path"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Creates an API key owned by the organization. Requires admin role."
+        },
+        {
+          "info": {
+            "name": "Revoke a team API key",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://api.smithery.ai/organizations/:orgId/api-keys/:keyId",
+            "params": [
+              {
+                "name": "orgId",
+                "value": "",
+                "type": "path"
+              },
+              {
+                "name": "keyId",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "Deletes an API key belonging to the organization. Requires admin role."
+        }
+      ]
+    },
+    {
+      "info": {
+        "name": "connect",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "List connections",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.smithery.ai/connect/:namespace",
+            "params": [
+              {
+                "name": "limit",
+                "value": "",
+                "type": "query",
+                "description": "Maximum number of items to return (default 100, max 100)"
+              },
+              {
+                "name": "cursor",
+                "value": "",
+                "type": "query",
+                "description": "Pagination cursor from previous response's nextCursor"
+              },
+              {
+                "name": "name",
+                "value": "",
+                "type": "query",
+                "description": "Filter by exact connection name"
+              },
+              {
+                "name": "mcpUrl",
+                "value": "",
+                "type": "query",
+                "description": "Filter by exact MCP server URL"
+              },
+              {
+                "name": "namespace",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "List all connections in a namespace. Supports filtering by metadata using `metadata.{key}={value}` query params."
+        },
+        {
+          "info": {
+            "name": "Create connection",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.smithery.ai/connect/:namespace",
+            "params": [
+              {
+                "name": "namespace",
+                "value": "",
+                "type": "path"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Create a new MCP connection with an auto-generated ID. Requires API key and namespace ownership."
+        },
+        {
+          "info": {
+            "name": "List triggers",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.smithery.ai/connect/:namespace/:connectionId/.triggers",
+            "params": [
+              {
+                "name": "namespace",
+                "value": "",
+                "type": "path"
+              },
+              {
+                "name": "connectionId",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "List trigger types exposed by a connection."
+        },
+        {
+          "info": {
+            "name": "Get trigger",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.smithery.ai/connect/:namespace/:connectionId/.triggers/:triggerName",
+            "params": [
+              {
+                "name": "namespace",
+                "value": "",
+                "type": "path"
+              },
+              {
+                "name": "connectionId",
+                "value": "",
+                "type": "path"
+              },
+              {
+                "name": "triggerName",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "Get the schema for a single trigger type."
+        },
+        {
+          "info": {
+            "name": "Subscribe to trigger",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.smithery.ai/connect/:namespace/:connectionId/.triggers/:triggerName",
+            "params": [
+              {
+                "name": "namespace",
+                "value": "",
+                "type": "path"
+              },
+              {
+                "name": "connectionId",
+                "value": "",
+                "type": "path"
+              },
+              {
+                "name": "triggerName",
+                "value": "",
+                "type": "path"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Subscribe to (or refresh) a trigger. Supplying the same (params, delivery.url) refreshes the TTL and may rotate the secret."
+        },
+        {
+          "info": {
+            "name": "Unsubscribe from trigger",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://api.smithery.ai/connect/:namespace/:connectionId/.triggers/:triggerName",
+            "params": [
+              {
+                "name": "namespace",
+                "value": "",
+                "type": "path"
+              },
+              {
+                "name": "connectionId",
+                "value": "",
+                "type": "path"
+              },
+              {
+                "name": "triggerName",
+                "value": "",
+                "type": "path"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Unsubscribe by subscription key (params + delivery.url). Eager teardown — subscriptions also expire naturally on TTL."
+        },
+        {
+          "info": {
+            "name": "Get connection",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.smithery.ai/connect/:namespace/:connectionId",
+            "params": [
+              {
+                "name": "namespace",
+                "value": "",
+                "type": "path"
+              },
+              {
+                "name": "connectionId",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "Get details for a specific connection. Requires service token with connections:read scope."
+        },
+        {
+          "info": {
+            "name": "Create or update connection",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "https://api.smithery.ai/connect/:namespace/:connectionId",
+            "params": [
+              {
+                "name": "namespace",
+                "value": "",
+                "type": "path"
+              },
+              {
+                "name": "connectionId",
+                "value": "",
+                "type": "path"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Create or update an MCP connection with the given ID. mcpUrl is required when creating a new connection, but optional when updating. Returns 409 if a different mcpUrl is provided, except while the connection is input_required and the new URL keeps the same host and path."
+        },
+        {
+          "info": {
+            "name": "Delete connection",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://api.smithery.ai/connect/:namespace/:connectionId",
+            "params": [
+              {
+                "name": "namespace",
+                "value": "",
+                "type": "path"
+              },
+              {
+                "name": "connectionId",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "Delete a connection and terminate its MCP session. Requires API key and namespace ownership."
+        },
+        {
+          "info": {
+            "name": "List tools across a namespace",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.smithery.ai/connect/:namespace/.tools",
+            "params": [
+              {
+                "name": "namespace",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "List tools for every connection in a namespace in one response. Each connection is wrapped in an envelope so a failure on one upstream doesn't fail the request. Skips connections in `auth_required`/`input_required` states without calling the upstream."
+        },
+        {
+          "info": {
+            "name": "List tools",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.smithery.ai/connect/:namespace/:connectionId/.tools",
+            "params": [
+              {
+                "name": "namespace",
+                "value": "",
+                "type": "path"
+              },
+              {
+                "name": "connectionId",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "List tools exposed by a connection."
+        },
+        {
+          "info": {
+            "name": "Get tool",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.smithery.ai/connect/:namespace/:connectionId/.tools/:toolPath",
+            "params": [
+              {
+                "name": "namespace",
+                "value": "",
+                "type": "path"
+              },
+              {
+                "name": "connectionId",
+                "value": "",
+                "type": "path"
+              },
+              {
+                "name": "toolPath",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "Get one tool or list tools under a slash-separated category."
+        },
+        {
+          "info": {
+            "name": "Call tool",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.smithery.ai/connect/:namespace/:connectionId/.tools/:toolPath",
+            "params": [
+              {
+                "name": "namespace",
+                "value": "",
+                "type": "path"
+              },
+              {
+                "name": "connectionId",
+                "value": "",
+                "type": "path"
+              },
+              {
+                "name": "toolPath",
+                "value": "",
+                "type": "path"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Invoke a tool with JSON arguments."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

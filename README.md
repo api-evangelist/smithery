@@ -1,93 +1,108 @@
-# Smithery
+# Smithery (smithery)
 
-Smithery is a platform for discovering, deploying, and managing Model Context Protocol (MCP) servers and skills. It operates a public registry of community-built MCP extensions plus a Connect gateway that bundles all connections in a namespace behind a single MCP endpoint at `mcp.smithery.run/{namespace}`. The Smithery Platform API exposes 55 operations across 35 paths covering registry browsing, server CRUD, releases and runtime logs, secrets and managed domains, skill publishing, namespace administration, scoped service tokens, organization API keys, and the Connect lifecycle (connections, triggers, subscriptions, and an MCP streamable-HTTP transport endpoint).
+Smithery is a platform for discovering, deploying, and managing Model Context Protocol (MCP) servers and skills. It operates a public registry of community-built MCP extensions that AI agents can use to access external tools, data sources, and services, plus a Connect gateway that bundles connections in a namespace behind a single MCP endpoint at mcp.smithery.run. The platform exposes APIs for server registry browsing, server deployment, skill publishing, namespace management, scoped service tokens, connection lifecycle, trigger subscriptions, and an MCP transport endpoint for AI-agent integration.
 
-> "Smithery gives agents more agency by connecting them to the outside world — search the web, query databases, control browsers, reach into business tools, and much more." — smithery.ai/docs
+**APIs.json:** [https://raw.githubusercontent.com/api-evangelist/smithery/refs/heads/main/apis.yml](https://raw.githubusercontent.com/api-evangelist/smithery/refs/heads/main/apis.yml)
+
+## Scope
+
+- **Type:** Index
+- **Position:** Consuming
+- **Access:** 3rd-Party
+
+## Tags
+
+- Artificial Intelligence
+- Large Language Models
+- MCP
+- Model Context Protocol
+- AI Agents
+- Developer Tools
+- Registry
+- Skills
+- Tool Discovery
+
+## Timestamps
+
+- **Created:** 2025-08-19
+- **Modified:** 2026-05-22
 
 ## APIs
 
-| API | Description |
-|-----|-------------|
-| [Smithery Platform API](openapi/smithery-openapi.json) | 55 operations across 8 tags: servers (18), skills (8), connect (16), connect.mcp (1), namespaces (5), organizations (3), tokens (1), general/health (1), plus domains (2) |
+### Smithery Platform API
 
-## Artifacts
+The Smithery Platform API provides programmatic access to the MCP server registry and the Connect gateway. It groups 55 operations across 35 paths under eight tags (servers, skills, tools, tokens, namespaces, organizations, connect, connect.mcp), covering registry search, server CRUD, releases and runtime logs, secrets, managed domains, icon management, skill bundles, organization API keys, namespace administration, scoped service tokens, and the Connect API for managing connections, triggers, and subscriptions plus a single POST /connect/{namespace}/{connectionId}/mcp endpoint that proxies MCP streamable-HTTP traffic to upstream servers.
 
-### OpenAPI Specifications
-- [smithery-openapi.json](openapi/smithery-openapi.json) — Official Smithery Platform API (from `smithery.ai/docs/openapi.json`)
-- [smithery-documented-openapi.yml](openapi/smithery-documented-openapi.yml) — Stainless-documented OpenAPI variant
+- **Human URL:** [https://smithery.ai/docs](https://smithery.ai/docs)
+- **Base URL:** `https://api.smithery.ai`
 
-### Capabilities (Naftiko, per business surface)
-- [smithery-general.yaml](capabilities/smithery-general.yaml) — Health check
-- [smithery-servers.yaml](capabilities/smithery-servers.yaml) — Server registry, releases, logs, secrets, icons (18 ops)
-- [smithery-skills.yaml](capabilities/smithery-skills.yaml) — Skill discovery and publishing (8 ops)
-- [smithery-connect.yaml](capabilities/smithery-connect.yaml) — Connection lifecycle, subscriptions, triggers (16 ops)
-- [smithery-connect-mcp.yaml](capabilities/smithery-connect-mcp.yaml) — MCP streamable-HTTP transport endpoint
-- [smithery-domains.yaml](capabilities/smithery-domains.yaml) — Managed custom domains
-- [smithery-namespaces.yaml](capabilities/smithery-namespaces.yaml) — Namespace administration (5 ops)
-- [smithery-organizations.yaml](capabilities/smithery-organizations.yaml) — Team API keys (3 ops)
-- [smithery-tokens.yaml](capabilities/smithery-tokens.yaml) — Scoped service tokens
+#### Tags
 
-### Rules
-- [smithery-rules.yml](rules/smithery-rules.yml) — Spectral ruleset for Smithery API conventions
+- Artificial Intelligence
+- MCP
+- Registry
+- Servers
+- Skills
+- Tools
+- Connect
+- Tokens
+- Namespaces
+- Organizations
 
-### JSON Schema
-- [smithery-server-schema.json](json-schema/smithery-server-schema.json) — MCP Server entity schema
-- [smithery-skill-schema.json](json-schema/smithery-skill-schema.json) — Skill entity schema
-
-### JSON Structure
-- [smithery-server-structure.json](json-structure/smithery-server-structure.json) — MCP server object structure
-
-### JSON-LD
-- [smithery-context.jsonld](json-ld/smithery-context.jsonld) — Linked data context for MCP concepts
-
-### Examples
-- [smithery-list-servers-example.json](examples/smithery-list-servers-example.json) — List servers request/response
-- [smithery-get-server-example.json](examples/smithery-get-server-example.json) — Get a server by qualifiedName
-- [smithery-list-skills-example.json](examples/smithery-list-skills-example.json) — Search the skills directory
-- [smithery-create-connection-example.json](examples/smithery-create-connection-example.json) — Create a Connect API connection
-- [smithery-create-service-token-example.json](examples/smithery-create-service-token-example.json) — Issue a scoped service token
-- [smithery-mcp-endpoint-example.json](examples/smithery-mcp-endpoint-example.json) — POST a JSON-RPC tools/call through the Connect MCP endpoint
-- [smithery-list-triggers-example.json](examples/smithery-list-triggers-example.json) — List triggers on a connection
-
-### Vocabulary
-- [smithery-vocabulary.yml](vocabulary/smithery-vocabulary.yml) — MCP, registry, Connect, and Smithery platform vocabulary
-
-### Commercial Surface
-- [smithery-plans-pricing.yml](plans/smithery-plans-pricing.yml) — Plans scaffold (API Commons Plans 0.1)
-- [smithery-rate-limits.yml](rate-limits/smithery-rate-limits.yml) — Rate limits scaffold (API Commons Rate Limits 0.1)
-- [smithery-finops.yml](finops/smithery-finops.yml) — FinOps Framework / FOCUS 1.3 alignment
-
-## Authentication
-
-- **Bearer Token (API Key)** — `Authorization: Bearer <key>` using a key from `smithery.ai/account/api-keys`. Long-lived; backend use.
-- **Service Token** — Scoped, time-limited tokens issued via `POST /tokens` for browser/mobile/agent contexts. Used by the Connect MCP endpoint.
-- **OAuth 2.0 (Upstream)** — Smithery manages the OAuth handshake with upstream providers on the user's behalf when a connection is created, handling client registration via Client ID Metadata Documents.
-
-## Connect Gateway
-
-The Connect API exposes a single MCP endpoint per namespace:
-
-```
-https://mcp.smithery.run/{namespace}
-```
-
-Or per-connection through the Platform API:
-
-```
-POST https://api.smithery.ai/connect/{namespace}/{connectionId}/mcp
-```
-
-This is a streamable-HTTP JSON-RPC transport that proxies agent calls to the underlying MCP server bound to the connection.
-
-## Developer Resources
+#### Properties
 
 - [Documentation](https://smithery.ai/docs)
+- [OpenAPI](https://raw.githubusercontent.com/api-evangelist/smithery/refs/heads/main/openapi/smithery-openapi.json) — [OpenAPI Specification](https://spec.openapis.org/oas/latest.html)
+- [OpenAPI](https://raw.githubusercontent.com/api-evangelist/smithery/refs/heads/main/openapi/smithery-documented-openapi.yml) — [OpenAPI Specification](https://spec.openapis.org/oas/latest.html)
+- [Open A P I  Specification](https://smithery.ai/docs/openapi.json)
+- [Open A P I  Specification](https://app.stainless.com/api/spec/documented/smithery/openapi.documented.yml)
+- [llms.txt](https://smithery.ai/docs/llms.txt)
 - [API Reference](https://smithery.ai/docs/api-reference)
-- [CLI Docs](https://smithery.ai/docs/concepts/cli) — `npm install -g smithery@latest` (Node.js 20+)
-- [GitHub Organization](https://github.com/smithery-ai) — 36 public repos
-- [TypeScript SDK (@smithery/api)](https://github.com/smithery-ai/typescript-api) — Stainless-generated
-- [Smithery Cookbook](https://github.com/smithery-ai/smithery-cookbook) — Recipes
+- [JSON Schema](json-schema/smithery-server-schema.json) — [JSON Schema](https://json-schema.org/specification)
+- [JSON Schema](json-schema/smithery-skill-schema.json) — [JSON Schema](https://json-schema.org/specification)
+- [JSON Structure](json-structure/smithery-server-structure.json)
+- [JSON-LD](json-ld/smithery-context.jsonld) — [JSON-LD](https://www.w3.org/TR/json-ld11/)
+- [Spectral Rules](rules/smithery-rules.yml)
+- [Vocabulary](vocabulary/smithery-vocabulary.yml)
+- [Plans](plans/smithery-plans-pricing.yml)
+- [Rate Limits](rate-limits/smithery-rate-limits.yml)
+- [Fin Ops](finops/smithery-finops.yml)
+- [Postman Collection](collections/smithery-documented.postman_collection.json) — [Postman Collection 2.1](https://schema.getpostman.com/json/collection/v2.1.0/collection.json)
+- [Open Collection](collections/smithery-documented.opencollection.json) — [Open Collection 1.0](https://schema.opencollection.com/opencollection/v1.0.0.json)
+- [Postman Collection](collections/smithery.postman_collection.json) — [Postman Collection 2.1](https://schema.getpostman.com/json/collection/v2.1.0/collection.json)
+- [Open Collection](collections/smithery.opencollection.json) — [Open Collection 1.0](https://schema.opencollection.com/opencollection/v1.0.0.json)
+
+## Common Properties
+
+- [LinkedIn](https://www.linkedin.com/company/smithery-ai)
+- [GitHub Organization](https://github.com/smithery-ai)
+- [Documentation](https://smithery.ai/docs)
+- [C L I](https://smithery.ai/docs/concepts/cli)
+- [Website](https://smithery.ai/)
 - [Playground](https://smithery.ai/playground)
 - [Blog](https://smithery.ai/blog)
-- [OpenAPI JSON](https://smithery.ai/docs/openapi.json)
-- [llms.txt](https://smithery.ai/docs/llms.txt)
+- [Documentation](https://smithery.ai/skills)
+- [Authentication](https://smithery.ai/account/api-keys)
+- [SDK](https://github.com/smithery-ai/typescript-api)
+- [SDK](https://github.com/smithery-ai/cli)
+- [Sample Code](https://github.com/smithery-ai/smithery-cookbook)
+- [Documentation](https://smithery.ai/docs/concepts/what_is_mcp)
+- [Documentation](https://smithery.ai/docs/use/deep-linking)
+- [Documentation](https://smithery.ai/docs/use/token-scoping)
+- [Documentation](https://smithery.ai/docs/use/uplink)
+- [Documentation](https://smithery.ai/docs/use/listing_your_client)
+- [Documentation](https://smithery.ai/docs/build/publish)
+- [Documentation](https://smithery.ai/docs/build/triggers)
+- [Sample Code](https://smithery.ai/docs/cookbooks/typescript_oauth_client)
+- [Integration](https://smithery.ai/docs/integrations/vercel_ai_sdk)
+- [M C P Server](https://mcp.smithery.run)
+- [Tools](https://github.com/smithery-ai/agent.pw)
+- [M C P Server](https://github.com/smithery-ai/mouseless)
+- [Tools](https://github.com/smithery-ai/mcp-to-cli)
+- [Tools](https://github.com/smithery-ai/workers-biscuit)
+- [Tools](https://github.com/smithery-ai/registry)
+
+## Maintainers
+
+**FN:** Kin Lane
+**Email:** kin@apievangelist.com
