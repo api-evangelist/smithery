@@ -83,6 +83,10 @@ apis:
       - type: FinOps
         url: finops/smithery-finops.yml
 common:
+  - type: DomainSecurity
+    url: security/smithery-domain-security.yml
+  - type: Authentication
+    url: authentication/smithery-authentication.yml
   - type: LinkedIn
     url: https://www.linkedin.com/company/smithery-ai
   - url: https://github.com/smithery-ai

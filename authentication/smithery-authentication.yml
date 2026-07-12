@@ -1,0 +1,14 @@
+generated: '2026-07-11'
+method: derived
+source: openapi/smithery-documented-openapi.yml, openapi/smithery-openapi.json
+summary:
+  types:
+  - http
+schemes:
+- name: bearerAuth
+  type: http
+  scheme: bearer
+  description: Smithery API key as Bearer token
+  sources:
+  - openapi/smithery-documented-openapi.yml
+  - openapi/smithery-openapi.json
