@@ -1,0 +1,408 @@
+openapi: 3.1.0
+info:
+  title: Smithery Platform connect namespaces API
+  description: API for the Smithery platform — discover, deploy, and manage MCP (Model Context Protocol) servers. Provides endpoints for browsing the server registry, managing deployments, creating scoped access tokens, and connecting to MCP servers.
+  version: 1.0.0
+servers:
+- url: https://api.smithery.ai
+security:
+- bearerAuth: []
+tags:
+- name: namespaces
+paths:
+  /namespaces:
+    get:
+      operationId: getNamespaces
+      tags:
+      - namespaces
+      summary: Get user's namespaces or search namespaces
+      description: When called without query params, returns the authenticated user's namespaces (backwards compatible). When query params are provided, searches public namespaces with pagination. Use ownerId to filter by owner, hasServers/hasSkills to filter by content, q for text search.
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/NamespacesSearchResponse'
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/NamespacesError'
+        '500':
+          description: Server error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/NamespacesError'
+      parameters:
+      - in: query
+        name: q
+        schema:
+          type: string
+        description: Text search query (prefix match on name)
+      - in: query
+        name: ownerId
+        schema:
+          type: string
+        description: Filter by owner ID
+      - in: query
+        name: hasServers
+        schema:
+          type: string
+          enum:
+          - '0'
+          - '1'
+          - 'true'
+          - 'false'
+        description: Filter namespaces with servers
+      - in: query
+        name: hasSkills
+        schema:
+          type: string
+          enum:
+          - '0'
+          - '1'
+          - 'true'
+          - 'false'
+        description: Filter namespaces with skills
+      - in: query
+        name: page
+        schema:
+          type: integer
+          minimum: 1
+          maximum: 9007199254740991
+      - in: query
+        name: pageSize
+        schema:
+          type: integer
+          minimum: 1
+          maximum: 50
+      - in: query
+        name: fields
+        schema:
+          type: string
+        description: Comma-separated list of fields to include in response
+      x-codeSamples:
+      - lang: JavaScript
+        source: "import Smithery from '@smithery/api';\n\nconst client = new Smithery({\n  apiKey: process.env['SMITHERY_API_KEY'], // This is the default and can be omitted\n});\n\n// Automatically fetches more pages as needed.\nfor await (const namespaceListResponse of client.namespaces.list()) {\n  console.log(namespaceListResponse.name);\n}"
+    post:
+      operationId: postNamespaces
+      tags:
+      - namespaces
+      summary: Create a new namespace with generated name
+      description: Create a new namespace with a server-generated human-readable name, owned by the authenticated user
+      responses:
+        '201':
+          description: Namespace created successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CreateNamespaceResponse'
+        '400':
+          description: Bad request (user already has a namespace)
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/NamespacesError'
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/NamespacesError'
+        '403':
+          description: Forbidden - missing namespaces:write permission
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/NamespacesError'
+      x-codeSamples:
+      - lang: JavaScript
+        source: "import Smithery from '@smithery/api';\n\nconst client = new Smithery({\n  apiKey: process.env['SMITHERY_API_KEY'], // This is the default and can be omitted\n});\n\nconst namespace = await client.namespaces.create();\n\nconsole.log(namespace.createdAt);"
+  /namespaces/{name}:
+    put:
+      operationId: putNamespaces:name
+      parameters:
+      - in: path
+        name: name
+        schema:
+          type: string
+          minLength: 3
+          maxLength: 39
+        required: true
+      tags:
+      - namespaces
+      summary: Create a new namespace
+      description: Create a new namespace owned by the authenticated user or an organization. This endpoint is idempotent - if the namespace already exists and is owned by the user/org, returns success. Pass organizationId in the request body to create an org-owned namespace.
+      responses:
+        '201':
+          description: Namespace created successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CreateNamespaceResponse'
+        '400':
+          description: Bad request (invalid name format or user already has a namespace)
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/NamespacesError'
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/NamespacesError'
+        '403':
+          description: Forbidden - missing namespaces:write permission
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/NamespacesError'
+        '409':
+          description: Conflict (namespace already exists)
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/NamespacesError'
+      x-codeSamples:
+      - lang: JavaScript
+        source: "import Smithery from '@smithery/api';\n\nconst client = new Smithery({\n  apiKey: process.env['SMITHERY_API_KEY'], // This is the default and can be omitted\n});\n\nconst response = await client.namespaces.set('xxx');\n\nconsole.log(response.createdAt);"
+    delete:
+      operationId: deleteNamespaces:name
+      parameters:
+      - in: path
+        name: name
+        schema:
+          type: string
+          minLength: 3
+          maxLength: 39
+        required: true
+      tags:
+      - namespaces
+      summary: Delete a namespace
+      description: Delete a namespace owned by the authenticated user. The namespace must not contain any servers. Skills and connections in the namespace will be deleted automatically.
+      responses:
+        '200':
+          description: Namespace deleted successfully
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                  name:
+                    type: string
+                    example: myorg
+                required:
+                - success
+                - name
+                id: DeleteNamespaceResponse
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/NamespacesError'
+        '403':
+          description: Forbidden - user does not own this namespace
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/NamespacesError'
+        '404':
+          description: Namespace not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/NamespacesError'
+        '409':
+          description: Conflict - namespace contains servers that must be deleted first
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/NamespacesError'
+      x-codeSamples:
+      - lang: JavaScript
+        source: "import Smithery from '@smithery/api';\n\nconst client = new Smithery({\n  apiKey: process.env['SMITHERY_API_KEY'], // This is the default and can be omitted\n});\n\nconst namespace = await client.namespaces.delete('xxx');\n\nconsole.log(namespace.name);"
+  /namespaces/{namespace}/servers/{server}:
+    put:
+      operationId: putNamespaces:namespaceServers:server
+      parameters:
+      - in: path
+        name: server
+        schema:
+          type: string
+          minLength: 3
+          maxLength: 39
+        required: true
+      - schema:
+          type: string
+        in: path
+        name: namespace
+        required: true
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CreateServerRequest'
+      tags:
+      - namespaces
+      summary: Create a server under a namespace (deprecated)
+      description: '**Deprecated:** Use PUT /servers/{namespace}/{server} instead. Create a new server under the specified namespace. This endpoint is idempotent.'
+      deprecated: true
+      responses:
+        '201':
+          description: Server created successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CreateServerResponse'
+        '400':
+          description: Bad request (invalid name format)
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CreateServerError'
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CreateServerError'
+        '403':
+          description: Forbidden (namespace not owned by user or missing servers:write permission)
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CreateServerError'
+        '404':
+          description: Namespace not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CreateServerError'
+      x-codeSamples:
+      - lang: JavaScript
+        source: "import Smithery from '@smithery/api';\n\nconst client = new Smithery({\n  apiKey: process.env['SMITHERY_API_KEY'], // This is the default and can be omitted\n});\n\nconst server = await client.namespaces.servers.create('xxx', { namespace: 'namespace' });\n\nconsole.log(server.createdAt);"
+components:
+  schemas:
+    NamespacesSearchResponse:
+      type: object
+      properties:
+        namespaces:
+          type: array
+          items:
+            $ref: '#/components/schemas/NamespaceSearchResult'
+        pagination:
+          type: object
+          properties:
+            currentPage:
+              type: integer
+              minimum: -9007199254740991
+              maximum: 9007199254740991
+            pageSize:
+              type: integer
+              minimum: -9007199254740991
+              maximum: 9007199254740991
+            totalPages:
+              type: integer
+              minimum: -9007199254740991
+              maximum: 9007199254740991
+            totalCount:
+              type: integer
+              minimum: -9007199254740991
+              maximum: 9007199254740991
+          required:
+          - currentPage
+          - pageSize
+          - totalPages
+          - totalCount
+          additionalProperties: false
+      required:
+      - namespaces
+      - pagination
+      additionalProperties: false
+    CreateServerError:
+      type: object
+      properties:
+        error:
+          type: string
+          example: 'Forbidden: You don''t own this server'
+      required:
+      - error
+      additionalProperties: false
+    CreateNamespaceResponse:
+      type: object
+      properties:
+        name:
+          type: string
+          example: myorg
+        createdAt:
+          type: string
+          example: '2024-01-01T00:00:00.000Z'
+      required:
+      - name
+      - createdAt
+      additionalProperties: false
+    CreateServerResponse:
+      type: object
+      properties:
+        namespace:
+          type: string
+          example: myorg
+        server:
+          type: string
+          example: my-server
+        displayName:
+          type: string
+          example: My Server
+        description:
+          type: string
+          example: A simple server
+        createdAt:
+          type: string
+          example: '2024-01-01T00:00:00.000Z'
+      required:
+      - namespace
+      - server
+      - displayName
+      - description
+      - createdAt
+      additionalProperties: false
+    NamespaceSearchResult:
+      type: object
+      properties:
+        name:
+          type: string
+          example: anthropic
+      required:
+      - name
+      additionalProperties: false
+    NamespacesError:
+      type: object
+      properties:
+        error:
+          type: string
+          example: Unauthorized
+      required:
+      - error
+      additionalProperties: false
+    CreateServerRequest:
+      type: object
+      properties:
+        displayName:
+          example: My Server
+          type: string
+        description:
+          example: A simple server
+          type: string
+      additionalProperties: false
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer
+      description: Smithery API key as Bearer token

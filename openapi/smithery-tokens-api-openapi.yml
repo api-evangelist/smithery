@@ -1,0 +1,183 @@
+openapi: 3.1.0
+info:
+  title: Smithery Platform connect tokens API
+  description: API for the Smithery platform — discover, deploy, and manage MCP (Model Context Protocol) servers. Provides endpoints for browsing the server registry, managing deployments, creating scoped access tokens, and connecting to MCP servers.
+  version: 1.0.0
+servers:
+- url: https://api.smithery.ai
+security:
+- bearerAuth: []
+tags:
+- name: tokens
+paths:
+  /tokens:
+    post:
+      operationId: postTokens
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CreateTokenRequest'
+      tags:
+      - tokens
+      summary: Create a service token
+      description: Create a service token for machine-to-machine authentication. Accepts API key or bearer token. Optionally apply restrictions.
+      responses:
+        '200':
+          description: Token created successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CreateTokenResponse'
+        '400':
+          description: Bad request (invalid parameters)
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/TokenError'
+        '401':
+          description: Unauthorized (missing or invalid credentials)
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/TokenError'
+        '403':
+          description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/TokenError'
+      x-codeSamples:
+      - lang: JavaScript
+        source: "import Smithery from '@smithery/api';\n\nconst client = new Smithery({\n  apiKey: process.env['SMITHERY_API_KEY'], // This is the default and can be omitted\n});\n\nconst createTokenResponse = await client.tokens.create();\n\nconsole.log(createTokenResponse.token);"
+components:
+  schemas:
+    TokenError:
+      type: object
+      properties:
+        error:
+          type: string
+          example: unauthorized
+        message:
+          example: Invalid API key
+          type: string
+      required:
+      - error
+      additionalProperties: false
+    CreateTokenResponse:
+      type: object
+      properties:
+        token:
+          type: string
+          description: The signed service token.
+        expiresAt:
+          type: string
+          description: ISO 8601 timestamp when the token expires.
+          example: '2024-01-01T01:00:00.000Z'
+      required:
+      - token
+      - expiresAt
+      additionalProperties: false
+    Constraint:
+      type: object
+      properties:
+        namespaces:
+          description: Namespace(s) the token is scoped to. Accepts a single slug or an array.
+          example:
+          - my-app
+          anyOf:
+          - type: string
+          - type: array
+            items:
+              type: string
+        resources:
+          description: 'Resource type(s) the token may access: connections, servers, namespaces, or skills.'
+          example:
+          - connections
+          anyOf:
+          - type: string
+            enum:
+            - connections
+            - servers
+            - namespaces
+            - skills
+          - type: array
+            items:
+              type: string
+              enum:
+              - connections
+              - servers
+              - namespaces
+              - skills
+        operations:
+          description: 'Operation(s) the token may perform: read, write, or execute.'
+          example:
+          - read
+          anyOf:
+          - type: string
+            enum:
+            - read
+            - write
+            - execute
+          - type: array
+            items:
+              type: string
+              enum:
+              - read
+              - write
+              - execute
+        metadata:
+          description: Key-value metadata for fine-grained filtering. A single object requires all pairs to match (AND). An array of objects requires any one to match (OR-of-AND), e.g. [{"userId":"alice"},{"team":"backend"}] grants access when either condition is met.
+          example:
+          - userId: alice
+          anyOf:
+          - type: object
+            propertyNames:
+              type: string
+            additionalProperties:
+              type: string
+          - type: array
+            items:
+              type: object
+              propertyNames:
+                type: string
+              additionalProperties:
+                type: string
+        ttl:
+          description: Time-to-live for the constraint. Accepts seconds (number) or a duration string such as "1h", "30m", or "20s".
+          example: 1h
+          anyOf:
+          - type: string
+          - type: number
+        rpcReqMatch:
+          description: MCP JSON-RPC request matching rules. Keys are dot-paths into the request body (e.g. "params.name", "method"). Values are regex patterns. All entries must match (AND).
+          example:
+            params.name: ^(create_issue|search_issues)$
+          type: object
+          propertyNames:
+            type: string
+            maxLength: 200
+          additionalProperties:
+            type: string
+            maxLength: 500
+      additionalProperties: false
+      description: A policy constraint that restricts a token's scope. All specified fields within a single constraint are AND'd together. When multiple constraints are passed in the policy array, each is applied as an independent attenuation block.
+    CreateTokenRequest:
+      type: object
+      properties:
+        policy:
+          description: Constraint objects to restrict the token. Each constraint may include a `ttl` field (max 24 hours). Default TTL is 1 hour. Maximum is 24 hours.
+          minItems: 1
+          type: array
+          items:
+            $ref: '#/components/schemas/Constraint'
+        organizationId:
+          description: Optional organization ID to scope the token to. When provided, the token is minted with org context. The authenticated user must be an admin or owner of the organization.
+          example: org_01H1234567890
+          type: string
+      additionalProperties: false
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer
+      description: Smithery API key as Bearer token

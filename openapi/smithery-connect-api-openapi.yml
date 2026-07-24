@@ -1,0 +1,1452 @@
+openapi: 3.1.0
+info:
+  title: Smithery Platform connect API
+  description: API for the Smithery platform — discover, deploy, and manage MCP (Model Context Protocol) servers. Provides endpoints for browsing the server registry, managing deployments, creating scoped access tokens, and connecting to MCP servers.
+  version: 1.0.0
+servers:
+- url: https://api.smithery.ai
+security:
+- bearerAuth: []
+tags:
+- name: connect
+paths:
+  /connect/{namespace}:
+    get:
+      operationId: getSmithery.run:namespace
+      tags:
+      - connect
+      summary: List connections
+      description: List all connections in a namespace. Supports filtering by metadata using `metadata.{key}={value}` query params.
+      responses:
+        '200':
+          description: List of connections
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ConnectionsListResponse'
+        '400':
+          description: Bad request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+      parameters:
+      - in: query
+        name: limit
+        schema:
+          example: 50
+          type: integer
+          minimum: 1
+          maximum: 100
+        description: Maximum number of items to return (default 100, max 100)
+      - in: query
+        name: cursor
+        schema:
+          type: string
+        description: Pagination cursor from previous response's nextCursor
+      - in: query
+        name: name
+        schema:
+          type: string
+        description: Filter by exact connection name
+      - in: query
+        name: mcpUrl
+        schema:
+          type: string
+        description: Filter by exact MCP server URL
+      - schema:
+          type: string
+        in: path
+        name: namespace
+        required: true
+    post:
+      operationId: postSmithery.run:namespace
+      tags:
+      - connect
+      summary: Create connection
+      description: Create a new MCP connection with an auto-generated ID. Requires API key and namespace ownership.
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CreateConnectionRequest'
+      responses:
+        '201':
+          description: Connection created
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Connection'
+        '400':
+          description: Validation error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ValidationError'
+        '404':
+          description: Namespace not found or access denied
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+      parameters:
+      - schema:
+          type: string
+        in: path
+        name: namespace
+        required: true
+  /connect/{namespace}/{connectionId}/.triggers:
+    get:
+      operationId: getSmithery.run:namespace:connectionId.triggers
+      tags:
+      - connect
+      summary: List triggers
+      description: List trigger types exposed by a connection.
+      responses:
+        '200':
+          description: Trigger definitions
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/TriggerDefinitionList'
+        '404':
+          description: Connection not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+      parameters:
+      - schema:
+          type: string
+        in: path
+        name: namespace
+        required: true
+      - schema:
+          type: string
+        in: path
+        name: connectionId
+        required: true
+  /connect/{namespace}/{connectionId}/.triggers/{triggerName}:
+    get:
+      operationId: getSmithery.run:namespace:connectionId.triggers:triggerName
+      tags:
+      - connect
+      summary: Get trigger
+      description: Get the schema for a single trigger type.
+      responses:
+        '200':
+          description: Trigger definition
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/TriggerDefinition'
+        '404':
+          description: Trigger not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+      parameters:
+      - schema:
+          type: string
+        in: path
+        name: namespace
+        required: true
+      - schema:
+          type: string
+        in: path
+        name: connectionId
+        required: true
+      - schema:
+          type: string
+        in: path
+        name: triggerName
+        required: true
+    post:
+      operationId: postSmithery.run:namespace:connectionId.triggers:triggerName
+      tags:
+      - connect
+      summary: Subscribe to trigger
+      description: Subscribe to (or refresh) a trigger. Supplying the same (params, delivery.url) refreshes the TTL and may rotate the secret.
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CreateTriggerRequest'
+      responses:
+        '200':
+          description: Subscription created or refreshed
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/TriggerSubscription'
+        '400':
+          description: Validation error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ValidationError'
+        '404':
+          description: Connection or trigger not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+      parameters:
+      - schema:
+          type: string
+        in: path
+        name: namespace
+        required: true
+      - schema:
+          type: string
+        in: path
+        name: connectionId
+        required: true
+      - schema:
+          type: string
+        in: path
+        name: triggerName
+        required: true
+    delete:
+      operationId: deleteSmithery.run:namespace:connectionId.triggers:triggerName
+      tags:
+      - connect
+      summary: Unsubscribe from trigger
+      description: Unsubscribe by subscription key (params + delivery.url). Eager teardown — subscriptions also expire naturally on TTL.
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/DeleteTriggerRequest'
+      responses:
+        '200':
+          description: Subscription removed
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Success'
+        '404':
+          description: Subscription not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+      parameters:
+      - schema:
+          type: string
+        in: path
+        name: namespace
+        required: true
+      - schema:
+          type: string
+        in: path
+        name: connectionId
+        required: true
+      - schema:
+          type: string
+        in: path
+        name: triggerName
+        required: true
+  /connect/{namespace}/{connectionId}:
+    get:
+      operationId: getSmithery.run:namespace:connectionId
+      tags:
+      - connect
+      summary: Get connection
+      description: Get details for a specific connection. Requires service token with connections:read scope.
+      responses:
+        '200':
+          description: Connection details
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Connection'
+        '400':
+          description: Bad request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '404':
+          description: Connection not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+      parameters:
+      - schema:
+          type: string
+        in: path
+        name: namespace
+        required: true
+      - schema:
+          type: string
+        in: path
+        name: connectionId
+        required: true
+    put:
+      operationId: putSmithery.run:namespace:connectionId
+      tags:
+      - connect
+      summary: Create or update connection
+      description: Create or update an MCP connection with the given ID. mcpUrl is required when creating a new connection, but optional when updating. Returns 409 if a different mcpUrl is provided, except while the connection is input_required and the new URL keeps the same host and path.
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UpsertConnectionRequest'
+      responses:
+        '200':
+          description: Connection updated
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Connection'
+        '201':
+          description: Connection created
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Connection'
+        '400':
+          description: Validation error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ValidationError'
+        '404':
+          description: Namespace not found or access denied
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '409':
+          description: URL mismatch
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+      parameters:
+      - schema:
+          type: string
+        in: path
+        name: namespace
+        required: true
+      - schema:
+          type: string
+        in: path
+        name: connectionId
+        required: true
+    delete:
+      operationId: deleteSmithery.run:namespace:connectionId
+      tags:
+      - connect
+      summary: Delete connection
+      description: Delete a connection and terminate its MCP session. Requires API key and namespace ownership.
+      responses:
+        '200':
+          description: Connection deleted
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Success'
+        '400':
+          description: Bad request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '404':
+          description: Namespace or connection not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+      parameters:
+      - schema:
+          type: string
+        in: path
+        name: namespace
+        required: true
+      - schema:
+          type: string
+        in: path
+        name: connectionId
+        required: true
+  /connect/{namespace}/.tools:
+    get:
+      operationId: getSmithery.run:namespace.tools
+      tags:
+      - connect
+      summary: List tools across a namespace
+      description: List tools for every connection in a namespace in one response. Each connection is wrapped in an envelope so a failure on one upstream doesn't fail the request. Skips connections in `auth_required`/`input_required` states without calling the upstream.
+      responses:
+        '200':
+          description: Tools by connection
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/LooseObject'
+      parameters:
+      - schema:
+          type: string
+        in: path
+        name: namespace
+        required: true
+  /connect/{namespace}/{connectionId}/.tools:
+    get:
+      operationId: getSmithery.run:namespace:connectionId.tools
+      tags:
+      - connect
+      summary: List tools
+      description: List tools exposed by a connection.
+      responses:
+        '200':
+          description: Tool list
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ToolList'
+        '404':
+          description: Connection not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+      parameters:
+      - schema:
+          type: string
+        in: path
+        name: namespace
+        required: true
+      - schema:
+          type: string
+        in: path
+        name: connectionId
+        required: true
+  /connect/{namespace}/{connectionId}/.tools/{toolPath}:
+    get:
+      operationId: getSmithery.run:namespace:connectionId.tools:toolPath
+      tags:
+      - connect
+      summary: Get tool
+      description: Get one tool or list tools under a slash-separated category.
+      responses:
+        '200':
+          description: Tool metadata or category listing
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ToolResponse'
+        '404':
+          description: Connection or tool not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+      parameters:
+      - schema:
+          type: string
+        in: path
+        name: namespace
+        required: true
+      - schema:
+          type: string
+        in: path
+        name: connectionId
+        required: true
+      - schema:
+          type: string
+        in: path
+        name: toolPath
+        required: true
+    post:
+      operationId: postSmithery.run:namespace:connectionId.tools:toolPath
+      tags:
+      - connect
+      summary: Call tool
+      description: Invoke a tool with JSON arguments.
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/LooseObject'
+      responses:
+        '200':
+          description: Tool result
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/LooseObject'
+        '400':
+          description: Validation error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ValidationError'
+        '404':
+          description: Connection not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '422':
+          description: Tool error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+      parameters:
+      - schema:
+          type: string
+        in: path
+        name: namespace
+        required: true
+      - schema:
+          type: string
+        in: path
+        name: connectionId
+        required: true
+      - schema:
+          type: string
+        in: path
+        name: toolPath
+        required: true
+  /connect/{namespace}/.subscriptions:
+    get:
+      operationId: getSmithery.run:namespace.subscriptions
+      tags:
+      - connect
+      summary: List namespace subscriptions
+      description: List namespace-scoped trigger subscriptions for all connections in the namespace.
+      responses:
+        '200':
+          description: Namespace subscriptions
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SubscriptionList'
+      parameters:
+      - schema:
+          type: string
+        in: path
+        name: namespace
+        required: true
+    post:
+      operationId: postSmithery.run:namespace.subscriptions
+      tags:
+      - connect
+      summary: Create namespace subscription
+      description: Create a namespace-scoped subscription that receives events from every connection in the namespace.
+      responses:
+        '200':
+          description: Subscription created
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CreateSubscriptionResponse'
+        '400':
+          description: Validation error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ValidationError'
+      parameters:
+      - schema:
+          type: string
+        in: path
+        name: namespace
+        required: true
+  /connect/{namespace}/.subscriptions/{subscriptionId}:
+    delete:
+      operationId: deleteSmithery.run:namespace.subscriptions:subscriptionId
+      tags:
+      - connect
+      summary: Delete namespace subscription
+      description: Delete a namespace-scoped trigger subscription.
+      responses:
+        '200':
+          description: Subscription deleted
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Success'
+        '404':
+          description: Subscription not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+      parameters:
+      - schema:
+          type: string
+        in: path
+        name: namespace
+        required: true
+      - schema:
+          type: string
+        in: path
+        name: subscriptionId
+        required: true
+  /connect/{namespace}/{connectionId}/.triggers/{triggerName}/{triggerId}:
+    get:
+      operationId: getSmithery.run:namespace:connectionId.triggers:triggerName:triggerId
+      tags:
+      - connect
+      summary: Get trigger instance
+      description: Get a specific trigger instance for a connection.
+      responses:
+        '200':
+          description: Trigger instance
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/TriggerInstance'
+        '404':
+          description: Trigger instance not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+      parameters:
+      - schema:
+          type: string
+        in: path
+        name: namespace
+        required: true
+      - schema:
+          type: string
+        in: path
+        name: connectionId
+        required: true
+      - schema:
+          type: string
+        in: path
+        name: triggerName
+        required: true
+      - schema:
+          type: string
+        in: path
+        name: triggerId
+        required: true
+    delete:
+      operationId: deleteSmithery.run:namespace:connectionId.triggers:triggerName:triggerId
+      tags:
+      - connect
+      summary: Delete trigger instance
+      description: Delete a trigger instance and deregister its upstream webhook.
+      responses:
+        '200':
+          description: Trigger instance deleted
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Success'
+        '404':
+          description: Trigger instance not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+      parameters:
+      - schema:
+          type: string
+        in: path
+        name: namespace
+        required: true
+      - schema:
+          type: string
+        in: path
+        name: connectionId
+        required: true
+      - schema:
+          type: string
+        in: path
+        name: triggerName
+        required: true
+      - schema:
+          type: string
+        in: path
+        name: triggerId
+        required: true
+  /connect/{namespace}/{connectionId}/.subscriptions:
+    get:
+      operationId: getSmithery.run:namespace:connectionId.subscriptions
+      tags:
+      - connect
+      summary: List connection subscriptions
+      description: List trigger subscriptions scoped to a single connection.
+      responses:
+        '200':
+          description: Connection subscriptions
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SubscriptionList'
+        '404':
+          description: Connection not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+      parameters:
+      - schema:
+          type: string
+        in: path
+        name: namespace
+        required: true
+      - schema:
+          type: string
+        in: path
+        name: connectionId
+        required: true
+    post:
+      operationId: postSmithery.run:namespace:connectionId.subscriptions
+      tags:
+      - connect
+      summary: Create connection subscription
+      description: Create a connection-scoped subscription that receives events from one connection.
+      responses:
+        '200':
+          description: Subscription created
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CreateSubscriptionResponse'
+        '400':
+          description: Validation error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ValidationError'
+        '404':
+          description: Connection not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+      parameters:
+      - schema:
+          type: string
+        in: path
+        name: namespace
+        required: true
+      - schema:
+          type: string
+        in: path
+        name: connectionId
+        required: true
+  /connect/{namespace}/{connectionId}/.subscriptions/{subscriptionId}:
+    delete:
+      operationId: deleteSmithery.run:namespace:connectionId.subscriptions:subscriptionId
+      tags:
+      - connect
+      summary: Delete connection subscription
+      description: Delete a connection-scoped trigger subscription.
+      responses:
+        '200':
+          description: Subscription deleted
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Success'
+        '404':
+          description: Subscription not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+      parameters:
+      - schema:
+          type: string
+        in: path
+        name: namespace
+        required: true
+      - schema:
+          type: string
+        in: path
+        name: connectionId
+        required: true
+      - schema:
+          type: string
+        in: path
+        name: subscriptionId
+        required: true
+components:
+  schemas:
+    TriggerInstance:
+      type: object
+      properties:
+        id:
+          type: string
+          description: Stable trigger instance id generated by Smithery
+          example: trg_01HW1234567890
+        name:
+          type: string
+          description: Trigger name
+          example: page.updated
+        connection_id:
+          type: string
+          description: Connection id the trigger belongs to
+          example: notion
+        params:
+          description: Trigger instance parameters
+          $ref: '#/components/schemas/LooseObject'
+        created_at:
+          type: string
+          description: ISO 8601 timestamp
+          example: '2026-04-22T12:00:00.000Z'
+      required:
+      - id
+      - name
+      - connection_id
+      - params
+      - created_at
+      additionalProperties: false
+    ToolList:
+      type: object
+      properties:
+        tools:
+          type: array
+          items:
+            $ref: '#/components/schemas/Tool'
+      required:
+      - tools
+      additionalProperties: false
+    Tool:
+      type: object
+      properties:
+        name:
+          type: string
+        title:
+          type: string
+        icons:
+          type: array
+          items:
+            type: object
+            properties:
+              src:
+                type: string
+              mimeType:
+                type: string
+              sizes:
+                type: array
+                items:
+                  type: string
+              theme:
+                type: string
+                enum:
+                - light
+                - dark
+            required:
+            - src
+            additionalProperties: false
+        description:
+          type: string
+        inputSchema:
+          type: object
+          properties:
+            type:
+              type: string
+              const: object
+            properties:
+              type: object
+              propertyNames:
+                type: string
+              additionalProperties: {}
+            required:
+              type: array
+              items:
+                type: string
+          required:
+          - type
+          additionalProperties: {}
+        outputSchema:
+          type: object
+          properties:
+            type:
+              type: string
+              const: object
+            properties:
+              type: object
+              propertyNames:
+                type: string
+              additionalProperties: {}
+            required:
+              type: array
+              items:
+                type: string
+          required:
+          - type
+          additionalProperties: {}
+        annotations:
+          type: object
+          properties:
+            title:
+              type: string
+            readOnlyHint:
+              type: boolean
+            destructiveHint:
+              type: boolean
+            idempotentHint:
+              type: boolean
+            openWorldHint:
+              type: boolean
+          additionalProperties: false
+        execution:
+          type: object
+          properties:
+            taskSupport:
+              type: string
+              enum:
+              - required
+              - optional
+              - forbidden
+          additionalProperties: false
+        _meta:
+          type: object
+          propertyNames:
+            type: string
+          additionalProperties: {}
+      required:
+      - name
+      - inputSchema
+      additionalProperties: false
+    ConnectionsListResponse:
+      type: object
+      properties:
+        connections:
+          type: array
+          items:
+            $ref: '#/components/schemas/Connection'
+        nextCursor:
+          anyOf:
+          - type: string
+          - type: 'null'
+          description: Cursor for next page, null if no more results
+      required:
+      - connections
+      - nextCursor
+      additionalProperties: false
+    ServerInfo:
+      type: object
+      properties:
+        name:
+          type: string
+        title:
+          type: string
+        icons:
+          type: array
+          items:
+            type: object
+            properties:
+              src:
+                type: string
+              mimeType:
+                type: string
+              sizes:
+                type: array
+                items:
+                  type: string
+              theme:
+                type: string
+                enum:
+                - light
+                - dark
+            required:
+            - src
+            additionalProperties: false
+        version:
+          type: string
+        websiteUrl:
+          type: string
+        description:
+          type: string
+      required:
+      - name
+      - version
+      additionalProperties: false
+    CredentialProfileHttp:
+      type: object
+      properties:
+        headers:
+          type: object
+          propertyNames:
+            type: string
+          additionalProperties:
+            $ref: '#/components/schemas/HttpInputField'
+        query:
+          type: object
+          propertyNames:
+            type: string
+          additionalProperties:
+            $ref: '#/components/schemas/HttpInputField'
+      additionalProperties: false
+      id: CredentialProfileHttp
+    MockConfig:
+      type: object
+      properties:
+        enabled:
+          type: boolean
+          description: Turn mock mode on for this connection.
+        scenario:
+          description: Natural-language starting-state for the simulator (threaded into the LLM system prompt so generated data is consistent with the scenario across calls).
+          example: 'Slack workspace with an active #community-ops channel containing recent event-planning messages, plus 50 Airtable candidate records with mixed tenure and interests.'
+          type: string
+      required:
+      - enabled
+      additionalProperties: false
+      id: MockConfig
+    TriggerDelivery:
+      type: object
+      properties:
+        url:
+          type: string
+          description: HTTPS webhook destination where the upstream MCP server delivers events.
+          example: https://my-app.example.com/events
+        secret:
+          type: string
+          description: Standard Webhooks signing secret (whsec_<base64 of 24-64 random bytes>). The upstream MCP server signs each delivery with this.
+          example: whsec_dGVzdF9zZWNyZXRfMjRfYnl0ZXNfbWluaW11bSE=
+      required:
+      - url
+      - secret
+      additionalProperties: false
+    ConnectionStatus:
+      oneOf:
+      - type: object
+        properties:
+          state:
+            type: string
+            const: connected
+        required:
+        - state
+        additionalProperties: false
+        title: ConnectionStatusConnected
+      - type: object
+        properties:
+          state:
+            type: string
+            const: disconnected
+        required:
+        - state
+        additionalProperties: false
+        title: ConnectionStatusDisconnected
+      - type: object
+        properties:
+          state:
+            type: string
+            const: auth_required
+          setupUrl:
+            description: Hosted Smithery URL for completing setup and OAuth
+            type: string
+            format: uri
+          authorizationUrl:
+            description: Deprecated compatibility alias for setupUrl
+            deprecated: true
+            type: string
+            format: uri
+        required:
+        - state
+        additionalProperties: false
+        title: ConnectionStatusAuthRequired
+      - type: object
+        properties:
+          state:
+            type: string
+            const: input_required
+          setupUrl:
+            description: Hosted Smithery URL for completing setup in the browser
+            type: string
+            format: uri
+          http:
+            $ref: '#/components/schemas/CredentialProfileHttp'
+          missing:
+            type: object
+            properties:
+              headers:
+                type: array
+                items:
+                  type: string
+              query:
+                type: array
+                items:
+                  type: string
+            required:
+            - headers
+            - query
+            additionalProperties: false
+        required:
+        - state
+        - http
+        - missing
+        additionalProperties: false
+        title: ConnectionStatusInputRequired
+      - type: object
+        properties:
+          state:
+            type: string
+            const: error
+          message:
+            type: string
+            description: Error message
+        required:
+        - state
+        - message
+        additionalProperties: false
+        title: ConnectionStatusError
+    UpsertConnectionRequest:
+      type: object
+      properties:
+        transport:
+          description: Connection transport. Defaults to the existing connection transport when updating.
+          example: http
+          type: string
+          enum:
+          - http
+          - uplink
+        mcpUrl:
+          description: URL of the MCP server. Required when creating a new connection. Optional when updating — omit to keep the existing URL.
+          example: https://mcp.example.com/sse
+          type: string
+          format: uri
+        name:
+          description: Human-readable name (optional, defaults to connection ID)
+          example: My MCP Server
+          type: string
+          minLength: 1
+          maxLength: 255
+        metadata:
+          description: Custom metadata for filtering connections
+          example:
+            userId: user123
+            team: engineering
+          type: object
+          propertyNames:
+            type: string
+          additionalProperties: {}
+        headers:
+          description: Custom headers to send with MCP requests (stored securely, not returned in responses)
+          example:
+            X-API-Key: secret-key
+          type: object
+          propertyNames:
+            type: string
+          additionalProperties:
+            type: string
+        mock:
+          description: Run this connection in mock mode. Only honored on first creation; ignored on updates to an existing connection.
+          example:
+            enabled: true
+          $ref: '#/components/schemas/MockConfig'
+      additionalProperties: false
+    CreateTriggerRequest:
+      type: object
+      properties:
+        params:
+          default: {}
+          description: Trigger-specific parameters defined by the trigger inputSchema
+          $ref: '#/components/schemas/LooseObject'
+        delivery:
+          $ref: '#/components/schemas/TriggerDelivery'
+      required:
+      - params
+      - delivery
+      additionalProperties: false
+    Error:
+      type: object
+      properties:
+        error:
+          type: string
+          example: not_found
+        message:
+          type: string
+          example: Resource not found
+      required:
+      - error
+      - message
+      additionalProperties: false
+    TriggerDefinition:
+      type: object
+      properties:
+        name:
+          type: string
+          description: Trigger name exposed by the MCP server
+          example: page.updated
+        description:
+          type: string
+        delivery:
+          type: array
+          items:
+            type: string
+          description: Supported delivery modes
+          example:
+          - webhook
+        inputSchema:
+          description: JSON Schema for the params required to create the trigger
+          $ref: '#/components/schemas/LooseObject'
+        payloadSchema:
+          description: JSON Schema for the event payload delivered by the trigger
+          $ref: '#/components/schemas/LooseObject'
+      required:
+      - name
+      - delivery
+      additionalProperties: false
+    Subscription:
+      type: object
+      properties:
+        id:
+          type: string
+          description: Stable subscription id generated by Smithery
+          example: sub_01HW1234567890
+        url:
+          type: string
+          format: uri
+          description: Destination URL for webhook deliveries
+          example: https://my-app.example.com/events
+        connection_id:
+          anyOf:
+          - type: string
+          - type: 'null'
+          description: Connection scope. Null for namespace-wide subscriptions.
+          example: notion
+        created_at:
+          type: string
+          description: ISO 8601 timestamp
+          example: '2026-04-22T12:00:00.000Z'
+      required:
+      - id
+      - url
+      - connection_id
+      - created_at
+      additionalProperties: false
+    HttpInputField:
+      type: object
+      properties:
+        label:
+          type: string
+        description:
+          type: string
+        required:
+          type: boolean
+      required:
+      - label
+      additionalProperties: false
+      id: HttpInputField
+    TriggerDefinitionList:
+      type: array
+      items:
+        $ref: '#/components/schemas/TriggerDefinition'
+    ValidationError:
+      type: object
+      properties:
+        error:
+          type: string
+          const: validation_error
+        message:
+          type: string
+          example: Invalid request
+      required:
+      - error
+      - message
+      additionalProperties: false
+    UnsubscribeDelivery:
+      type: object
+      properties:
+        url:
+          type: string
+          description: The delivery URL of the subscription to remove. Together with name+params it forms the subscription key.
+          example: https://my-app.example.com/events
+      required:
+      - url
+      additionalProperties: false
+    TriggerSubscription:
+      type: object
+      properties:
+        id:
+          type: string
+          description: Stable subscription id derived from (namespace, connection, name, params, delivery.url). Used by the receiver to route via X-MCP-Subscription-Id.
+          example: trg_01HW1234567890
+        refreshBefore:
+          type: string
+          description: ISO 8601 timestamp at which the subscription expires unless refreshed.
+          example: '2026-04-22T13:00:00.000Z'
+      required:
+      - id
+      - refreshBefore
+      additionalProperties: false
+    LooseObject:
+      type: object
+      propertyNames:
+        type: string
+      additionalProperties:
+        x-stainless-any: true
+    CreateConnectionRequest:
+      type: object
+      properties:
+        transport:
+          description: Connection transport. Use `uplink` for a local server paired over Smithery CLI.
+          example: http
+          type: string
+          enum:
+          - http
+          - uplink
+        mcpUrl:
+          description: URL of the MCP server. Required for HTTP connections. Omit for uplink connections.
+          example: https://mcp.example.com/sse
+          type: string
+          format: uri
+        name:
+          description: Human-readable name (optional, defaults to connection ID)
+          example: My MCP Server
+          type: string
+          minLength: 1
+          maxLength: 255
+        metadata:
+          description: Custom metadata for filtering connections
+          example:
+            userId: user123
+            team: engineering
+          type: object
+          propertyNames:
+            type: string
+          additionalProperties: {}
+        headers:
+          description: Custom headers to send with MCP requests (stored securely, not returned in responses)
+          example:
+            X-API-Key: secret-key
+          type: object
+          propertyNames:
+            type: string
+          additionalProperties:
+            type: string
+        mock:
+          description: Run this connection in mock mode. Tool calls are LLM-simulated against the registry's scanned schemas and never reach the upstream server. Provide an optional `scenario` to seed the simulator with a starting-state description. Registry servers only; frozen at creation (cannot be toggled via PUT).
+          example:
+            enabled: true
+            scenario: A developer inbox with 3 unread Q4 planning threads.
+          $ref: '#/components/schemas/MockConfig'
+      additionalProperties: false
+    CreateSubscriptionResponse:
+      type: object
+      properties:
+        id:
+          type: string
+          description: Stable subscription id generated by Smithery
+          example: sub_01HW1234567890
+        url:
+          type: string
+          format: uri
+          description: Destination URL for webhook deliveries
+          example: https://my-app.example.com/events
+        connection_id:
+          anyOf:
+          - type: string
+          - type: 'null'
+          description: Connection scope. Null for namespace-wide subscriptions.
+          example: notion
+        created_at:
+          type: string
+          description: ISO 8601 timestamp
+          example: '2026-04-22T12:00:00.000Z'
+        secret:
+          type: string
+          description: Webhook signing secret. Returned only once at creation time.
+          example: whsec_0123456789abcdef
+      required:
+      - id
+      - url
+      - connection_id
+      - created_at
+      - secret
+      additionalProperties: false
+    SubscriptionList:
+      type: array
+      items:
+        $ref: '#/components/schemas/Subscription'
+    ToolResponse:
+      anyOf:
+      - $ref: '#/components/schemas/Tool'
+      - $ref: '#/components/schemas/ToolList'
+    Connection:
+      type: object
+      properties:
+        connectionId:
+          type: string
+          description: Connection ID (auto-generated or developer-defined)
+          example: clever-dolphin-a9X3
+        name:
+          type: string
+          description: Human-readable name
+        transport:
+          description: Connection transport
+          type: string
+          enum:
+          - http
+          - uplink
+        mcpUrl:
+          anyOf:
+          - type: string
+          - type: 'null'
+          description: MCP server URL. Null for uplink connections.
+        metadata:
+          anyOf:
+          - type: object
+            propertyNames:
+              type: string
+            additionalProperties: {}
+          - type: 'null'
+        mock:
+          description: 'Mock-mode config: `{enabled: true, scenario?}` when LLM-simulated, absent otherwise.'
+          $ref: '#/components/schemas/MockConfig'
+        iconUrl:
+          anyOf:
+          - type: string
+          - type: 'null'
+        createdAt:
+          description: ISO 8601 timestamp
+          type: string
+        status:
+          description: Last known connection status
+          $ref: '#/components/schemas/ConnectionStatus'
+        serverInfo:
+          description: Server information from MCP initialization (name, version)
+          $ref: '#/components/schemas/ServerInfo'
+      required:
+      - connectionId
+      - name
+      - mcpUrl
+      - metadata
+      additionalProperties: false
+    DeleteTriggerRequest:
+      type: object
+      properties:
+        params:
+          default: {}
+          description: The same params used at subscribe time. Forms part of the subscription key.
+          $ref: '#/components/schemas/LooseObject'
+        delivery:
+          $ref: '#/components/schemas/UnsubscribeDelivery'
+      required:
+      - params
+      - delivery
+      additionalProperties: false
+    Success:
+      type: object
+      properties:
+        success:
+          type: boolean
+          const: true
+      required:
+      - success
+      additionalProperties: false
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer
+      description: Smithery API key as Bearer token

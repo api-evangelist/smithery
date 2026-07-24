@@ -1,0 +1,253 @@
+openapi: 3.1.0
+info:
+  title: Smithery Platform connect connect.mcp API
+  description: API for the Smithery platform — discover, deploy, and manage MCP (Model Context Protocol) servers. Provides endpoints for browsing the server registry, managing deployments, creating scoped access tokens, and connecting to MCP servers.
+  version: 1.0.0
+servers:
+- url: https://api.smithery.ai
+security:
+- bearerAuth: []
+tags:
+- name: connect.mcp
+paths:
+  /connect/{namespace}/{connectionId}/mcp:
+    post:
+      operationId: post:namespace:connectionIdMcp
+      tags:
+      - connect.mcp
+      summary: MCP endpoint
+      description: Stateless MCP endpoint using Streamable HTTP transport. Accepts JSON-RPC requests and notifications. Session management is handled internally by Connect—clients should not send mcp-session-id headers. Requires service token with mcp scope.
+      responses:
+        '200':
+          description: JSON-RPC response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/JsonRpcResponse'
+        '202':
+          description: Notification accepted
+        '400':
+          description: Invalid request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/JsonRpcError'
+        '401':
+          description: Authorization required
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AuthRequiredError'
+        '404':
+          description: Connection not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/JsonRpcError'
+        '405':
+          description: Method not allowed (stateless mode)
+        '409':
+          description: Input required
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/InputRequiredError'
+        '500':
+          description: Internal error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/JsonRpcError'
+        '502':
+          description: Upstream error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/JsonRpcError'
+      parameters:
+      - schema:
+          type: string
+        in: path
+        name: namespace
+        required: true
+      - schema:
+          type: string
+        in: path
+        name: connectionId
+        required: true
+components:
+  schemas:
+    JsonRpcResponse:
+      type: object
+      properties:
+        jsonrpc:
+          type: string
+          const: '2.0'
+        id:
+          anyOf:
+          - type: string
+          - type: number
+          - type: 'null'
+        result: {}
+      required:
+      - jsonrpc
+      - id
+      additionalProperties: false
+    InputRequiredError:
+      type: object
+      properties:
+        jsonrpc:
+          type: string
+          const: '2.0'
+        id:
+          anyOf:
+          - type: string
+          - type: number
+          - type: 'null'
+        error:
+          type: object
+          properties:
+            code:
+              type: number
+              const: -32002
+            message:
+              type: string
+              const: Input required
+            data:
+              type: object
+              properties:
+                http:
+                  $ref: '#/components/schemas/CredentialProfileHttp'
+                missing:
+                  type: object
+                  properties:
+                    headers:
+                      type: array
+                      items:
+                        type: string
+                    query:
+                      type: array
+                      items:
+                        type: string
+                  required:
+                  - headers
+                  - query
+                  additionalProperties: false
+              required:
+              - http
+              - missing
+              additionalProperties: false
+          required:
+          - code
+          - message
+          - data
+          additionalProperties: false
+      required:
+      - jsonrpc
+      - id
+      - error
+      additionalProperties: false
+    HttpInputField:
+      type: object
+      properties:
+        label:
+          type: string
+        description:
+          type: string
+        required:
+          type: boolean
+      required:
+      - label
+      additionalProperties: false
+      id: HttpInputField
+    CredentialProfileHttp:
+      type: object
+      properties:
+        headers:
+          type: object
+          propertyNames:
+            type: string
+          additionalProperties:
+            $ref: '#/components/schemas/HttpInputField'
+        query:
+          type: object
+          propertyNames:
+            type: string
+          additionalProperties:
+            $ref: '#/components/schemas/HttpInputField'
+      additionalProperties: false
+      id: CredentialProfileHttp
+    JsonRpcError:
+      type: object
+      properties:
+        jsonrpc:
+          type: string
+          const: '2.0'
+        id:
+          anyOf:
+          - type: string
+          - type: number
+          - type: 'null'
+        error:
+          type: object
+          properties:
+            code:
+              type: number
+              example: -32600
+            message:
+              type: string
+              example: Invalid Request
+            data: {}
+          required:
+          - code
+          - message
+          additionalProperties: false
+      required:
+      - jsonrpc
+      - id
+      - error
+      additionalProperties: false
+    AuthRequiredError:
+      type: object
+      properties:
+        jsonrpc:
+          type: string
+          const: '2.0'
+        id:
+          anyOf:
+          - type: string
+          - type: number
+          - type: 'null'
+        error:
+          type: object
+          properties:
+            code:
+              type: number
+              const: -32001
+            message:
+              type: string
+              const: Authorization required
+            data:
+              type: object
+              properties:
+                authorizationUrl:
+                  type: string
+                  format: uri
+              required:
+              - authorizationUrl
+              additionalProperties: false
+          required:
+          - code
+          - message
+          - data
+          additionalProperties: false
+      required:
+      - jsonrpc
+      - id
+      - error
+      additionalProperties: false
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer
+      description: Smithery API key as Bearer token

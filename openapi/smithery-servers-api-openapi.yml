@@ -1,0 +1,1877 @@
+openapi: 3.1.0
+info:
+  title: Smithery Platform connect servers API
+  description: API for the Smithery platform — discover, deploy, and manage MCP (Model Context Protocol) servers. Provides endpoints for browsing the server registry, managing deployments, creating scoped access tokens, and connecting to MCP servers.
+  version: 1.0.0
+servers:
+- url: https://api.smithery.ai
+security:
+- bearerAuth: []
+tags:
+- name: servers
+  description: Browse the MCP server registry, manage server configuration, and handle deployments
+paths:
+  /servers/{qualifiedName}:
+    get:
+      operationId: getServers:namespace
+      tags:
+      - servers
+      summary: Get a server
+      description: Retrieve server details including connections, tools, and security status.
+      responses:
+        '200':
+          description: Server found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Server'
+        '404':
+          description: Server or namespace not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/RegistryError'
+      parameters:
+      - schema:
+          type: string
+        in: path
+        name: qualifiedName
+        required: true
+        description: The server's qualified name (e.g. 'namespace/server' or 'namespace' for namespace-only servers). Use %2F to encode the slash.
+      x-codeSamples:
+      - lang: JavaScript
+        source: "import Smithery from '@smithery/api';\n\nconst client = new Smithery({\n  apiKey: process.env['SMITHERY_API_KEY'], // This is the default and can be omitted\n});\n\nconst server = await client.servers.get('qualifiedName');\n\nconsole.log(server.connections);"
+    put:
+      operationId: putServers:namespace
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                displayName:
+                  example: My Server
+                  type: string
+                description:
+                  example: A simple server
+                  type: string
+              id: CreateNamespaceServerRequest
+      tags:
+      - servers
+      summary: Create a server
+      description: Create a new server. Idempotent — returns success if the server already exists and is owned by the caller.
+      responses:
+        '201':
+          description: Server created successfully
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  namespace:
+                    type: string
+                    example: myorg
+                  server:
+                    type: string
+                    example: ''
+                  displayName:
+                    type: string
+                    example: My Server
+                  description:
+                    type: string
+                    example: A simple server
+                  createdAt:
+                    type: string
+                    example: '2024-01-01T00:00:00.000Z'
+                required:
+                - namespace
+                - server
+                - displayName
+                - description
+                - createdAt
+                id: CreateNamespaceServerResponse
+        '400':
+          description: Bad request (invalid name format)
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/RegistryError'
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/RegistryError'
+        '403':
+          description: Forbidden (namespace not owned by user or missing servers:write permission)
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/RegistryError'
+        '404':
+          description: Namespace not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/RegistryError'
+      parameters:
+      - schema:
+          type: string
+        in: path
+        name: qualifiedName
+        required: true
+        description: The server's qualified name (e.g. 'namespace/server' or 'namespace' for namespace-only servers). Use %2F to encode the slash.
+      x-codeSamples:
+      - lang: JavaScript
+        source: "import Smithery from '@smithery/api';\n\nconst client = new Smithery({\n  apiKey: process.env['SMITHERY_API_KEY'], // This is the default and can be omitted\n});\n\nconst server = await client.servers.create('qualifiedName');\n\nconsole.log(server.createdAt);"
+    patch:
+      operationId: patchServers:namespace
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                displayName:
+                  type: string
+                description:
+                  type: string
+                homepage:
+                  anyOf:
+                  - type: string
+                  - type: 'null'
+                repositoryUrl:
+                  anyOf:
+                  - type: string
+                  - type: 'null'
+                backlinkUrl:
+                  anyOf:
+                  - type: string
+                  - type: 'null'
+                license:
+                  anyOf:
+                  - type: string
+                  - type: 'null'
+                iconUrl:
+                  anyOf:
+                  - type: string
+                  - type: 'null'
+                unlisted:
+                  type: boolean
+              id: UpdateServerRequest
+      tags:
+      - servers
+      summary: Update a server
+      description: Update server metadata such as display name, description, repository, icon, or visibility.
+      responses:
+        '200':
+          description: Server updated
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                  namespace:
+                    type: string
+                  server:
+                    type: string
+                required:
+                - success
+                - namespace
+                - server
+                id: UpdateServerResponse
+        '400':
+          description: Bad request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/RegistryError'
+        '403':
+          description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/RegistryError'
+        '404':
+          description: Server not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/RegistryError'
+      parameters:
+      - schema:
+          type: string
+        in: path
+        name: qualifiedName
+        required: true
+        description: The server's qualified name (e.g. 'namespace/server' or 'namespace' for namespace-only servers). Use %2F to encode the slash.
+      x-codeSamples:
+      - lang: JavaScript
+        source: "import Smithery from '@smithery/api';\n\nconst client = new Smithery({\n  apiKey: process.env['SMITHERY_API_KEY'], // This is the default and can be omitted\n});\n\nconst server = await client.servers.update('qualifiedName');\n\nconsole.log(server.namespace);"
+    delete:
+      operationId: deleteServers:namespace
+      tags:
+      - servers
+      summary: Delete a server
+      description: Permanently delete a server, its releases, and associated resources.
+      responses:
+        '200':
+          description: Server deleted
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                  namespace:
+                    type: string
+                  server:
+                    type: string
+                required:
+                - success
+                - namespace
+                - server
+                id: DeleteSuccess
+        '404':
+          description: Server not found or not owned by user
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/RegistryError'
+      parameters:
+      - schema:
+          type: string
+        in: path
+        name: qualifiedName
+        required: true
+        description: The server's qualified name (e.g. 'namespace/server' or 'namespace' for namespace-only servers). Use %2F to encode the slash.
+      x-codeSamples:
+      - lang: JavaScript
+        source: "import Smithery from '@smithery/api';\n\nconst client = new Smithery({\n  apiKey: process.env['SMITHERY_API_KEY'], // This is the default and can be omitted\n});\n\nconst server = await client.servers.delete('qualifiedName');\n\nconsole.log(server.namespace);"
+  /servers/{qualifiedName}/download:
+    get:
+      operationId: getServers:namespaceDownload
+      tags:
+      - servers
+      summary: Download server bundle
+      description: Download the MCPB bundle for the latest successful stdio release.
+      responses:
+        '200':
+          description: Bundle file
+          content:
+            application/zip:
+              schema:
+                type: string
+                format: binary
+        '404':
+          description: Bundle not found
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: string
+                required:
+                - error
+                id: BundleDownloadError
+      parameters:
+      - schema:
+          type: string
+        in: path
+        name: qualifiedName
+        required: true
+        description: The server's qualified name (e.g. 'namespace/server' or 'namespace' for namespace-only servers). Use %2F to encode the slash.
+      x-codeSamples:
+      - lang: JavaScript
+        source: "import Smithery from '@smithery/api';\n\nconst client = new Smithery({\n  apiKey: process.env['SMITHERY_API_KEY'], // This is the default and can be omitted\n});\n\nconst response = await client.servers.download('qualifiedName');\n\nconsole.log(response);\n\nconst content = await response.blob();\nconsole.log(content);"
+  /servers/{qualifiedName}/releases:
+    put:
+      operationId: putServers:namespaceReleases
+      tags:
+      - servers
+      summary: Publish a server
+      description: Submit a release via multipart form. Supports hosted (JS module upload), external (URL), and stdio (MCPB bundle) release types.
+      requestBody:
+        content:
+          multipart/form-data:
+            schema:
+              type: object
+              properties:
+                payload:
+                  type: string
+                  description: JSON-encoded release payload. See DeployPayload schema for structure.
+                module:
+                  type: string
+                  format: binary
+                  description: JavaScript module file (for hosted releases)
+                sourcemap:
+                  type: string
+                  format: binary
+                  description: Source map file (for hosted releases)
+                bundle:
+                  type: string
+                  format: binary
+                  description: MCPB bundle file (for stdio releases)
+              required:
+              - payload
+      responses:
+        '202':
+          description: Release accepted
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DeployResponse'
+        '400':
+          description: Invalid payload
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DeploymentError'
+      parameters:
+      - schema:
+          type: string
+        in: path
+        name: qualifiedName
+        required: true
+        description: The server's qualified name (e.g. 'namespace/server' or 'namespace' for namespace-only servers). Use %2F to encode the slash.
+      x-codeSamples:
+      - lang: JavaScript
+        source: "import fs from 'fs';\nimport Smithery from '@smithery/api';\n\nconst client = new Smithery({\n  apiKey: process.env['SMITHERY_API_KEY'], // This is the default and can be omitted\n});\n\nconst response = await client.servers.releases.deploy('qualifiedName', { payload: 'payload' });\n\nconsole.log(response.deploymentId);"
+    get:
+      operationId: getServers:namespaceReleases
+      parameters:
+      - in: query
+        name: page
+        schema:
+          default: 1
+          type: integer
+          minimum: 1
+          maximum: 9007199254740991
+      - in: query
+        name: pageSize
+        schema:
+          default: 20
+          type: integer
+          minimum: 1
+          maximum: 100
+      - schema:
+          type: string
+        in: path
+        name: qualifiedName
+        required: true
+        description: The server's qualified name (e.g. 'namespace/server' or 'namespace' for namespace-only servers). Use %2F to encode the slash.
+      tags:
+      - servers
+      summary: List releases
+      description: List releases ordered by most recent first. Logs are omitted — fetch a specific release to see logs.
+      responses:
+        '200':
+          description: Paginated list of releases
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  releases:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        id:
+                          type: string
+                          format: uuid
+                          pattern: ^([0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[1-8][0-9a-fA-F]{3}-[89abAB][0-9a-fA-F]{3}-[0-9a-fA-F]{12}|00000000-0000-0000-0000-000000000000|ffffffff-ffff-ffff-ffff-ffffffffffff)$
+                        status:
+                          type: string
+                          description: 'Current status: QUEUED, WORKING, SUCCESS, FAILURE, FAILURE_SCAN, AUTH_REQUIRED, AUTH_TIMEOUT, CANCELLED, or INTERNAL_ERROR.'
+                        type:
+                          type: string
+                          description: 'Release type: hosted_shttp (Smithery-hosted), external_shttp (external URL), or stdio (local binary).'
+                        commit:
+                          description: Git commit SHA that triggered this release.
+                          anyOf:
+                          - type: string
+                          - type: 'null'
+                        commitMessage:
+                          description: Git commit message associated with this release.
+                          anyOf:
+                          - type: string
+                          - type: 'null'
+                        branch:
+                          description: Git branch this release was built from.
+                          anyOf:
+                          - type: string
+                          - type: 'null'
+                        upstreamUrl:
+                          description: Upstream MCP server URL. Present only for external releases.
+                          anyOf:
+                          - type: string
+                          - type: 'null'
+                        mcpUrl:
+                          description: The MCP endpoint URL for connecting to this server.
+                          type: string
+                          format: uri
+                        createdAt:
+                          type: string
+                          description: ISO 8601 timestamp of when the release was created.
+                        updatedAt:
+                          type: string
+                          description: ISO 8601 timestamp of the last status change.
+                      required:
+                      - id
+                      - status
+                      - type
+                      - createdAt
+                      - updatedAt
+                  pagination:
+                    type: object
+                    properties:
+                      currentPage:
+                        type: integer
+                        minimum: -9007199254740991
+                        maximum: 9007199254740991
+                      pageSize:
+                        type: integer
+                        minimum: -9007199254740991
+                        maximum: 9007199254740991
+                      totalPages:
+                        type: integer
+                        minimum: -9007199254740991
+                        maximum: 9007199254740991
+                      totalCount:
+                        type: integer
+                        minimum: -9007199254740991
+                        maximum: 9007199254740991
+                    required:
+                    - currentPage
+                    - pageSize
+                    - totalPages
+                    - totalCount
+                required:
+                - releases
+                - pagination
+                id: DeploymentListPage
+        '404':
+          description: Server not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DeploymentError'
+      x-codeSamples:
+      - lang: JavaScript
+        source: "import Smithery from '@smithery/api';\n\nconst client = new Smithery({\n  apiKey: process.env['SMITHERY_API_KEY'], // This is the default and can be omitted\n});\n\n// Automatically fetches more pages as needed.\nfor await (const releaseListResponse of client.servers.releases.list('qualifiedName')) {\n  console.log(releaseListResponse.id);\n}"
+  /servers/{qualifiedName}/releases/{id}:
+    get:
+      operationId: getServers:namespaceReleases:id
+      tags:
+      - servers
+      summary: Get a release
+      description: Retrieve release details including status, git metadata, pipeline logs, and MCP endpoint URL.
+      responses:
+        '200':
+          description: Release info
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DeploymentInfo'
+        '404':
+          description: Server or release not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DeploymentError'
+      parameters:
+      - schema:
+          type: string
+        in: path
+        name: qualifiedName
+        required: true
+        description: The server's qualified name (e.g. 'namespace/server' or 'namespace' for namespace-only servers). Use %2F to encode the slash.
+      - schema:
+          type: string
+        in: path
+        name: id
+        required: true
+      x-codeSamples:
+      - lang: JavaScript
+        source: "import Smithery from '@smithery/api';\n\nconst client = new Smithery({\n  apiKey: process.env['SMITHERY_API_KEY'], // This is the default and can be omitted\n});\n\nconst release = await client.servers.releases.get('id', { qualifiedName: 'qualifiedName' });\n\nconsole.log(release.id);"
+  /servers/{qualifiedName}/releases/{id}/stream:
+    get:
+      operationId: getServers:namespaceReleases:idStream
+      tags:
+      - servers
+      summary: Stream release logs
+      description: Real-time SSE stream of release logs and status updates.
+      responses:
+        '200':
+          description: SSE stream of release events
+          content:
+            text/event-stream:
+              schema:
+                type: string
+                description: 'SSE events: init (with buffered logs), log, status, complete'
+        '404':
+          description: Release not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DeploymentError'
+      parameters:
+      - schema:
+          type: string
+        in: path
+        name: qualifiedName
+        required: true
+        description: The server's qualified name (e.g. 'namespace/server' or 'namespace' for namespace-only servers). Use %2F to encode the slash.
+      - schema:
+          type: string
+        in: path
+        name: id
+        required: true
+      x-codeSamples:
+      - lang: JavaScript
+        source: "import Smithery from '@smithery/api';\n\nconst client = new Smithery({\n  apiKey: process.env['SMITHERY_API_KEY'], // This is the default and can be omitted\n});\n\nconst response = await client.servers.releases.stream('id', { qualifiedName: 'qualifiedName' });\n\nconsole.log(response);"
+  /servers/{qualifiedName}/releases/{id}/resume:
+    post:
+      operationId: postServers:namespaceReleases:idResume
+      tags:
+      - servers
+      summary: Resume a release
+      description: Resume a paused release (e.g. after OAuth authorization). Use id='latest' to resume the most recent one.
+      responses:
+        '202':
+          description: Resume accepted
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ResumeResponse'
+        '400':
+          description: Release not in resumable state
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DeploymentError'
+        '404':
+          description: Server or release not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DeploymentError'
+      parameters:
+      - schema:
+          type: string
+        in: path
+        name: qualifiedName
+        required: true
+        description: The server's qualified name (e.g. 'namespace/server' or 'namespace' for namespace-only servers). Use %2F to encode the slash.
+      - schema:
+          type: string
+        in: path
+        name: id
+        required: true
+      x-codeSamples:
+      - lang: JavaScript
+        source: "import Smithery from '@smithery/api';\n\nconst client = new Smithery({\n  apiKey: process.env['SMITHERY_API_KEY'], // This is the default and can be omitted\n});\n\nconst response = await client.servers.releases.resume('id', { qualifiedName: 'qualifiedName' });\n\nconsole.log(response.deploymentId);"
+  /servers/{qualifiedName}/logs:
+    get:
+      operationId: getServers:namespaceLogs
+      tags:
+      - servers
+      summary: List runtime logs
+      description: Fetch recent runtime logs grouped by invocation.
+      responses:
+        '200':
+          description: Logs fetched successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/RuntimeLogsResponse'
+        '403':
+          description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/RuntimeLogsError'
+        '404':
+          description: Server not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/RuntimeLogsError'
+        '500':
+          description: Internal server error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/RuntimeLogsError'
+      parameters:
+      - in: query
+        name: from
+        schema:
+          example: '2026-01-01T00:00:00Z'
+          type: string
+        description: Start of time range (ISO 8601).
+      - in: query
+        name: to
+        schema:
+          example: '2026-01-01T01:00:00Z'
+          type: string
+        description: End of time range (ISO 8601).
+      - in: query
+        name: limit
+        schema:
+          example: 20
+          type: integer
+          minimum: 1
+          maximum: 100
+        description: Max invocations to return. Defaults to 20.
+      - in: query
+        name: search
+        schema:
+          example: error
+          type: string
+        description: Text search across log messages.
+      - schema:
+          type: string
+        in: path
+        name: qualifiedName
+        required: true
+        description: The server's qualified name (e.g. 'namespace/server' or 'namespace' for namespace-only servers). Use %2F to encode the slash.
+      x-codeSamples:
+      - lang: JavaScript
+        source: "import Smithery from '@smithery/api';\n\nconst client = new Smithery({\n  apiKey: process.env['SMITHERY_API_KEY'], // This is the default and can be omitted\n});\n\nconst logs = await client.servers.logs.list('qualifiedName');\n\nconsole.log(logs.invocations);"
+  /servers/{qualifiedName}/secrets:
+    get:
+      operationId: getServers:namespaceSecrets
+      tags:
+      - servers
+      summary: List secrets
+      description: List secret names. Values are not returned.
+      responses:
+        '200':
+          description: Secrets listed
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    name:
+                      type: string
+                      example: API_KEY
+                    type:
+                      type: string
+                      example: secret_text
+                  required:
+                  - name
+                  - type
+        '404':
+          description: Server not found
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: string
+                    example: Server not found
+                required:
+                - error
+      parameters:
+      - schema:
+          type: string
+        in: path
+        name: qualifiedName
+        required: true
+        description: The server's qualified name (e.g. 'namespace/server' or 'namespace' for namespace-only servers). Use %2F to encode the slash.
+      x-hidden: true
+      x-codeSamples:
+      - lang: JavaScript
+        source: "import Smithery from '@smithery/api';\n\nconst client = new Smithery({\n  apiKey: process.env['SMITHERY_API_KEY'], // This is the default and can be omitted\n});\n\nconst secrets = await client.servers.secrets.list('qualifiedName');\n\nconsole.log(secrets);"
+    put:
+      operationId: putServers:namespaceSecrets
+      tags:
+      - servers
+      summary: Set a secret
+      description: Create or update a secret value.
+      responses:
+        '200':
+          description: Secret updated
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                required:
+                - success
+        '404':
+          description: Server not found
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: string
+                    example: Server not found
+                required:
+                - error
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                name:
+                  type: string
+                  minLength: 1
+                value:
+                  type: string
+                  minLength: 1
+              required:
+              - name
+              - value
+      parameters:
+      - schema:
+          type: string
+        in: path
+        name: qualifiedName
+        required: true
+        description: The server's qualified name (e.g. 'namespace/server' or 'namespace' for namespace-only servers). Use %2F to encode the slash.
+      x-hidden: true
+      x-codeSamples:
+      - lang: JavaScript
+        source: "import Smithery from '@smithery/api';\n\nconst client = new Smithery({\n  apiKey: process.env['SMITHERY_API_KEY'], // This is the default and can be omitted\n});\n\nconst response = await client.servers.secrets.set('qualifiedName', { name: 'x', value: 'x' });\n\nconsole.log(response.success);"
+  /servers/{qualifiedName}/secrets/{secretName}:
+    delete:
+      operationId: deleteServers:namespaceSecrets:secretName
+      tags:
+      - servers
+      summary: Delete a secret
+      description: Remove a secret by name.
+      responses:
+        '200':
+          description: Secret deleted
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                required:
+                - success
+        '404':
+          description: Server not found
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: string
+                    example: Server not found
+                required:
+                - error
+      parameters:
+      - schema:
+          type: string
+        in: path
+        name: qualifiedName
+        required: true
+        description: The server's qualified name (e.g. 'namespace/server' or 'namespace' for namespace-only servers). Use %2F to encode the slash.
+      - schema:
+          type: string
+        in: path
+        name: secretName
+        required: true
+      x-hidden: true
+      x-codeSamples:
+      - lang: JavaScript
+        source: "import Smithery from '@smithery/api';\n\nconst client = new Smithery({\n  apiKey: process.env['SMITHERY_API_KEY'], // This is the default and can be omitted\n});\n\nconst secret = await client.servers.secrets.delete('secretName', {\n  qualifiedName: 'qualifiedName',\n});\n\nconsole.log(secret.success);"
+  /servers/{qualifiedName}/icon:
+    put:
+      operationId: putServers:namespaceIcon
+      tags:
+      - servers
+      summary: Upload server icon
+      description: 'Upload or replace the server icon. Accepts a single image file via multipart/form-data. Max 1MB. Supported formats: PNG, JPEG, GIF, SVG, WebP.'
+      responses:
+        '200':
+          description: Icon uploaded successfully
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  iconUrl:
+                    type: string
+                    example: https://icons.smithery.ai/server-id.png
+                required:
+                - iconUrl
+                id: IconResponse
+        '400':
+          description: Bad request (invalid file type, too large, or no file)
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: string
+                    example: File too large
+                required:
+                - error
+                id: IconError
+        '403':
+          description: Forbidden (user doesn't own server)
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: string
+                    example: File too large
+                required:
+                - error
+                id: IconError
+        '404':
+          description: Server not found
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: string
+                    example: File too large
+                required:
+                - error
+                id: IconError
+      parameters:
+      - schema:
+          type: string
+        in: path
+        name: qualifiedName
+        required: true
+        description: The server's qualified name (e.g. 'namespace/server' or 'namespace' for namespace-only servers). Use %2F to encode the slash.
+      x-codeSamples:
+      - lang: JavaScript
+        source: "import Smithery from '@smithery/api';\n\nconst client = new Smithery({\n  apiKey: process.env['SMITHERY_API_KEY'], // This is the default and can be omitted\n});\n\nconst response = await client.servers.icon.upload('qualifiedName');\n\nconsole.log(response.iconUrl);"
+    delete:
+      operationId: deleteServers:namespaceIcon
+      tags:
+      - servers
+      summary: Delete server icon
+      description: Remove the server's icon.
+      responses:
+        '200':
+          description: Icon deleted successfully
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                    example: true
+                required:
+                - success
+                id: IconDeleteResponse
+        '403':
+          description: Forbidden (user doesn't own server)
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: string
+                    example: File too large
+                required:
+                - error
+                id: IconError
+        '404':
+          description: Server not found
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: string
+                    example: File too large
+                required:
+                - error
+                id: IconError
+      parameters:
+      - schema:
+          type: string
+        in: path
+        name: qualifiedName
+        required: true
+        description: The server's qualified name (e.g. 'namespace/server' or 'namespace' for namespace-only servers). Use %2F to encode the slash.
+      x-codeSamples:
+      - lang: JavaScript
+        source: "import Smithery from '@smithery/api';\n\nconst client = new Smithery({\n  apiKey: process.env['SMITHERY_API_KEY'], // This is the default and can be omitted\n});\n\nconst icon = await client.servers.icon.delete('qualifiedName');\n\nconsole.log(icon.success);"
+    get:
+      operationId: getServers:namespaceIcon
+      tags:
+      - servers
+      summary: Get server icon
+      description: Retrieve the server's icon image. Returns the image directly with appropriate content type.
+      responses:
+        '200':
+          description: Icon image
+          content:
+            image/*:
+              schema:
+                type: string
+                format: binary
+        '404':
+          description: No icon found
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: string
+                    example: File too large
+                required:
+                - error
+                id: IconError
+      parameters:
+      - schema:
+          type: string
+        in: path
+        name: qualifiedName
+        required: true
+        description: The server's qualified name (e.g. 'namespace/server' or 'namespace' for namespace-only servers). Use %2F to encode the slash.
+      x-codeSamples:
+      - lang: JavaScript
+        source: "import Smithery from '@smithery/api';\n\nconst client = new Smithery({\n  apiKey: process.env['SMITHERY_API_KEY'], // This is the default and can be omitted\n});\n\nconst icon = await client.servers.icon.get('qualifiedName');\n\nconsole.log(icon);\n\nconst content = await icon.blob();\nconsole.log(content);"
+  /servers/{qualifiedName}/experimental/tools/{toolName}/output-schema:
+    get:
+      operationId: getServers:namespaceExperimentalTools:toolNameOutput-schema
+      tags:
+      - servers
+      summary: Infer a tool output schema
+      description: Infer a best-effort Zod schema from recent successful Tinybird tool outputs. All discovered object fields are marked optional.
+      responses:
+        '200':
+          description: Inferred tool output schema
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  qualifiedName:
+                    type: string
+                    example: smithery-ai/github
+                  toolName:
+                    type: string
+                    example: search_repositories
+                  sampleCount:
+                    type: number
+                    example: 25
+                  zodSchema:
+                    type: string
+                    example: 'z.object({ "items": z.array(z.object({})).optional() })'
+                required:
+                - qualifiedName
+                - toolName
+                - sampleCount
+                - zodSchema
+                id: ToolOutputSchemaResponse
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: string
+                    example: No output samples found
+                required:
+                - error
+                id: ToolOutputSchemaError
+        '403':
+          description: Forbidden
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: string
+                    example: No output samples found
+                required:
+                - error
+                id: ToolOutputSchemaError
+        '404':
+          description: No output samples found
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: string
+                    example: No output samples found
+                required:
+                - error
+                id: ToolOutputSchemaError
+        '503':
+          description: Tinybird is not configured
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: string
+                    example: No output samples found
+                required:
+                - error
+                id: ToolOutputSchemaError
+      parameters:
+      - schema:
+          type: string
+        in: path
+        name: qualifiedName
+        required: true
+        description: The server's qualified name (e.g. 'namespace/server' or 'namespace' for namespace-only servers). Use %2F to encode the slash.
+      - schema:
+          type: string
+        in: path
+        name: toolName
+        required: true
+  /servers:
+    get:
+      operationId: getServers
+      tags:
+      - servers
+      summary: List all servers
+      description: Search and browse public MCP servers in the Smithery registry. Supports full-text and semantic search via the `q` parameter, and filtering by deployment status, verification, ownership, and more.
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ServersListResponse'
+        '400':
+          description: Bad request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ServersListError'
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ServersListError'
+        '422':
+          description: Unprocessable entity
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ServersListError'
+      parameters:
+      - in: query
+        name: q
+        schema:
+          type: string
+        description: Search query for full-text and semantic search across server names and descriptions.
+      - in: query
+        name: page
+        schema:
+          type: integer
+          minimum: 1
+          maximum: 9007199254740991
+        description: Page number (1-indexed).
+      - in: query
+        name: pageSize
+        schema:
+          type: integer
+          minimum: 1
+          maximum: 100
+        description: Number of results per page (default 10, max 100).
+      - in: query
+        name: topK
+        schema:
+          type: integer
+          minimum: 10
+          maximum: 500
+        description: Maximum number of candidate results to consider from the search index before pagination. The server applies a hard cap of 500 to keep the rerank window bounded; pass `seed` for stable deep pagination.
+      - in: query
+        name: fields
+        schema:
+          type: string
+        description: Comma-separated list of fields to include in response
+      - in: query
+        name: ids
+        schema:
+          type: array
+          items:
+            type: string
+            format: uuid
+            pattern: ^([0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[1-8][0-9a-fA-F]{3}-[89abAB][0-9a-fA-F]{3}-[0-9a-fA-F]{12}|00000000-0000-0000-0000-000000000000|ffffffff-ffff-ffff-ffff-ffffffffffff)$
+        description: Filter by specific server IDs.
+      - in: query
+        name: qualifiedName
+        schema:
+          type: string
+        description: 'Exact match on the server''s qualified name (e.g. "smithery/hello-world"). Deprecated: use GET /servers/:namespace/:server instead.'
+      - in: query
+        name: namespace
+        schema:
+          type: string
+        description: Filter by the namespace that owns the server.
+      - in: query
+        name: remote
+        schema:
+          type: string
+          enum:
+          - '0'
+          - '1'
+          - 'true'
+          - 'false'
+        description: Filter by remote status. Remote servers are accessed via URL; non-remote servers run locally via stdio.
+      - in: query
+        name: isDeployed
+        schema:
+          type: string
+          enum:
+          - '0'
+          - '1'
+          - 'true'
+          - 'false'
+        description: Filter by deployment status. Deployed servers are hosted on Smithery infrastructure.
+      - in: query
+        name: verified
+        schema:
+          type: string
+          enum:
+          - '0'
+          - '1'
+          - 'true'
+          - 'false'
+        description: Filter to only verified servers.
+      - in: query
+        name: smitheryManaged
+        schema:
+          type: string
+          enum:
+          - '0'
+          - '1'
+          - 'true'
+          - 'false'
+        description: Filter to servers whose namespace is owned by the Smithery org.
+      - in: query
+        name: ownerId
+        schema:
+          type: string
+        description: Filter by the server owner's user ID.
+      - in: query
+        name: repoOwner
+        schema:
+          type: string
+        description: Filter by GitHub repository owner from repository_url.
+      - in: query
+        name: repoName
+        schema:
+          type: string
+        description: Filter by GitHub repository name from repository_url.
+      - in: query
+        name: seed
+        schema:
+          type: integer
+          minimum: -9007199254740991
+          maximum: 9007199254740991
+        description: Random seed for deterministic pagination. When provided, results use a stable sort order that is consistent across pages for the same seed value.
+      x-codeSamples:
+      - lang: JavaScript
+        source: "import Smithery from '@smithery/api';\n\nconst client = new Smithery({\n  apiKey: process.env['SMITHERY_API_KEY'], // This is the default and can be omitted\n});\n\n// Automatically fetches more pages as needed.\nfor await (const serverListResponse of client.servers.list()) {\n  console.log(serverListResponse.id);\n}"
+components:
+  schemas:
+    Server:
+      type: object
+      properties:
+        qualifiedName:
+          type: string
+          example: smithery/hello-world
+        displayName:
+          type: string
+          example: Hello World
+        description:
+          type: string
+          example: A simple hello world server
+        iconUrl:
+          anyOf:
+          - type: string
+          - type: 'null'
+          example: https://example.com/icon.png
+        remote:
+          type: boolean
+          example: true
+        deploymentUrl:
+          anyOf:
+          - type: string
+          - type: 'null'
+          example: https://api.example.com
+        connections:
+          type: array
+          items:
+            anyOf:
+            - $ref: '#/components/schemas/StdioConnection'
+            - $ref: '#/components/schemas/HttpConnection'
+        security:
+          anyOf:
+          - $ref: '#/components/schemas/ServerSecurity'
+          - type: 'null'
+        tools:
+          anyOf:
+          - type: array
+            items:
+              $ref: '#/components/schemas/ServerTool'
+          - type: 'null'
+        resources:
+          anyOf:
+          - type: array
+            items:
+              $ref: '#/components/schemas/ServerResource'
+          - type: 'null'
+        prompts:
+          anyOf:
+          - type: array
+            items:
+              $ref: '#/components/schemas/ServerPrompt'
+          - type: 'null'
+      required:
+      - qualifiedName
+      - displayName
+      - description
+      - iconUrl
+      - remote
+      - deploymentUrl
+      - connections
+      - security
+      - tools
+      - resources
+      - prompts
+      additionalProperties: false
+    ToolOutputSchema:
+      id: ToolOutputSchema
+      type: object
+      properties:
+        type:
+          type: string
+          const: object
+        properties:
+          $ref: '#/components/schemas/OutputSchemaProperties'
+        required:
+          type: array
+          items:
+            type: string
+      required:
+      - type
+      additionalProperties: false
+    DeploymentInfo:
+      type: object
+      properties:
+        id:
+          type: string
+          format: uuid
+          pattern: ^([0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[1-8][0-9a-fA-F]{3}-[89abAB][0-9a-fA-F]{3}-[0-9a-fA-F]{12}|00000000-0000-0000-0000-000000000000|ffffffff-ffff-ffff-ffff-ffffffffffff)$
+        status:
+          type: string
+          description: 'Current status: QUEUED, WORKING, SUCCESS, FAILURE, FAILURE_SCAN, AUTH_REQUIRED, AUTH_TIMEOUT, CANCELLED, or INTERNAL_ERROR.'
+        type:
+          type: string
+          description: 'Release type: hosted_shttp (Smithery-hosted), external_shttp (external URL), or stdio (local binary).'
+        commit:
+          description: Git commit SHA that triggered this release.
+          anyOf:
+          - type: string
+          - type: 'null'
+        commitMessage:
+          description: Git commit message associated with this release.
+          anyOf:
+          - type: string
+          - type: 'null'
+        branch:
+          description: Git branch this release was built from.
+          anyOf:
+          - type: string
+          - type: 'null'
+        upstreamUrl:
+          description: Upstream MCP server URL. Present only for external releases.
+          anyOf:
+          - type: string
+          - type: 'null'
+        logs:
+          description: Pipeline log entries. Only included when fetching a single release.
+          type: array
+          items:
+            $ref: '#/components/schemas/DeploymentLogEntry'
+        mcpUrl:
+          description: The MCP endpoint URL for connecting to this server.
+          type: string
+          format: uri
+        createdAt:
+          type: string
+          description: ISO 8601 timestamp of when the release was created.
+        updatedAt:
+          type: string
+          description: ISO 8601 timestamp of the last status change.
+      required:
+      - id
+      - status
+      - type
+      - createdAt
+      - updatedAt
+      additionalProperties: false
+    OutputSchemaProperties:
+      id: OutputSchemaProperties
+      type: object
+      propertyNames:
+        type: string
+      additionalProperties: {}
+    ExceptionEntry:
+      type: object
+      properties:
+        timestamp:
+          type: string
+          example: '2026-01-04 10:53:39'
+        name:
+          type: string
+          example: TypeError
+        message:
+          type: string
+          example: Cannot read property 'x' of undefined
+      required:
+      - timestamp
+      - name
+      - message
+      additionalProperties: false
+    ServerSummary:
+      type: object
+      properties:
+        id:
+          type: string
+          example: abc123
+        qualifiedName:
+          type: string
+          description: Unique identifier in namespace/slug format.
+          example: smithery/hello-world
+        namespace:
+          anyOf:
+          - type: string
+          - type: 'null'
+          description: The namespace this server belongs to, or null if unassigned.
+          example: smithery-ai
+        slug:
+          anyOf:
+          - type: string
+          - type: 'null'
+          description: URL-friendly short name within the namespace.
+          example: hello-world
+        displayName:
+          type: string
+          example: Hello World
+        description:
+          type: string
+          example: A simple hello world server
+        iconUrl:
+          anyOf:
+          - type: string
+          - type: 'null'
+          example: https://example.com/icon.png
+        verified:
+          type: boolean
+          description: Whether this server has been verified by Smithery.
+          example: true
+        useCount:
+          type: number
+          description: Total number of times this server has been connected to.
+          example: 42
+        remote:
+          anyOf:
+          - type: boolean
+          - type: 'null'
+          description: Whether the server is accessed via URL (true) or runs locally via stdio (false). Null if unknown.
+          example: true
+        isDeployed:
+          type: boolean
+          description: Whether the server is currently hosted on Smithery infrastructure.
+          example: true
+        createdAt:
+          type: string
+          description: ISO 8601 timestamp of when the server was registered.
+          example: '2024-01-01T00:00:00.000Z'
+        homepage:
+          type: string
+          description: The server owner's homepage URL, or the server's Smithery page as a fallback. Will become nullable in a future release.
+          example: https://example.com
+        bySmithery:
+          type: boolean
+          description: Whether this server is maintained by Smithery (i.e. owned by the Smithery organization).
+          example: false
+        owner:
+          anyOf:
+          - type: string
+          - type: 'null'
+          description: User ID of the server owner, or null for community servers.
+          example: user_abc123
+        score:
+          anyOf:
+          - type: number
+          - type: 'null'
+          description: RRF relevance score from search (null for browse requests).
+          example: 0.016
+      required:
+      - id
+      - qualifiedName
+      - namespace
+      - slug
+      - displayName
+      - description
+      - iconUrl
+      - verified
+      - useCount
+      - remote
+      - isDeployed
+      - createdAt
+      - homepage
+      - bySmithery
+      - owner
+      - score
+      additionalProperties: false
+      id: ServerSummary
+    DeploymentError:
+      type: object
+      properties:
+        error:
+          type: string
+          example: Server not found
+      required:
+      - error
+      additionalProperties: false
+    ServerTool:
+      type: object
+      properties:
+        name:
+          type: string
+          example: get_weather
+        description:
+          anyOf:
+          - type: string
+          - type: 'null'
+          example: Get current weather
+        inputSchema:
+          $ref: '#/components/schemas/ToolInputSchema'
+        outputSchema:
+          $ref: '#/components/schemas/ToolOutputSchema'
+      required:
+      - name
+      - description
+      - inputSchema
+      additionalProperties: false
+      id: ServerTool
+    ServerPrompt:
+      type: object
+      properties:
+        name:
+          type: string
+          example: summarize
+        description:
+          example: Summarize the given text
+          type: string
+        arguments:
+          type: array
+          items:
+            type: object
+            properties:
+              name:
+                type: string
+                example: text
+              description:
+                example: The text to summarize
+                type: string
+              required:
+                example: true
+                type: boolean
+            required:
+            - name
+            additionalProperties: false
+      required:
+      - name
+      additionalProperties: false
+      id: ServerPrompt
+    RuntimeLogsResponse:
+      type: object
+      properties:
+        invocations:
+          type: array
+          items:
+            $ref: '#/components/schemas/Invocation'
+        total:
+          type: number
+          description: Total invocations matching query
+      required:
+      - invocations
+      - total
+      additionalProperties: false
+    InvocationResponse:
+      type: object
+      properties:
+        status:
+          type: number
+          example: 200
+        outcome:
+          type: string
+          example: ok
+      required:
+      - status
+      - outcome
+      additionalProperties: false
+      id: InvocationResponse
+    StdioConnection:
+      type: object
+      properties:
+        type:
+          type: string
+          const: stdio
+        bundleUrl:
+          type: string
+          format: uri
+        runtime:
+          type: string
+          enum:
+          - node
+          - binary
+          - python
+          - bun
+        configSchema:
+          $ref: '#/components/schemas/ConfigSchema'
+      required:
+      - type
+      - bundleUrl
+      - runtime
+      - configSchema
+      additionalProperties: false
+      id: StdioConnection
+    InputSchemaProperties:
+      id: InputSchemaProperties
+      type: object
+      propertyNames:
+        type: string
+      additionalProperties:
+        x-stainless-any: true
+    ServersListResponse:
+      type: object
+      properties:
+        servers:
+          type: array
+          items:
+            $ref: '#/components/schemas/ServerSummary'
+        pagination:
+          type: object
+          properties:
+            currentPage:
+              type: integer
+              minimum: -9007199254740991
+              maximum: 9007199254740991
+              description: Current page number (1-indexed).
+              example: 1
+            pageSize:
+              type: integer
+              minimum: -9007199254740991
+              maximum: 9007199254740991
+              description: Number of results per page.
+              example: 10
+            totalPages:
+              type: integer
+              minimum: -9007199254740991
+              maximum: 9007199254740991
+              description: Total number of pages available.
+              example: 5
+            totalCount:
+              type: integer
+              minimum: -9007199254740991
+              maximum: 9007199254740991
+              description: Total number of matching servers.
+              example: 42
+          required:
+          - currentPage
+          - pageSize
+          - totalPages
+          - totalCount
+          additionalProperties: false
+      required:
+      - servers
+      - pagination
+      additionalProperties: false
+    ConfigSchema:
+      type: object
+      propertyNames:
+        type: string
+      additionalProperties:
+        x-stainless-any: true
+    InvocationDuration:
+      type: object
+      properties:
+        cpuMs:
+          type: number
+          example: 5
+        wallMs:
+          type: number
+          example: 743
+      required:
+      - cpuMs
+      - wallMs
+      additionalProperties: false
+      id: InvocationDuration
+    RegistryError:
+      type: object
+      properties:
+        error:
+          type: string
+          example: Server not found
+      required:
+      - error
+      additionalProperties: false
+    DeploymentLogEntryError:
+      type: object
+      properties:
+        message:
+          type: string
+      additionalProperties: false
+      id: DeploymentLogEntryError
+    ServersListError:
+      type: object
+      properties:
+        error:
+          type: string
+          example: Server not found
+      required:
+      - error
+      additionalProperties: false
+    ResumeResponse:
+      type: object
+      properties:
+        status:
+          type: string
+          example: WORKING
+        deploymentId:
+          type: string
+          format: uuid
+          pattern: ^([0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[1-8][0-9a-fA-F]{3}-[89abAB][0-9a-fA-F]{3}-[0-9a-fA-F]{12}|00000000-0000-0000-0000-000000000000|ffffffff-ffff-ffff-ffff-ffffffffffff)$
+      required:
+      - status
+      - deploymentId
+      additionalProperties: false
+    RuntimeLogEntry:
+      type: object
+      properties:
+        timestamp:
+          type: string
+          example: '2026-01-04 10:53:39'
+        level:
+          type: string
+          example: info
+        message:
+          type: string
+          example: Processing request...
+      required:
+      - timestamp
+      - level
+      - message
+      additionalProperties: false
+    ServerSecurity:
+      type: object
+      properties:
+        scanPassed:
+          type: boolean
+          example: true
+      required:
+      - scanPassed
+      additionalProperties: false
+      id: ServerSecurity
+    Invocation:
+      type: object
+      properties:
+        id:
+          type: string
+          example: 625f9ce6-f179-4f23-b3e3-4de28b52b39d
+        timestamp:
+          type: string
+          example: '2026-01-04 10:53:39'
+        request:
+          $ref: '#/components/schemas/InvocationRequest'
+        response:
+          $ref: '#/components/schemas/InvocationResponse'
+        duration:
+          $ref: '#/components/schemas/InvocationDuration'
+        logs:
+          type: array
+          items:
+            $ref: '#/components/schemas/RuntimeLogEntry'
+        exceptions:
+          type: array
+          items:
+            $ref: '#/components/schemas/ExceptionEntry'
+      required:
+      - id
+      - timestamp
+      - request
+      - response
+      - duration
+      - logs
+      - exceptions
+      additionalProperties: false
+    ServerResource:
+      type: object
+      properties:
+        name:
+          type: string
+          example: config://settings
+        uri:
+          type: string
+          example: config://app/settings
+        description:
+          example: Application settings
+          type: string
+        mimeType:
+          example: application/json
+          type: string
+      required:
+      - name
+      - uri
+      additionalProperties: false
+      id: ServerResource
+    DeployResponse:
+      type: object
+      properties:
+        deploymentId:
+          type: string
+          format: uuid
+          pattern: ^([0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[1-8][0-9a-fA-F]{3}-[89abAB][0-9a-fA-F]{3}-[0-9a-fA-F]{12}|00000000-0000-0000-0000-000000000000|ffffffff-ffff-ffff-ffff-ffffffffffff)$
+          description: Unique identifier for this release.
+          example: 123e4567-e89b-12d3-a456-426614174000
+        status:
+          type: string
+          description: Initial status. Will be WORKING while the release is in progress.
+          example: WORKING
+        mcpUrl:
+          type: string
+          format: uri
+          description: The MCP endpoint URL for connecting to this server once published.
+          example: https://slug.run.tools
+        warnings:
+          description: Non-fatal warnings encountered during submission.
+          type: array
+          items:
+            type: string
+      required:
+      - deploymentId
+      - status
+      - mcpUrl
+      additionalProperties: false
+    ToolInputSchema:
+      type: object
+      properties:
+        type:
+          type: string
+          const: object
+        properties:
+          $ref: '#/components/schemas/InputSchemaProperties'
+      required:
+      - type
+      additionalProperties: false
+      id: ToolInputSchema
+    HttpConnection:
+      type: object
+      properties:
+        type:
+          type: string
+          const: http
+        deploymentUrl:
+          type: string
+        configSchema:
+          $ref: '#/components/schemas/ConfigSchema'
+      required:
+      - type
+      - deploymentUrl
+      - configSchema
+      additionalProperties: false
+      id: HttpConnection
+    DeploymentLogEntry:
+      type: object
+      properties:
+        stage:
+          type: string
+          enum:
+          - deploy
+          - scan
+          - metadata
+          - publish
+          description: 'Pipeline stage: deploy (bundle upload), scan (security/OAuth check), metadata (tool discovery), publish (generated artifacts).'
+        level:
+          type: string
+          description: 'Log level: ''start'', ''end'', ''info'', ''success'', or ''failure''.'
+        message:
+          type: string
+          description: Human-readable log message.
+        timestamp:
+          type: string
+          description: ISO 8601 timestamp of the log entry.
+        error:
+          description: Error details, present only when the stage failed.
+          $ref: '#/components/schemas/DeploymentLogEntryError'
+      required:
+      - stage
+      - level
+      - message
+      - timestamp
+      additionalProperties: false
+    InvocationRequest:
+      type: object
+      properties:
+        method:
+          type: string
+          example: POST
+        url:
+          type: string
+          example: https://gateway.smithery.ai/@smithery/unicorn
+      required:
+      - method
+      - url
+      additionalProperties: false
+      id: InvocationRequest
+    RuntimeLogsError:
+      type: object
+      properties:
+        error:
+          type: string
+          example: Server not found
+      required:
+      - error
+      additionalProperties: false
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer
+      description: Smithery API key as Bearer token

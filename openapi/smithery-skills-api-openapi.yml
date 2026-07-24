@@ -1,0 +1,1022 @@
+openapi: 3.1.0
+info:
+  title: Smithery Platform connect skills API
+  description: API for the Smithery platform — discover, deploy, and manage MCP (Model Context Protocol) servers. Provides endpoints for browsing the server registry, managing deployments, creating scoped access tokens, and connecting to MCP servers.
+  version: 1.0.0
+servers:
+- url: https://api.smithery.ai
+security:
+- bearerAuth: []
+tags:
+- name: skills
+  description: Discover and search reusable prompt-based skills for MCP servers
+paths:
+  /skills:
+    get:
+      operationId: getSkills
+      tags:
+      - skills
+      summary: List or search skills
+      description: Search and browse reusable prompt-based skills. Supports full-text and semantic search via the `q` parameter, and filtering by category, namespace, or slug.
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SkillsListResponse'
+        '500':
+          description: Server error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SkillsListError'
+      parameters:
+      - in: query
+        name: q
+        schema:
+          type: string
+        description: Search query for full-text and semantic search across skill names and descriptions.
+      - in: query
+        name: category
+        schema:
+          type: string
+        description: Filter by skill category (e.g. 'code', 'data', 'web').
+      - in: query
+        name: namespace
+        schema:
+          type: string
+        description: Filter by the namespace that owns the skill.
+      - in: query
+        name: slug
+        schema:
+          type: string
+        description: 'Filter by exact skill slug within a namespace. Deprecated: use GET /skills/:namespace/:slug instead.'
+      - in: query
+        name: ownerId
+        schema:
+          type: string
+        description: Filter by the skill owner's organization ID.
+      - in: query
+        name: verified
+        schema:
+          type: boolean
+        description: Filter by whether the skill's namespace is verified.
+      - in: query
+        name: page
+        schema:
+          type: integer
+          minimum: 1
+          maximum: 9007199254740991
+        description: Page number (1-indexed).
+      - in: query
+        name: pageSize
+        schema:
+          type: integer
+          minimum: 1
+          maximum: 100
+        description: Number of results per page (default 20, max 100).
+      - in: query
+        name: topK
+        schema:
+          type: integer
+          minimum: 10
+          maximum: 500
+        description: Maximum number of candidate results to consider from the search index before pagination. The server applies a hard cap of 500 to keep the rerank window bounded; pass `seed` for stable deep pagination.
+      - in: query
+        name: fields
+        schema:
+          type: string
+        description: Comma-separated list of fields to include in response
+      - in: query
+        name: seed
+        schema:
+          type: integer
+          minimum: -9007199254740991
+          maximum: 9007199254740991
+        description: Random seed for deterministic pagination. When provided, results use a stable sort order that is consistent across pages for the same seed value.
+      x-codeSamples:
+      - lang: JavaScript
+        source: "import Smithery from '@smithery/api';\n\nconst client = new Smithery({\n  apiKey: process.env['SMITHERY_API_KEY'], // This is the default and can be omitted\n});\n\n// Automatically fetches more pages as needed.\nfor await (const skillListResponse of client.skills.list()) {\n  console.log(skillListResponse.id);\n}"
+    post:
+      operationId: postSkills
+      tags:
+      - skills
+      summary: Create a new skill (deprecated)
+      description: '**Deprecated:** Use PUT /skills/{namespace}/{slug} instead. Create a new skill by linking a GitHub repository containing a SKILL.md file.'
+      deprecated: true
+      responses:
+        '200':
+          description: Skill created successfully
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  id:
+                    type: string
+                  namespace:
+                    type: string
+                  slug:
+                    type: string
+                  displayName:
+                    type: string
+                  description:
+                    type: string
+                  gitUrl:
+                    type: string
+                  listed:
+                    type: boolean
+                  createdAt:
+                    type: string
+                required:
+                - id
+                - namespace
+                - slug
+                - displayName
+                - description
+                - gitUrl
+                - listed
+                - createdAt
+                id: CreateSkillResponse
+        '400':
+          description: Invalid request
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: string
+                  code:
+                    type: string
+                required:
+                - error
+                id: CreateSkillError
+        '403':
+          description: Forbidden - user does not own the namespace
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: string
+                  code:
+                    type: string
+                required:
+                - error
+                id: CreateSkillError
+        '404':
+          description: Namespace not found or SKILL.md not found
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: string
+                  code:
+                    type: string
+                required:
+                - error
+                id: CreateSkillError
+        '409':
+          description: Skill with this slug or git URL already exists
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: string
+                  code:
+                    type: string
+                required:
+                - error
+                id: CreateSkillError
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                namespace:
+                  type: string
+                  minLength: 1
+                  description: The namespace to create the skill in.
+                slug:
+                  type: string
+                  minLength: 1
+                  pattern: ^[a-z0-9-]+$
+                  description: URL-friendly identifier for the skill.
+                gitUrl:
+                  type: string
+                  format: uri
+                  description: GitHub URL pointing to a repository with SKILL.md
+              required:
+              - namespace
+              - slug
+              - gitUrl
+              id: CreateSkillRequest
+      x-codeSamples:
+      - lang: JavaScript
+        source: "import Smithery from '@smithery/api';\n\nconst client = new Smithery({\n  apiKey: process.env['SMITHERY_API_KEY'], // This is the default and can be omitted\n});\n\nconst skill = await client.skills.create({\n  gitUrl: 'https://example.com',\n  namespace: 'x',\n  slug: 'slug',\n});\n\nconsole.log(skill.id);"
+  /skills/{namespace}/{slug}:
+    get:
+      operationId: getSkills:namespace:slug
+      tags:
+      - skills
+      summary: Get a skill
+      description: Get a single skill by its namespace and slug.
+      responses:
+        '200':
+          description: Skill found
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  id:
+                    type: string
+                  namespace:
+                    type: string
+                  slug:
+                    type: string
+                  displayName:
+                    type: string
+                  description:
+                    type: string
+                  prompt:
+                    type: string
+                  qualityScore:
+                    type: number
+                  externalStars:
+                    type: number
+                  externalForks:
+                    type: number
+                  totalActivations:
+                    type: number
+                  uniqueUsers:
+                    type: number
+                  categories:
+                    type: array
+                    items:
+                      type: string
+                  servers:
+                    type: array
+                    items:
+                      type: string
+                  gitUrl:
+                    anyOf:
+                    - type: string
+                    - type: 'null'
+                  verified:
+                    type: boolean
+                    description: Whether this skill's namespace is verified.
+                  listed:
+                    type: boolean
+                  owner:
+                    anyOf:
+                    - type: string
+                    - type: 'null'
+                    description: Organization ID of the skill owner (from namespace)
+                  createdAt:
+                    type: string
+                required:
+                - id
+                - namespace
+                - slug
+                - displayName
+                - description
+                - prompt
+                - qualityScore
+                - externalStars
+                - externalForks
+                - totalActivations
+                - uniqueUsers
+                - categories
+                - servers
+                - gitUrl
+                - verified
+                - listed
+                - owner
+                - createdAt
+                id: SkillResponse
+        '404':
+          description: Skill not found
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: string
+                required:
+                - error
+                id: SkillError
+      parameters:
+      - schema:
+          type: string
+        in: path
+        name: namespace
+        required: true
+      - schema:
+          type: string
+        in: path
+        name: slug
+        required: true
+      x-codeSamples:
+      - lang: JavaScript
+        source: "import Smithery from '@smithery/api';\n\nconst client = new Smithery({\n  apiKey: process.env['SMITHERY_API_KEY'], // This is the default and can be omitted\n});\n\nconst skill = await client.skills.get('slug', { namespace: 'namespace' });\n\nconsole.log(skill.id);"
+    put:
+      operationId: putSkills:namespace:slug
+      tags:
+      - skills
+      summary: Create or update a skill
+      description: Idempotent endpoint to create or update a GitHub-backed skill. Send application/json with `gitUrl`.
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              vendor: zod
+      responses:
+        '200':
+          description: Skill updated successfully
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  id:
+                    type: string
+                  namespace:
+                    type: string
+                  slug:
+                    type: string
+                  displayName:
+                    type: string
+                  description:
+                    type: string
+                  gitUrl:
+                    anyOf:
+                    - type: string
+                    - type: 'null'
+                  externalStars:
+                    type: number
+                  listed:
+                    type: boolean
+                  createdAt:
+                    type: string
+                  updatedAt:
+                    type: string
+                required:
+                - id
+                - namespace
+                - slug
+                - displayName
+                - description
+                - gitUrl
+                - externalStars
+                - listed
+                - createdAt
+                - updatedAt
+                id: PutSkillResponse
+        '201':
+          description: Skill created successfully
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  id:
+                    type: string
+                  namespace:
+                    type: string
+                  slug:
+                    type: string
+                  displayName:
+                    type: string
+                  description:
+                    type: string
+                  gitUrl:
+                    anyOf:
+                    - type: string
+                    - type: 'null'
+                  externalStars:
+                    type: number
+                  listed:
+                    type: boolean
+                  createdAt:
+                    type: string
+                  updatedAt:
+                    type: string
+                required:
+                - id
+                - namespace
+                - slug
+                - displayName
+                - description
+                - gitUrl
+                - externalStars
+                - listed
+                - createdAt
+                - updatedAt
+                id: PutSkillResponse
+        '400':
+          description: Invalid request
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: string
+                  code:
+                    type: string
+                required:
+                - error
+                id: CreateSkillError
+        '403':
+          description: Forbidden - user does not own the namespace
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: string
+                  code:
+                    type: string
+                required:
+                - error
+                id: CreateSkillError
+        '404':
+          description: Namespace not found or SKILL.md not found
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: string
+                  code:
+                    type: string
+                required:
+                - error
+                id: CreateSkillError
+        '409':
+          description: Git URL already claimed by another skill
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: string
+                  code:
+                    type: string
+                required:
+                - error
+                id: CreateSkillError
+        '422':
+          description: SKILL.md validation error
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: string
+                  code:
+                    type: string
+                required:
+                - error
+                id: CreateSkillError
+      parameters:
+      - schema:
+          type: string
+        in: path
+        name: namespace
+        required: true
+      - schema:
+          type: string
+        in: path
+        name: slug
+        required: true
+      x-codeSamples:
+      - lang: JavaScript
+        source: "import Smithery from '@smithery/api';\n\nconst client = new Smithery({\n  apiKey: process.env['SMITHERY_API_KEY'], // This is the default and can be omitted\n});\n\nconst response = await client.skills.set('slug', {\n  namespace: 'namespace',\n  body: {},\n});\n\nconsole.log(response.id);"
+    delete:
+      operationId: deleteSkills:namespace:slug
+      tags:
+      - skills
+      summary: Delete a skill
+      description: Delete a skill by namespace and slug. Requires ownership of the namespace.
+      responses:
+        '200':
+          description: Skill deleted successfully
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                  qualifiedName:
+                    type: string
+                required:
+                - success
+                - qualifiedName
+                id: DeleteSkillResponse
+        '403':
+          description: Forbidden - user does not own the namespace
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: string
+                required:
+                - error
+                id: SkillError
+        '404':
+          description: Skill not found
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: string
+                required:
+                - error
+                id: SkillError
+      parameters:
+      - schema:
+          type: string
+        in: path
+        name: namespace
+        required: true
+      - schema:
+          type: string
+        in: path
+        name: slug
+        required: true
+      x-codeSamples:
+      - lang: JavaScript
+        source: "import Smithery from '@smithery/api';\n\nconst client = new Smithery({\n  apiKey: process.env['SMITHERY_API_KEY'], // This is the default and can be omitted\n});\n\nconst skill = await client.skills.delete('slug', { namespace: 'namespace' });\n\nconsole.log(skill.qualifiedName);"
+  /skills/{namespace}/{slug}/download:
+    get:
+      operationId: getSkills:namespace:slugDownload
+      tags:
+      - skills
+      summary: Download skill bundle
+      description: Download a ZIP bundle containing all skill files.
+      responses:
+        '200':
+          description: Skill ZIP file
+          content:
+            application/zip:
+              schema:
+                type: string
+                format: binary
+        '404':
+          description: Skill not found
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: string
+                required:
+                - error
+                id: SkillError
+      parameters:
+      - schema:
+          type: string
+        in: path
+        name: namespace
+        required: true
+      - schema:
+          type: string
+        in: path
+        name: slug
+        required: true
+      x-hidden: true
+      x-codeSamples:
+      - lang: JavaScript
+        source: "import Smithery from '@smithery/api';\n\nconst client = new Smithery({\n  apiKey: process.env['SMITHERY_API_KEY'], // This is the default and can be omitted\n});\n\nconst response = await client.skills.download('slug', { namespace: 'namespace' });\n\nconsole.log(response);\n\nconst content = await response.blob();\nconsole.log(content);"
+  /skills/{namespace}/{slug}/sync:
+    post:
+      operationId: postSkills:namespace:slugSync
+      tags:
+      - skills
+      summary: Sync skill metadata from GitHub (deprecated)
+      description: '**Deprecated:** Use PUT /skills/{namespace}/{slug} instead. Refetch SKILL.md and repository stars from GitHub and update the skill record.'
+      deprecated: true
+      responses:
+        '200':
+          description: Skill synced successfully
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  id:
+                    type: string
+                  namespace:
+                    type: string
+                  slug:
+                    type: string
+                  displayName:
+                    type: string
+                  description:
+                    type: string
+                  externalStars:
+                    type: number
+                  gitUrl:
+                    type: string
+                  updatedAt:
+                    type: string
+                required:
+                - id
+                - namespace
+                - slug
+                - displayName
+                - description
+                - externalStars
+                - gitUrl
+                - updatedAt
+                id: SyncSkillResponse
+        '403':
+          description: Forbidden - user does not own the namespace
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: string
+                required:
+                - error
+                id: SkillError
+        '404':
+          description: Skill not found
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: string
+                required:
+                - error
+                id: SkillError
+        '422':
+          description: Validation error - SKILL.md invalid
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: string
+                  code:
+                    type: string
+                required:
+                - error
+                id: CreateSkillError
+      parameters:
+      - schema:
+          type: string
+        in: path
+        name: namespace
+        required: true
+      - schema:
+          type: string
+        in: path
+        name: slug
+        required: true
+      x-hidden: true
+      x-codeSamples:
+      - lang: JavaScript
+        source: "import Smithery from '@smithery/api';\n\nconst client = new Smithery({\n  apiKey: process.env['SMITHERY_API_KEY'], // This is the default and can be omitted\n});\n\nconst response = await client.skills.sync('slug', { namespace: 'namespace' });\n\nconsole.log(response.id);"
+  /skills/{namespace}/{slug}/upload:
+    put:
+      operationId: putSkills:namespace:slugUpload
+      tags:
+      - skills
+      summary: Upload a skill bundle
+      description: Upload or replace a skill bundle via multipart/form-data with an `archive` file.
+      requestBody:
+        required: true
+        content:
+          multipart/form-data:
+            schema:
+              type: object
+              properties:
+                archive:
+                  type: string
+                  format: binary
+                  description: ZIP file upload containing a skill folder with SKILL.md and any scripts, references, or assets.
+              required:
+              - archive
+      responses:
+        '200':
+          description: Skill updated successfully
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  id:
+                    type: string
+                  namespace:
+                    type: string
+                  slug:
+                    type: string
+                  displayName:
+                    type: string
+                  description:
+                    type: string
+                  gitUrl:
+                    anyOf:
+                    - type: string
+                    - type: 'null'
+                  externalStars:
+                    type: number
+                  listed:
+                    type: boolean
+                  createdAt:
+                    type: string
+                  updatedAt:
+                    type: string
+                required:
+                - id
+                - namespace
+                - slug
+                - displayName
+                - description
+                - gitUrl
+                - externalStars
+                - listed
+                - createdAt
+                - updatedAt
+                id: PutSkillResponse
+        '201':
+          description: Skill created successfully
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  id:
+                    type: string
+                  namespace:
+                    type: string
+                  slug:
+                    type: string
+                  displayName:
+                    type: string
+                  description:
+                    type: string
+                  gitUrl:
+                    anyOf:
+                    - type: string
+                    - type: 'null'
+                  externalStars:
+                    type: number
+                  listed:
+                    type: boolean
+                  createdAt:
+                    type: string
+                  updatedAt:
+                    type: string
+                required:
+                - id
+                - namespace
+                - slug
+                - displayName
+                - description
+                - gitUrl
+                - externalStars
+                - listed
+                - createdAt
+                - updatedAt
+                id: PutSkillResponse
+        '400':
+          description: Invalid request
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: string
+                  code:
+                    type: string
+                required:
+                - error
+                id: CreateSkillError
+        '403':
+          description: Forbidden - user does not own the namespace
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: string
+                  code:
+                    type: string
+                required:
+                - error
+                id: CreateSkillError
+        '404':
+          description: Namespace not found
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: string
+                  code:
+                    type: string
+                required:
+                - error
+                id: CreateSkillError
+        '422':
+          description: SKILL.md validation error
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: string
+                  code:
+                    type: string
+                required:
+                - error
+                id: CreateSkillError
+        '502':
+          description: Failed to store uploaded skill bundle
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: string
+                  code:
+                    type: string
+                required:
+                - error
+                id: CreateSkillError
+      parameters:
+      - schema:
+          type: string
+        in: path
+        name: namespace
+        required: true
+      - schema:
+          type: string
+        in: path
+        name: slug
+        required: true
+      x-hidden: true
+      x-codeSamples:
+      - lang: JavaScript
+        source: "import fs from 'fs';\nimport Smithery from '@smithery/api';\n\nconst client = new Smithery({\n  apiKey: process.env['SMITHERY_API_KEY'], // This is the default and can be omitted\n});\n\nconst response = await client.skills.upload('slug', {\n  namespace: 'namespace',\n  archive: fs.createReadStream('path/to/file'),\n});\n\nconsole.log(response.id);"
+components:
+  schemas:
+    SkillsListError:
+      type: object
+      properties:
+        error:
+          type: string
+      required:
+      - error
+      additionalProperties: false
+    SkillSummary:
+      type: object
+      properties:
+        id:
+          type: string
+        namespace:
+          type: string
+          description: Namespace that owns this skill.
+        slug:
+          type: string
+          description: URL-friendly short name within the namespace.
+        displayName:
+          type: string
+        description:
+          type: string
+        prompt:
+          anyOf:
+          - type: string
+          - type: 'null'
+          description: The prompt template for this skill, or null if not publicly visible.
+        qualityScore:
+          type: number
+          description: Computed quality score from 0 to 1.
+        externalStars:
+          description: GitHub star count of the source repository, if applicable.
+          type: number
+        externalForks:
+          description: GitHub fork count of the source repository, if applicable.
+          type: number
+        totalActivations:
+          description: Total number of times this skill has been activated.
+          type: number
+        uniqueUsers:
+          description: Number of distinct users who have activated this skill.
+          type: number
+        categories:
+          description: List of categories this skill belongs to.
+          type: array
+          items:
+            type: string
+        servers:
+          description: Qualified names of MCP servers this skill depends on.
+          type: array
+          items:
+            type: string
+        gitUrl:
+          description: URL to the skill's source repository.
+          anyOf:
+          - type: string
+          - type: 'null'
+        verified:
+          type: boolean
+          description: Whether this skill's namespace is verified.
+        listed:
+          type: boolean
+          description: Whether this skill is publicly listed in the registry.
+        createdAt:
+          type: string
+          description: ISO 8601 timestamp of when the skill was created.
+      required:
+      - id
+      - namespace
+      - slug
+      - displayName
+      - description
+      - prompt
+      - qualityScore
+      - verified
+      - listed
+      - createdAt
+      additionalProperties: false
+      id: SkillSummary
+    SkillsListResponse:
+      type: object
+      properties:
+        skills:
+          type: array
+          items:
+            $ref: '#/components/schemas/SkillSummary'
+        pagination:
+          type: object
+          properties:
+            currentPage:
+              type: integer
+              minimum: -9007199254740991
+              maximum: 9007199254740991
+              description: Current page number (1-indexed).
+            pageSize:
+              type: integer
+              minimum: -9007199254740991
+              maximum: 9007199254740991
+              description: Number of results per page.
+            totalPages:
+              type: integer
+              minimum: -9007199254740991
+              maximum: 9007199254740991
+              description: Total number of pages available.
+            totalCount:
+              type: integer
+              minimum: -9007199254740991
+              maximum: 9007199254740991
+              description: Total number of matching skills.
+          required:
+          - currentPage
+          - pageSize
+          - totalPages
+          - totalCount
+          additionalProperties: false
+      required:
+      - skills
+      - pagination
+      additionalProperties: false
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer
+      description: Smithery API key as Bearer token

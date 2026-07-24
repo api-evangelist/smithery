@@ -1,0 +1,251 @@
+openapi: 3.1.0
+info:
+  title: Smithery Platform connect organizations API
+  description: API for the Smithery platform — discover, deploy, and manage MCP (Model Context Protocol) servers. Provides endpoints for browsing the server registry, managing deployments, creating scoped access tokens, and connecting to MCP servers.
+  version: 1.0.0
+servers:
+- url: https://api.smithery.ai
+security:
+- bearerAuth: []
+tags:
+- name: organizations
+paths:
+  /organizations/{orgId}/api-keys:
+    post:
+      operationId: postOrganizations:orgIdApi-keys
+      tags:
+      - organizations
+      summary: Create a team API key
+      description: Creates an API key owned by the organization. Requires admin role.
+      responses:
+        '201':
+          description: API key created (key value only shown on creation)
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/TeamApiKeyCreated'
+        '400':
+          description: Bad request
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: string
+                required:
+                - error
+                id: OrganizationError
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: string
+                required:
+                - error
+                id: OrganizationError
+        '403':
+          description: Forbidden — user is not an admin
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: string
+                required:
+                - error
+                id: OrganizationError
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CreateTeamApiKeyBody'
+      parameters:
+      - schema:
+          type: string
+        in: path
+        name: orgId
+        required: true
+      x-codeSamples:
+      - lang: JavaScript
+        source: "import Smithery from '@smithery/api';\n\nconst client = new Smithery({\n  apiKey: process.env['SMITHERY_API_KEY'], // This is the default and can be omitted\n});\n\nconst apiKey = await client.organizations.apiKeys.create('orgId', { name: 'x' });\n\nconsole.log(apiKey.id);"
+    get:
+      operationId: getOrganizations:orgIdApi-keys
+      tags:
+      - organizations
+      summary: List team API keys
+      description: Returns all API keys belonging to the organization. Requires admin role. Key values are not included in the response.
+      responses:
+        '200':
+          description: List of team API keys
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  apiKeys:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/TeamApiKey'
+                required:
+                - apiKeys
+                $defs:
+                  TeamApiKey:
+                    $ref: '#/components/schemas/TeamApiKey'
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: string
+                required:
+                - error
+                id: OrganizationError
+        '403':
+          description: Forbidden — user is not an admin
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: string
+                required:
+                - error
+                id: OrganizationError
+      parameters:
+      - schema:
+          type: string
+        in: path
+        name: orgId
+        required: true
+      x-codeSamples:
+      - lang: JavaScript
+        source: "import Smithery from '@smithery/api';\n\nconst client = new Smithery({\n  apiKey: process.env['SMITHERY_API_KEY'], // This is the default and can be omitted\n});\n\nconst apiKeys = await client.organizations.apiKeys.list('orgId');\n\nconsole.log(apiKeys.apiKeys);"
+  /organizations/{orgId}/api-keys/{keyId}:
+    delete:
+      operationId: deleteOrganizations:orgIdApi-keys:keyId
+      tags:
+      - organizations
+      summary: Revoke a team API key
+      description: Deletes an API key belonging to the organization. Requires admin role.
+      responses:
+        '200':
+          description: API key revoked
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                required:
+                - success
+                id: RevokeTeamApiKeyResponse
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: string
+                required:
+                - error
+                id: OrganizationError
+        '403':
+          description: Forbidden — user is not an admin
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: string
+                required:
+                - error
+                id: OrganizationError
+        '404':
+          description: API key not found in this organization
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: string
+                required:
+                - error
+                id: OrganizationError
+      parameters:
+      - schema:
+          type: string
+        in: path
+        name: orgId
+        required: true
+      - schema:
+          type: string
+        in: path
+        name: keyId
+        required: true
+      x-codeSamples:
+      - lang: JavaScript
+        source: "import Smithery from '@smithery/api';\n\nconst client = new Smithery({\n  apiKey: process.env['SMITHERY_API_KEY'], // This is the default and can be omitted\n});\n\nconst apiKey = await client.organizations.apiKeys.delete('keyId', { orgId: 'orgId' });\n\nconsole.log(apiKey.success);"
+components:
+  schemas:
+    TeamApiKey:
+      type: object
+      properties:
+        id:
+          type: string
+        name:
+          type: string
+        createdAt:
+          type: string
+      required:
+      - id
+      - name
+      - createdAt
+      additionalProperties: false
+    CreateTeamApiKeyBody:
+      type: object
+      properties:
+        name:
+          type: string
+          minLength: 1
+          maxLength: 256
+          description: Name for the team API key
+      required:
+      - name
+      additionalProperties: false
+    TeamApiKeyCreated:
+      type: object
+      properties:
+        id:
+          type: string
+        name:
+          type: string
+        key:
+          type: string
+        createdAt:
+          type: string
+      required:
+      - id
+      - name
+      - key
+      - createdAt
+      additionalProperties: false
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer
+      description: Smithery API key as Bearer token
