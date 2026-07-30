@@ -8,9 +8,22 @@ description: >-
   namespace management, scoped service tokens, connection lifecycle, trigger subscriptions, and an MCP transport
   endpoint for AI-agent integration.
 type: Index
+accessModel:
+  pricing: freemium
+  onboarding: self-serve
+  trial: false
+  try_now: true
+  public: false
+  label: Freemium · Self-serve signup
+  confidence: high
+  source:
+  - plans
+  - authentication
+  generated: '2026-07-22'
+  method: derived
 position: Consuming
 access: 3rd-Party
-image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/apis-json-logo.jpg
+image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/icons/smithery.png
 tags:
   - Artificial Intelligence
   - Large Language Models
@@ -26,62 +39,348 @@ modified: '2026-05-22'
 url: https://raw.githubusercontent.com/api-evangelist/smithery/refs/heads/main/apis.yml
 specificationVersion: '0.19'
 apis:
-  - aid: smithery:platform-api
-    name: Smithery Platform API
-    description: >-
-      The Smithery Platform API provides programmatic access to the MCP server registry and the Connect gateway. It
-      groups 55 operations across 35 paths under eight tags (servers, skills, tools, tokens, namespaces, organizations,
-      connect, connect.mcp), covering registry search, server CRUD, releases and runtime logs, secrets, managed domains,
-      icon management, skill bundles, organization API keys, namespace administration, scoped service tokens, and the
-      Connect API for managing connections, triggers, and subscriptions plus a single POST
-      /connect/{namespace}/{connectionId}/mcp endpoint that proxies MCP streamable-HTTP traffic to upstream servers.
-    humanURL: https://smithery.ai/docs
-    baseURL: https://api.smithery.ai
-    tags:
-      - Artificial Intelligence
-      - MCP
-      - Registry
-      - Servers
-      - Skills
-      - Tools
-      - Connect
-      - Tokens
-      - Namespaces
-      - Organizations
-    properties:
-      - type: Documentation
-        url: https://smithery.ai/docs
-      - type: OpenAPI
-        url: https://raw.githubusercontent.com/api-evangelist/smithery/refs/heads/main/openapi/smithery-openapi.json
-      - type: OpenAPI
-        url: >-
-          https://raw.githubusercontent.com/api-evangelist/smithery/refs/heads/main/openapi/smithery-documented-openapi.yml
-      - type: OpenAPI Specification
-        url: https://smithery.ai/docs/openapi.json
-      - type: OpenAPI Specification
-        url: https://app.stainless.com/api/spec/documented/smithery/openapi.documented.yml
-      - type: LlmsText
-        url: https://smithery.ai/docs/llms.txt
-      - type: APIReference
-        url: https://smithery.ai/docs/api-reference
-      - type: JSONSchema
-        url: json-schema/smithery-server-schema.json
-      - type: JSONSchema
-        url: json-schema/smithery-skill-schema.json
-      - type: JSONStructure
-        url: json-structure/smithery-server-structure.json
-      - type: JSONLD
-        url: json-ld/smithery-context.jsonld
-      - type: SpectralRules
-        url: rules/smithery-rules.yml
-      - type: Vocabulary
-        url: vocabulary/smithery-vocabulary.yml
-      - type: Plans
-        url: plans/smithery-plans-pricing.yml
-      - type: RateLimits
-        url: rate-limits/smithery-rate-limits.yml
-      - type: FinOps
-        url: finops/smithery-finops.yml
+- aid: smithery:smithery-connect-api
+  name: Smithery connect API
+  description: The connect API from Smithery — 12 operation(s) for connect.
+  humanURL: https://smithery.ai/docs
+  baseURL: https://api.smithery.ai
+  tags:
+  - connect
+  properties:
+  - type: OpenAPI
+    url: openapi/smithery-connect-api-openapi.yml
+  - type: Documentation
+    url: https://smithery.ai/docs
+  - type: OpenAPI Specification
+    url: https://smithery.ai/docs/openapi.json
+  - type: OpenAPI Specification
+    url: https://app.stainless.com/api/spec/documented/smithery/openapi.documented.yml
+  - type: LlmsText
+    url: https://smithery.ai/docs/llms.txt
+  - type: APIReference
+    url: https://smithery.ai/docs/api-reference
+  - type: JSONSchema
+    url: json-schema/smithery-server-schema.json
+  - type: JSONSchema
+    url: json-schema/smithery-skill-schema.json
+  - type: JSONStructure
+    url: json-structure/smithery-server-structure.json
+  - type: JSONLD
+    url: json-ld/smithery-context.jsonld
+  - type: SpectralRules
+    url: rules/smithery-rules.yml
+  - type: Vocabulary
+    url: vocabulary/smithery-vocabulary.yml
+  - type: Plans
+    url: plans/smithery-plans-pricing.yml
+  - type: RateLimits
+    url: rate-limits/smithery-rate-limits.yml
+  - type: FinOps
+    url: finops/smithery-finops.yml
+- aid: smithery:smithery-connect-mcp-api
+  name: Smithery connect.mcp API
+  description: The connect.mcp API from Smithery — 1 operation(s) for connect.mcp.
+  humanURL: https://smithery.ai/docs
+  baseURL: https://api.smithery.ai
+  tags:
+  - connect.mcp
+  properties:
+  - type: OpenAPI
+    url: openapi/smithery-connect-mcp-api-openapi.yml
+  - type: Documentation
+    url: https://smithery.ai/docs
+  - type: OpenAPI Specification
+    url: https://smithery.ai/docs/openapi.json
+  - type: OpenAPI Specification
+    url: https://app.stainless.com/api/spec/documented/smithery/openapi.documented.yml
+  - type: LlmsText
+    url: https://smithery.ai/docs/llms.txt
+  - type: APIReference
+    url: https://smithery.ai/docs/api-reference
+  - type: JSONSchema
+    url: json-schema/smithery-server-schema.json
+  - type: JSONSchema
+    url: json-schema/smithery-skill-schema.json
+  - type: JSONStructure
+    url: json-structure/smithery-server-structure.json
+  - type: JSONLD
+    url: json-ld/smithery-context.jsonld
+  - type: SpectralRules
+    url: rules/smithery-rules.yml
+  - type: Vocabulary
+    url: vocabulary/smithery-vocabulary.yml
+  - type: Plans
+    url: plans/smithery-plans-pricing.yml
+  - type: RateLimits
+    url: rate-limits/smithery-rate-limits.yml
+  - type: FinOps
+    url: finops/smithery-finops.yml
+- aid: smithery:smithery-domains-api
+  name: Smithery domains API
+  description: The domains API from Smithery — 2 operation(s) for domains.
+  humanURL: https://smithery.ai/docs
+  baseURL: https://api.smithery.ai
+  tags:
+  - domains
+  properties:
+  - type: OpenAPI
+    url: openapi/smithery-domains-api-openapi.yml
+  - type: Documentation
+    url: https://smithery.ai/docs
+  - type: OpenAPI Specification
+    url: https://smithery.ai/docs/openapi.json
+  - type: OpenAPI Specification
+    url: https://app.stainless.com/api/spec/documented/smithery/openapi.documented.yml
+  - type: LlmsText
+    url: https://smithery.ai/docs/llms.txt
+  - type: APIReference
+    url: https://smithery.ai/docs/api-reference
+  - type: JSONSchema
+    url: json-schema/smithery-server-schema.json
+  - type: JSONSchema
+    url: json-schema/smithery-skill-schema.json
+  - type: JSONStructure
+    url: json-structure/smithery-server-structure.json
+  - type: JSONLD
+    url: json-ld/smithery-context.jsonld
+  - type: SpectralRules
+    url: rules/smithery-rules.yml
+  - type: Vocabulary
+    url: vocabulary/smithery-vocabulary.yml
+  - type: Plans
+    url: plans/smithery-plans-pricing.yml
+  - type: RateLimits
+    url: rate-limits/smithery-rate-limits.yml
+  - type: FinOps
+    url: finops/smithery-finops.yml
+- aid: smithery:smithery-health-api
+  name: Smithery Health API
+  description: The Health API from Smithery — 1 operation(s) for health.
+  humanURL: https://smithery.ai/docs
+  baseURL: https://api.smithery.ai
+  tags:
+  - Health
+  properties:
+  - type: OpenAPI
+    url: openapi/smithery-health-api-openapi.yml
+  - type: Documentation
+    url: https://smithery.ai/docs
+  - type: OpenAPI Specification
+    url: https://smithery.ai/docs/openapi.json
+  - type: OpenAPI Specification
+    url: https://app.stainless.com/api/spec/documented/smithery/openapi.documented.yml
+  - type: LlmsText
+    url: https://smithery.ai/docs/llms.txt
+  - type: APIReference
+    url: https://smithery.ai/docs/api-reference
+  - type: JSONSchema
+    url: json-schema/smithery-server-schema.json
+  - type: JSONSchema
+    url: json-schema/smithery-skill-schema.json
+  - type: JSONStructure
+    url: json-structure/smithery-server-structure.json
+  - type: JSONLD
+    url: json-ld/smithery-context.jsonld
+  - type: SpectralRules
+    url: rules/smithery-rules.yml
+  - type: Vocabulary
+    url: vocabulary/smithery-vocabulary.yml
+  - type: Plans
+    url: plans/smithery-plans-pricing.yml
+  - type: RateLimits
+    url: rate-limits/smithery-rate-limits.yml
+  - type: FinOps
+    url: finops/smithery-finops.yml
+- aid: smithery:smithery-namespaces-api
+  name: Smithery namespaces API
+  description: The namespaces API from Smithery — 3 operation(s) for namespaces.
+  humanURL: https://smithery.ai/docs
+  baseURL: https://api.smithery.ai
+  tags:
+  - namespaces
+  properties:
+  - type: OpenAPI
+    url: openapi/smithery-namespaces-api-openapi.yml
+  - type: Documentation
+    url: https://smithery.ai/docs
+  - type: OpenAPI Specification
+    url: https://smithery.ai/docs/openapi.json
+  - type: OpenAPI Specification
+    url: https://app.stainless.com/api/spec/documented/smithery/openapi.documented.yml
+  - type: LlmsText
+    url: https://smithery.ai/docs/llms.txt
+  - type: APIReference
+    url: https://smithery.ai/docs/api-reference
+  - type: JSONSchema
+    url: json-schema/smithery-server-schema.json
+  - type: JSONSchema
+    url: json-schema/smithery-skill-schema.json
+  - type: JSONStructure
+    url: json-structure/smithery-server-structure.json
+  - type: JSONLD
+    url: json-ld/smithery-context.jsonld
+  - type: SpectralRules
+    url: rules/smithery-rules.yml
+  - type: Vocabulary
+    url: vocabulary/smithery-vocabulary.yml
+  - type: Plans
+    url: plans/smithery-plans-pricing.yml
+  - type: RateLimits
+    url: rate-limits/smithery-rate-limits.yml
+  - type: FinOps
+    url: finops/smithery-finops.yml
+- aid: smithery:smithery-organizations-api
+  name: Smithery organizations API
+  description: The organizations API from Smithery — 2 operation(s) for organizations.
+  humanURL: https://smithery.ai/docs
+  baseURL: https://api.smithery.ai
+  tags:
+  - organizations
+  properties:
+  - type: OpenAPI
+    url: openapi/smithery-organizations-api-openapi.yml
+  - type: Documentation
+    url: https://smithery.ai/docs
+  - type: OpenAPI Specification
+    url: https://smithery.ai/docs/openapi.json
+  - type: OpenAPI Specification
+    url: https://app.stainless.com/api/spec/documented/smithery/openapi.documented.yml
+  - type: LlmsText
+    url: https://smithery.ai/docs/llms.txt
+  - type: APIReference
+    url: https://smithery.ai/docs/api-reference
+  - type: JSONSchema
+    url: json-schema/smithery-server-schema.json
+  - type: JSONSchema
+    url: json-schema/smithery-skill-schema.json
+  - type: JSONStructure
+    url: json-structure/smithery-server-structure.json
+  - type: JSONLD
+    url: json-ld/smithery-context.jsonld
+  - type: SpectralRules
+    url: rules/smithery-rules.yml
+  - type: Vocabulary
+    url: vocabulary/smithery-vocabulary.yml
+  - type: Plans
+    url: plans/smithery-plans-pricing.yml
+  - type: RateLimits
+    url: rate-limits/smithery-rate-limits.yml
+  - type: FinOps
+    url: finops/smithery-finops.yml
+- aid: smithery:smithery-servers-api
+  name: Smithery servers API
+  description: Browse the MCP server registry, manage server configuration, and handle deployments
+  humanURL: https://smithery.ai/docs
+  baseURL: https://api.smithery.ai
+  tags:
+  - servers
+  properties:
+  - type: OpenAPI
+    url: openapi/smithery-servers-api-openapi.yml
+  - type: Documentation
+    url: https://smithery.ai/docs
+  - type: OpenAPI Specification
+    url: https://smithery.ai/docs/openapi.json
+  - type: OpenAPI Specification
+    url: https://app.stainless.com/api/spec/documented/smithery/openapi.documented.yml
+  - type: LlmsText
+    url: https://smithery.ai/docs/llms.txt
+  - type: APIReference
+    url: https://smithery.ai/docs/api-reference
+  - type: JSONSchema
+    url: json-schema/smithery-server-schema.json
+  - type: JSONSchema
+    url: json-schema/smithery-skill-schema.json
+  - type: JSONStructure
+    url: json-structure/smithery-server-structure.json
+  - type: JSONLD
+    url: json-ld/smithery-context.jsonld
+  - type: SpectralRules
+    url: rules/smithery-rules.yml
+  - type: Vocabulary
+    url: vocabulary/smithery-vocabulary.yml
+  - type: Plans
+    url: plans/smithery-plans-pricing.yml
+  - type: RateLimits
+    url: rate-limits/smithery-rate-limits.yml
+  - type: FinOps
+    url: finops/smithery-finops.yml
+- aid: smithery:smithery-skills-api
+  name: Smithery skills API
+  description: Discover and search reusable prompt-based skills for MCP servers
+  humanURL: https://smithery.ai/docs
+  baseURL: https://api.smithery.ai
+  tags:
+  - skills
+  properties:
+  - type: OpenAPI
+    url: openapi/smithery-skills-api-openapi.yml
+  - type: Documentation
+    url: https://smithery.ai/docs
+  - type: OpenAPI Specification
+    url: https://smithery.ai/docs/openapi.json
+  - type: OpenAPI Specification
+    url: https://app.stainless.com/api/spec/documented/smithery/openapi.documented.yml
+  - type: LlmsText
+    url: https://smithery.ai/docs/llms.txt
+  - type: APIReference
+    url: https://smithery.ai/docs/api-reference
+  - type: JSONSchema
+    url: json-schema/smithery-server-schema.json
+  - type: JSONSchema
+    url: json-schema/smithery-skill-schema.json
+  - type: JSONStructure
+    url: json-structure/smithery-server-structure.json
+  - type: JSONLD
+    url: json-ld/smithery-context.jsonld
+  - type: SpectralRules
+    url: rules/smithery-rules.yml
+  - type: Vocabulary
+    url: vocabulary/smithery-vocabulary.yml
+  - type: Plans
+    url: plans/smithery-plans-pricing.yml
+  - type: RateLimits
+    url: rate-limits/smithery-rate-limits.yml
+  - type: FinOps
+    url: finops/smithery-finops.yml
+- aid: smithery:smithery-tokens-api
+  name: Smithery tokens API
+  description: The tokens API from Smithery — 1 operation(s) for tokens.
+  humanURL: https://smithery.ai/docs
+  baseURL: https://api.smithery.ai
+  tags:
+  - tokens
+  properties:
+  - type: OpenAPI
+    url: openapi/smithery-tokens-api-openapi.yml
+  - type: Documentation
+    url: https://smithery.ai/docs
+  - type: OpenAPI Specification
+    url: https://smithery.ai/docs/openapi.json
+  - type: OpenAPI Specification
+    url: https://app.stainless.com/api/spec/documented/smithery/openapi.documented.yml
+  - type: LlmsText
+    url: https://smithery.ai/docs/llms.txt
+  - type: APIReference
+    url: https://smithery.ai/docs/api-reference
+  - type: JSONSchema
+    url: json-schema/smithery-server-schema.json
+  - type: JSONSchema
+    url: json-schema/smithery-skill-schema.json
+  - type: JSONStructure
+    url: json-structure/smithery-server-structure.json
+  - type: JSONLD
+    url: json-ld/smithery-context.jsonld
+  - type: SpectralRules
+    url: rules/smithery-rules.yml
+  - type: Vocabulary
+    url: vocabulary/smithery-vocabulary.yml
+  - type: Plans
+    url: plans/smithery-plans-pricing.yml
+  - type: RateLimits
+    url: rate-limits/smithery-rate-limits.yml
+  - type: FinOps
+    url: finops/smithery-finops.yml
 common:
   - type: AgenticAccess
     url: agentic-access/smithery-agentic-access.yml
