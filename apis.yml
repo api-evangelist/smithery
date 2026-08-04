@@ -382,6 +382,8 @@ apis:
   - type: FinOps
     url: finops/smithery-finops.yml
 common:
+  - type: PostmanWorkspace
+    url: https://www.postman.com/kinlaneapi/smithery/overview
   - type: AgenticAccess
     url: agentic-access/smithery-agentic-access.yml
   - type: DomainSecurity

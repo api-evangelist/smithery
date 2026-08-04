@@ -1,0 +1,30 @@
+{
+  "provider": "smithery",
+  "sources": [
+    "smithery-connect-api-openapi.yml",
+    "smithery-connect-mcp-api-openapi.yml",
+    "smithery-domains-api-openapi.yml",
+    "smithery-health-api-openapi.yml",
+    "smithery-namespaces-api-openapi.yml",
+    "smithery-organizations-api-openapi.yml",
+    "smithery-servers-api-openapi.yml",
+    "smithery-skills-api-openapi.yml",
+    "smithery-tokens-api-openapi.yml"
+  ],
+  "outputs": [
+    "smithery-connect-api-openapi.yml",
+    "smithery-connect-mcp-api-openapi.yml",
+    "smithery-domains-api-openapi.yml",
+    "smithery-health-api-openapi.yml",
+    "smithery-namespaces-api-openapi.yml",
+    "smithery-organizations-api-openapi.yml",
+    "smithery-servers-api-openapi.yml",
+    "smithery-skills-api-openapi.yml",
+    "smithery-tokens-api-openapi.yml"
+  ],
+  "archived": [],
+  "errors": [],
+  "warnings": [],
+  "notes": [],
+  "skipped": []
+}
