@@ -37,7 +37,7 @@ tags:
 created: '2025-08-19'
 modified: '2026-05-22'
 url: https://raw.githubusercontent.com/api-evangelist/smithery/refs/heads/main/apis.yml
-specificationVersion: '0.19'
+specificationVersion: '0.23'
 apis:
 - aid: smithery:smithery-connect-api
   name: Smithery connect API
