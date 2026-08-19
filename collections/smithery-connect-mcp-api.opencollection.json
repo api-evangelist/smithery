@@ -1,0 +1,47 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Smithery Platform connect connect.mcp API",
+    "version": "1.0.0"
+  },
+  "request": {
+    "auth": {
+      "type": "bearer",
+      "token": "{{bearerToken}}"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "connect.mcp",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "MCP endpoint",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.smithery.ai/connect/:namespace/:connectionId/mcp",
+            "params": [
+              {
+                "name": "namespace",
+                "value": "",
+                "type": "path"
+              },
+              {
+                "name": "connectionId",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "Stateless MCP endpoint using Streamable HTTP transport. Accepts JSON-RPC requests and notifications. Session management is handled internally by Connect—clients should not send mcp-session-id headers. Requires service token with mcp scope."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

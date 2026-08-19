@@ -1,0 +1,2624 @@
+{
+  "item": [
+    {
+      "id": "8728fa8e-5f62-4009-8004-704792157d56",
+      "name": "skills",
+      "description": {
+        "content": "Discover and search reusable prompt-based skills for MCP servers",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "8f453ea8-2628-450c-b551-9a69ef4778db",
+          "name": "List or search skills",
+          "request": {
+            "name": "List or search skills",
+            "description": {
+              "content": "Search and browse reusable prompt-based skills. Supports full-text and semantic search via the `q` parameter, and filtering by category, namespace, or slug.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "skills"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "q",
+                  "value": "<string>",
+                  "description": "Search query for full-text and semantic search across skill names and descriptions."
+                },
+                {
+                  "disabled": false,
+                  "key": "category",
+                  "value": "<string>",
+                  "description": "Filter by skill category (e.g. 'code', 'data', 'web')."
+                },
+                {
+                  "disabled": false,
+                  "key": "namespace",
+                  "value": "<string>",
+                  "description": "Filter by the namespace that owns the skill."
+                },
+                {
+                  "disabled": false,
+                  "key": "slug",
+                  "value": "<string>",
+                  "description": "Filter by exact skill slug within a namespace. Deprecated: use GET /skills/:namespace/:slug instead."
+                },
+                {
+                  "disabled": false,
+                  "key": "ownerId",
+                  "value": "<string>",
+                  "description": "Filter by the skill owner's organization ID."
+                },
+                {
+                  "disabled": false,
+                  "key": "verified",
+                  "value": "<boolean>",
+                  "description": "Filter by whether the skill's namespace is verified."
+                },
+                {
+                  "disabled": false,
+                  "key": "page",
+                  "value": "<integer>",
+                  "description": "Page number (1-indexed)."
+                },
+                {
+                  "disabled": false,
+                  "key": "pageSize",
+                  "value": "<integer>",
+                  "description": "Number of results per page (default 20, max 100)."
+                },
+                {
+                  "disabled": false,
+                  "key": "topK",
+                  "value": "<integer>",
+                  "description": "Maximum number of candidate results to consider from the search index before pagination. The server applies a hard cap of 500 to keep the rerank window bounded; pass `seed` for stable deep pagination."
+                },
+                {
+                  "disabled": false,
+                  "key": "fields",
+                  "value": "<string>",
+                  "description": "Comma-separated list of fields to include in response"
+                },
+                {
+                  "disabled": false,
+                  "key": "seed",
+                  "value": "<integer>",
+                  "description": "Random seed for deterministic pagination. When provided, results use a stable sort order that is consistent across pages for the same seed value."
+                }
+              ],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "5d7af07d-9f86-44c8-bee6-f172533c58ed",
+              "name": "Successful response",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "skills"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "q",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "category",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "namespace",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "slug",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "ownerId",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "verified",
+                      "value": "<boolean>"
+                    },
+                    {
+                      "key": "page",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "pageSize",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "topK",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "fields",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "seed",
+                      "value": "<integer>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"skills\": [\n    {\n      \"id\": \"string\",\n      \"namespace\": \"string\",\n      \"slug\": \"string\",\n      \"displayName\": \"string\",\n      \"description\": \"string\",\n      \"prompt\": \"string\",\n      \"qualityScore\": 6296.70434230783,\n      \"verified\": true,\n      \"listed\": false,\n      \"createdAt\": \"string\",\n      \"externalStars\": 9121.546970955591,\n      \"externalForks\": 821.9902443569426,\n      \"totalActivations\": 1875.1520986399405,\n      \"uniqueUsers\": 993.4931597247065,\n      \"categories\": [\n        \"string\",\n        \"string\"\n      ],\n      \"servers\": [\n        \"string\",\n        \"string\"\n      ],\n      \"gitUrl\": \"string\"\n    },\n    {\n      \"id\": \"string\",\n      \"namespace\": \"string\",\n      \"slug\": \"string\",\n      \"displayName\": \"string\",\n      \"description\": \"string\",\n      \"prompt\": \"string\",\n      \"qualityScore\": 8451.334243413105,\n      \"verified\": true,\n      \"listed\": false,\n      \"createdAt\": \"string\",\n      \"externalStars\": 7396.862647530619,\n      \"externalForks\": 6433.631357055007,\n      \"totalActivations\": 2882.5766411415766,\n      \"uniqueUsers\": 5301.522670440389,\n      \"categories\": [\n        \"string\",\n        \"string\"\n      ],\n      \"servers\": [\n        \"string\",\n        \"string\"\n      ],\n      \"gitUrl\": \"string\"\n    }\n  ],\n  \"pagination\": {\n    \"currentPage\": -6388102155965974,\n    \"pageSize\": -3392804568071780,\n    \"totalPages\": 3303035998188757,\n    \"totalCount\": -4841769465020046\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "e35054a6-e3af-40ac-a8c3-b9236a56345a",
+              "name": "Server error",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "skills"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "q",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "category",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "namespace",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "slug",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "ownerId",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "verified",
+                      "value": "<boolean>"
+                    },
+                    {
+                      "key": "page",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "pageSize",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "topK",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "fields",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "seed",
+                      "value": "<integer>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "32f44be5-138e-439f-9d8b-fe0389524671",
+          "name": "Create a new skill (deprecated)",
+          "request": {
+            "name": "Create a new skill (deprecated)",
+            "description": {
+              "content": "**Deprecated:** Use PUT /skills/{namespace}/{slug} instead. Create a new skill by linking a GitHub repository containing a SKILL.md file.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "skills"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"namespace\": \"<string>\",\n  \"slug\": \"<string>\",\n  \"gitUrl\": \"<uri>\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "5614f26a-dddd-4f22-985a-a5033ab9d8ea",
+              "name": "Skill created successfully",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "skills"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"namespace\": \"<string>\",\n  \"slug\": \"<string>\",\n  \"gitUrl\": \"<uri>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"id\": \"string\",\n  \"namespace\": \"string\",\n  \"slug\": \"string\",\n  \"displayName\": \"string\",\n  \"description\": \"string\",\n  \"gitUrl\": \"string\",\n  \"listed\": true,\n  \"createdAt\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "07db9e80-4ad3-4d3b-addb-ee4dd3a09ae2",
+              "name": "Invalid request",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "skills"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"namespace\": \"<string>\",\n  \"slug\": \"<string>\",\n  \"gitUrl\": \"<uri>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": \"string\",\n  \"code\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "3bfea525-a097-4da0-8290-6ee6611ddca9",
+              "name": "Forbidden - user does not own the namespace",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "skills"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"namespace\": \"<string>\",\n  \"slug\": \"<string>\",\n  \"gitUrl\": \"<uri>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Forbidden",
+              "code": 403,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": \"string\",\n  \"code\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "654185f0-edd9-4e7c-ad82-c3613332d4ea",
+              "name": "Namespace not found or SKILL.md not found",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "skills"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"namespace\": \"<string>\",\n  \"slug\": \"<string>\",\n  \"gitUrl\": \"<uri>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": \"string\",\n  \"code\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "8f4da700-e8a2-4ca9-8c58-9cd42f5dadfe",
+              "name": "Skill with this slug or git URL already exists",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "skills"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"namespace\": \"<string>\",\n  \"slug\": \"<string>\",\n  \"gitUrl\": \"<uri>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Conflict",
+              "code": 409,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": \"string\",\n  \"code\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "d16fd56a-4cae-445a-95f5-efe436030b20",
+          "name": "Get a skill",
+          "request": {
+            "name": "Get a skill",
+            "description": {
+              "content": "Get a single skill by its namespace and slug.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "skills",
+                ":namespace",
+                ":slug"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "namespace",
+                  "description": "(Required) "
+                },
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "slug",
+                  "description": "(Required) "
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "e4e670ca-bb0c-40c7-9627-36e6325b538b",
+              "name": "Skill found",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "skills",
+                    ":namespace",
+                    ":slug"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "namespace",
+                      "description": "(Required) "
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "slug",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"id\": \"string\",\n  \"namespace\": \"string\",\n  \"slug\": \"string\",\n  \"displayName\": \"string\",\n  \"description\": \"string\",\n  \"prompt\": \"string\",\n  \"qualityScore\": 6360.000861701078,\n  \"externalStars\": 7293.580707468852,\n  \"externalForks\": 4877.911331236908,\n  \"totalActivations\": 1589.7788182815964,\n  \"uniqueUsers\": 2600.1207428950224,\n  \"categories\": [\n    \"string\",\n    \"string\"\n  ],\n  \"servers\": [\n    \"string\",\n    \"string\"\n  ],\n  \"gitUrl\": \"string\",\n  \"verified\": false,\n  \"listed\": false,\n  \"owner\": \"string\",\n  \"createdAt\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "8769bd82-1b07-4ff1-aea7-f5b3ffb03302",
+              "name": "Skill not found",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "skills",
+                    ":namespace",
+                    ":slug"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "namespace",
+                      "description": "(Required) "
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "slug",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "91c9379f-e58c-4153-b32b-b1176fca31dd",
+          "name": "Create or update a skill",
+          "request": {
+            "name": "Create or update a skill",
+            "description": {
+              "content": "Idempotent endpoint to create or update a GitHub-backed skill. Send application/json with `gitUrl`.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "skills",
+                ":namespace",
+                ":slug"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "namespace",
+                  "description": "(Required) "
+                },
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "slug",
+                  "description": "(Required) "
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "PUT",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "{}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "f8c3c5d3-2336-41d5-9b1a-9d73de3c7634",
+              "name": "Skill updated successfully",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "skills",
+                    ":namespace",
+                    ":slug"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "namespace",
+                      "description": "(Required) "
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "slug",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "PUT",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"id\": \"string\",\n  \"namespace\": \"string\",\n  \"slug\": \"string\",\n  \"displayName\": \"string\",\n  \"description\": \"string\",\n  \"gitUrl\": \"string\",\n  \"externalStars\": 3977.9612474185324,\n  \"listed\": true,\n  \"createdAt\": \"string\",\n  \"updatedAt\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "974db6db-0657-4296-a8cc-7c70747744ff",
+              "name": "Skill created successfully",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "skills",
+                    ":namespace",
+                    ":slug"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "namespace",
+                      "description": "(Required) "
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "slug",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "PUT",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Created",
+              "code": 201,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"id\": \"string\",\n  \"namespace\": \"string\",\n  \"slug\": \"string\",\n  \"displayName\": \"string\",\n  \"description\": \"string\",\n  \"gitUrl\": \"string\",\n  \"externalStars\": 3977.9612474185324,\n  \"listed\": true,\n  \"createdAt\": \"string\",\n  \"updatedAt\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "c75bd9f4-8b9f-4bb2-a1b4-fcd63cf08188",
+              "name": "Invalid request",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "skills",
+                    ":namespace",
+                    ":slug"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "namespace",
+                      "description": "(Required) "
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "slug",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "PUT",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": \"string\",\n  \"code\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "fd7245d6-c064-4237-8900-457a1e216df0",
+              "name": "Forbidden - user does not own the namespace",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "skills",
+                    ":namespace",
+                    ":slug"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "namespace",
+                      "description": "(Required) "
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "slug",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "PUT",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Forbidden",
+              "code": 403,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": \"string\",\n  \"code\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "3973d4a1-f996-46b7-9aa7-d00ff6651b78",
+              "name": "Namespace not found or SKILL.md not found",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "skills",
+                    ":namespace",
+                    ":slug"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "namespace",
+                      "description": "(Required) "
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "slug",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "PUT",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": \"string\",\n  \"code\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "cde22e65-970e-4b19-9f62-c2e9c8ccc1cf",
+              "name": "Git URL already claimed by another skill",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "skills",
+                    ":namespace",
+                    ":slug"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "namespace",
+                      "description": "(Required) "
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "slug",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "PUT",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Conflict",
+              "code": 409,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": \"string\",\n  \"code\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "73250e2c-ef67-4527-969f-b148b768c565",
+              "name": "SKILL.md validation error",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "skills",
+                    ":namespace",
+                    ":slug"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "namespace",
+                      "description": "(Required) "
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "slug",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "PUT",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Unprocessable Entity (WebDAV) (RFC 4918)",
+              "code": 422,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": \"string\",\n  \"code\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "287596fc-9c09-4279-9525-5538905f6c54",
+          "name": "Delete a skill",
+          "request": {
+            "name": "Delete a skill",
+            "description": {
+              "content": "Delete a skill by namespace and slug. Requires ownership of the namespace.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "skills",
+                ":namespace",
+                ":slug"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "namespace",
+                  "description": "(Required) "
+                },
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "slug",
+                  "description": "(Required) "
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "DELETE",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "f7ff17fa-f0bf-4a77-8ae0-80d084a2d508",
+              "name": "Skill deleted successfully",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "skills",
+                    ":namespace",
+                    ":slug"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "namespace",
+                      "description": "(Required) "
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "slug",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "DELETE",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"success\": false,\n  \"qualifiedName\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "9110db62-472e-4ed5-8d49-402f48ca354b",
+              "name": "Forbidden - user does not own the namespace",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "skills",
+                    ":namespace",
+                    ":slug"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "namespace",
+                      "description": "(Required) "
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "slug",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "DELETE",
+                "body": {}
+              },
+              "status": "Forbidden",
+              "code": 403,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "dac1b85a-0f0d-4d43-bb04-466991072f5b",
+              "name": "Skill not found",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "skills",
+                    ":namespace",
+                    ":slug"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "namespace",
+                      "description": "(Required) "
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "slug",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "DELETE",
+                "body": {}
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "1cb95846-dcf2-4a93-b5ad-beccd1173b1f",
+          "name": "Download skill bundle",
+          "request": {
+            "name": "Download skill bundle",
+            "description": {
+              "content": "Download a ZIP bundle containing all skill files.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "skills",
+                ":namespace",
+                ":slug",
+                "download"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "namespace",
+                  "description": "(Required) "
+                },
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "slug",
+                  "description": "(Required) "
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/zip"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "f9657666-8e49-4062-a208-8f09d4d4985a",
+              "name": "Skill ZIP file",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "skills",
+                    ":namespace",
+                    ":slug",
+                    "download"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "namespace",
+                      "description": "(Required) "
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "slug",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/zip"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/zip"
+                }
+              ],
+              "body": "string",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "0424c7f2-f175-457b-9931-8f4ea66b7654",
+              "name": "Skill not found",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "skills",
+                    ":namespace",
+                    ":slug",
+                    "download"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "namespace",
+                      "description": "(Required) "
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "slug",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "bc9c6eb4-ffa0-4d36-b6e8-0577f20c8d90",
+          "name": "Sync skill metadata from GitHub (deprecated)",
+          "request": {
+            "name": "Sync skill metadata from GitHub (deprecated)",
+            "description": {
+              "content": "**Deprecated:** Use PUT /skills/{namespace}/{slug} instead. Refetch SKILL.md and repository stars from GitHub and update the skill record.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "skills",
+                ":namespace",
+                ":slug",
+                "sync"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "namespace",
+                  "description": "(Required) "
+                },
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "slug",
+                  "description": "(Required) "
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "6a07248c-3d71-45cf-8db4-76098e6760cd",
+              "name": "Skill synced successfully",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "skills",
+                    ":namespace",
+                    ":slug",
+                    "sync"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "namespace",
+                      "description": "(Required) "
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "slug",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"id\": \"string\",\n  \"namespace\": \"string\",\n  \"slug\": \"string\",\n  \"displayName\": \"string\",\n  \"description\": \"string\",\n  \"externalStars\": 2668.465438399653,\n  \"gitUrl\": \"string\",\n  \"updatedAt\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "811da59c-b73d-440a-a8fd-dc95fbc37115",
+              "name": "Forbidden - user does not own the namespace",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "skills",
+                    ":namespace",
+                    ":slug",
+                    "sync"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "namespace",
+                      "description": "(Required) "
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "slug",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {}
+              },
+              "status": "Forbidden",
+              "code": 403,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "eb3e62aa-834d-43dc-83e4-af196589f599",
+              "name": "Skill not found",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "skills",
+                    ":namespace",
+                    ":slug",
+                    "sync"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "namespace",
+                      "description": "(Required) "
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "slug",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {}
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "8a4f1a61-30e7-4de7-84a7-d3d063fef0b2",
+              "name": "Validation error - SKILL.md invalid",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "skills",
+                    ":namespace",
+                    ":slug",
+                    "sync"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "namespace",
+                      "description": "(Required) "
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "slug",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {}
+              },
+              "status": "Unprocessable Entity (WebDAV) (RFC 4918)",
+              "code": 422,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": \"string\",\n  \"code\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "ccc6d87a-ca38-4c87-a938-3b5627721a4f",
+          "name": "Upload a skill bundle",
+          "request": {
+            "name": "Upload a skill bundle",
+            "description": {
+              "content": "Upload or replace a skill bundle via multipart/form-data with an `archive` file.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "skills",
+                ":namespace",
+                ":slug",
+                "upload"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "namespace",
+                  "description": "(Required) "
+                },
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "slug",
+                  "description": "(Required) "
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "multipart/form-data"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "PUT",
+            "auth": null,
+            "body": {
+              "mode": "formdata",
+              "formdata": [
+                {
+                  "key": "archive",
+                  "type": "file",
+                  "description": "(Required) ZIP file upload containing a skill folder with SKILL.md and any scripts, references, or assets."
+                }
+              ]
+            }
+          },
+          "response": [
+            {
+              "id": "63b30b38-a5f5-40c2-8967-adf61ea374bb",
+              "name": "Skill updated successfully",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "skills",
+                    ":namespace",
+                    ":slug",
+                    "upload"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "namespace",
+                      "description": "(Required) "
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "slug",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "PUT",
+                "body": {
+                  "mode": "formdata",
+                  "formdata": [
+                    {
+                      "description": {
+                        "content": "(Required) ZIP file upload containing a skill folder with SKILL.md and any scripts, references, or assets.",
+                        "type": "text/plain"
+                      },
+                      "key": "archive",
+                      "value": "<binary>",
+                      "type": "text"
+                    }
+                  ]
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"id\": \"string\",\n  \"namespace\": \"string\",\n  \"slug\": \"string\",\n  \"displayName\": \"string\",\n  \"description\": \"string\",\n  \"gitUrl\": \"string\",\n  \"externalStars\": 3977.9612474185324,\n  \"listed\": true,\n  \"createdAt\": \"string\",\n  \"updatedAt\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "a2b5aa39-eef7-4a09-b2a3-3bddc125e08c",
+              "name": "Skill created successfully",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "skills",
+                    ":namespace",
+                    ":slug",
+                    "upload"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "namespace",
+                      "description": "(Required) "
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "slug",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "PUT",
+                "body": {
+                  "mode": "formdata",
+                  "formdata": [
+                    {
+                      "description": {
+                        "content": "(Required) ZIP file upload containing a skill folder with SKILL.md and any scripts, references, or assets.",
+                        "type": "text/plain"
+                      },
+                      "key": "archive",
+                      "value": "<binary>",
+                      "type": "text"
+                    }
+                  ]
+                }
+              },
+              "status": "Created",
+              "code": 201,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"id\": \"string\",\n  \"namespace\": \"string\",\n  \"slug\": \"string\",\n  \"displayName\": \"string\",\n  \"description\": \"string\",\n  \"gitUrl\": \"string\",\n  \"externalStars\": 3977.9612474185324,\n  \"listed\": true,\n  \"createdAt\": \"string\",\n  \"updatedAt\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "b54d3bf7-ca30-4ba9-8a5c-8b163e0818f6",
+              "name": "Invalid request",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "skills",
+                    ":namespace",
+                    ":slug",
+                    "upload"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "namespace",
+                      "description": "(Required) "
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "slug",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "PUT",
+                "body": {
+                  "mode": "formdata",
+                  "formdata": [
+                    {
+                      "description": {
+                        "content": "(Required) ZIP file upload containing a skill folder with SKILL.md and any scripts, references, or assets.",
+                        "type": "text/plain"
+                      },
+                      "key": "archive",
+                      "value": "<binary>",
+                      "type": "text"
+                    }
+                  ]
+                }
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": \"string\",\n  \"code\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "1d7163c4-8682-4375-9aa6-22b79558fb3b",
+              "name": "Forbidden - user does not own the namespace",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "skills",
+                    ":namespace",
+                    ":slug",
+                    "upload"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "namespace",
+                      "description": "(Required) "
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "slug",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "PUT",
+                "body": {
+                  "mode": "formdata",
+                  "formdata": [
+                    {
+                      "description": {
+                        "content": "(Required) ZIP file upload containing a skill folder with SKILL.md and any scripts, references, or assets.",
+                        "type": "text/plain"
+                      },
+                      "key": "archive",
+                      "value": "<binary>",
+                      "type": "text"
+                    }
+                  ]
+                }
+              },
+              "status": "Forbidden",
+              "code": 403,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": \"string\",\n  \"code\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "02fba28c-1372-4f9b-84ab-5830f2745739",
+              "name": "Namespace not found",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "skills",
+                    ":namespace",
+                    ":slug",
+                    "upload"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "namespace",
+                      "description": "(Required) "
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "slug",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "PUT",
+                "body": {
+                  "mode": "formdata",
+                  "formdata": [
+                    {
+                      "description": {
+                        "content": "(Required) ZIP file upload containing a skill folder with SKILL.md and any scripts, references, or assets.",
+                        "type": "text/plain"
+                      },
+                      "key": "archive",
+                      "value": "<binary>",
+                      "type": "text"
+                    }
+                  ]
+                }
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": \"string\",\n  \"code\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "75d0bbbe-336d-4c6a-88ff-5e5897164bee",
+              "name": "SKILL.md validation error",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "skills",
+                    ":namespace",
+                    ":slug",
+                    "upload"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "namespace",
+                      "description": "(Required) "
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "slug",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "PUT",
+                "body": {
+                  "mode": "formdata",
+                  "formdata": [
+                    {
+                      "description": {
+                        "content": "(Required) ZIP file upload containing a skill folder with SKILL.md and any scripts, references, or assets.",
+                        "type": "text/plain"
+                      },
+                      "key": "archive",
+                      "value": "<binary>",
+                      "type": "text"
+                    }
+                  ]
+                }
+              },
+              "status": "Unprocessable Entity (WebDAV) (RFC 4918)",
+              "code": 422,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": \"string\",\n  \"code\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "12848678-41cb-421f-897a-3ec6be415b64",
+              "name": "Failed to store uploaded skill bundle",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "skills",
+                    ":namespace",
+                    ":slug",
+                    "upload"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "namespace",
+                      "description": "(Required) "
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "slug",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "PUT",
+                "body": {
+                  "mode": "formdata",
+                  "formdata": [
+                    {
+                      "description": {
+                        "content": "(Required) ZIP file upload containing a skill folder with SKILL.md and any scripts, references, or assets.",
+                        "type": "text/plain"
+                      },
+                      "key": "archive",
+                      "value": "<binary>",
+                      "type": "text"
+                    }
+                  ]
+                }
+              },
+              "status": "Bad Gateway",
+              "code": 502,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": \"string\",\n  \"code\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "type": "string",
+      "value": "https://api.smithery.ai",
+      "key": "baseUrl"
+    }
+  ],
+  "auth": {
+    "type": "bearer",
+    "bearer": [
+      {
+        "key": "token",
+        "value": "{{bearerToken}}"
+      }
+    ]
+  },
+  "info": {
+    "_postman_id": "865d34a7-9b0e-491d-8297-12297c0c0a20",
+    "name": "Smithery Platform connect skills API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "API for the Smithery platform — discover, deploy, and manage MCP (Model Context Protocol) servers. Provides endpoints for browsing the server registry, managing deployments, creating scoped access tokens, and connecting to MCP servers.",
+      "type": "text/plain"
+    }
+  }
+}

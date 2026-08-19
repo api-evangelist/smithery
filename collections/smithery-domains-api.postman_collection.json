@@ -1,0 +1,465 @@
+{
+  "item": [
+    {
+      "id": "d969d8a3-c6d2-466b-aa03-3ba6018a6b3a",
+      "name": "domains",
+      "description": {
+        "content": "",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "5fa885da-256f-479f-b12b-c395716ef7eb",
+          "name": "List domains",
+          "request": {
+            "name": "List domains",
+            "description": {
+              "content": "List the domains for a server.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "servers",
+                ":qualifiedName",
+                "domains"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "qualifiedName",
+                  "description": "(Required) The server's qualified name (e.g. 'namespace/server' or 'namespace' for namespace-only servers). Use %2F to encode the slash."
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "c89f27cc-e3b7-4edf-8cfb-7537d3f352f0",
+              "name": "Domain list",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "servers",
+                    ":qualifiedName",
+                    "domains"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "qualifiedName",
+                      "description": "(Required) The server's qualified name (e.g. 'namespace/server' or 'namespace' for namespace-only servers). Use %2F to encode the slash."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"domains\": [\n    {\n      \"id\": \"managed\",\n      \"type\": \"managed\",\n      \"hostname\": \"my-server.run.tools\",\n      \"subdomain\": \"my-server\",\n      \"createdAt\": \"2024-01-01T00:00:00.000Z\",\n      \"updatedAt\": \"2024-01-01T00:00:00.000Z\"\n    },\n    {\n      \"id\": \"managed\",\n      \"type\": \"managed\",\n      \"hostname\": \"my-server.run.tools\",\n      \"subdomain\": \"my-server\",\n      \"createdAt\": \"2024-01-01T00:00:00.000Z\",\n      \"updatedAt\": \"2024-01-01T00:00:00.000Z\"\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "fa42e665-95e0-405e-ad9e-73bad831718d",
+              "name": "Server not found",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "servers",
+                    ":qualifiedName",
+                    "domains"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "qualifiedName",
+                      "description": "(Required) The server's qualified name (e.g. 'namespace/server' or 'namespace' for namespace-only servers). Use %2F to encode the slash."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": \"Server not found\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "2476597a-6aa6-4ffb-bbad-bef1c007ec99",
+          "name": "Update managed domain",
+          "request": {
+            "name": "Update managed domain",
+            "description": {
+              "content": "Update the managed run.tools slug for a server.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "servers",
+                ":qualifiedName",
+                "domains",
+                ":domainId"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "qualifiedName",
+                  "description": "(Required) The server's qualified name (e.g. 'namespace/server' or 'namespace' for namespace-only servers). Use %2F to encode the slash."
+                },
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "domainId",
+                  "description": "(Required) "
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "PATCH",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"subdomain\": \"<string>\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "55285746-4d08-4099-a945-10b4cfc73a16",
+              "name": "Managed domain updated",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "servers",
+                    ":qualifiedName",
+                    "domains",
+                    ":domainId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "qualifiedName",
+                      "description": "(Required) The server's qualified name (e.g. 'namespace/server' or 'namespace' for namespace-only servers). Use %2F to encode the slash."
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "domainId",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "PATCH",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"subdomain\": \"<string>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"id\": \"managed\",\n  \"type\": \"managed\",\n  \"hostname\": \"my-server.run.tools\",\n  \"subdomain\": \"my-server\",\n  \"createdAt\": \"2024-01-01T00:00:00.000Z\",\n  \"updatedAt\": \"2024-01-01T00:00:00.000Z\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "a9932fcc-d223-4c0e-bbb4-f1107210ac5d",
+              "name": "Domain not found",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "servers",
+                    ":qualifiedName",
+                    "domains",
+                    ":domainId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "qualifiedName",
+                      "description": "(Required) The server's qualified name (e.g. 'namespace/server' or 'namespace' for namespace-only servers). Use %2F to encode the slash."
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "domainId",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "PATCH",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"subdomain\": \"<string>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": \"Server not found\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "77721978-f1fe-44d7-9b86-bece5bfec419",
+              "name": "Conflict — managed run.tools slug already taken",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "servers",
+                    ":qualifiedName",
+                    "domains",
+                    ":domainId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "qualifiedName",
+                      "description": "(Required) The server's qualified name (e.g. 'namespace/server' or 'namespace' for namespace-only servers). Use %2F to encode the slash."
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "domainId",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "PATCH",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"subdomain\": \"<string>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Conflict",
+              "code": 409,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": \"Server not found\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "type": "string",
+      "value": "https://api.smithery.ai",
+      "key": "baseUrl"
+    }
+  ],
+  "auth": {
+    "type": "bearer",
+    "bearer": [
+      {
+        "key": "token",
+        "value": "{{bearerToken}}"
+      }
+    ]
+  },
+  "info": {
+    "_postman_id": "a2775b3b-f345-4c51-aa0e-ac8e07db1b4c",
+    "name": "Smithery Platform connect domains API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "API for the Smithery platform — discover, deploy, and manage MCP (Model Context Protocol) servers. Provides endpoints for browsing the server registry, managing deployments, creating scoped access tokens, and connecting to MCP servers.",
+      "type": "text/plain"
+    }
+  }
+}

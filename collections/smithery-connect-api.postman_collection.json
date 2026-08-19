@@ -1,0 +1,4595 @@
+{
+  "item": [
+    {
+      "id": "d13689d1-7e23-47ee-b8c3-9afc174e96aa",
+      "name": "connect",
+      "description": {
+        "content": "",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "bcfe0c2b-b2f7-4053-a9f8-e4f2b84cedb5",
+          "name": "List connections",
+          "request": {
+            "name": "List connections",
+            "description": {
+              "content": "List all connections in a namespace. Supports filtering by metadata using `metadata.{key}={value}` query params.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "connect",
+                ":namespace"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "limit",
+                  "value": "<integer>",
+                  "description": "Maximum number of items to return (default 100, max 100)"
+                },
+                {
+                  "disabled": false,
+                  "key": "cursor",
+                  "value": "<string>",
+                  "description": "Pagination cursor from previous response's nextCursor"
+                },
+                {
+                  "disabled": false,
+                  "key": "name",
+                  "value": "<string>",
+                  "description": "Filter by exact connection name"
+                },
+                {
+                  "disabled": false,
+                  "key": "mcpUrl",
+                  "value": "<string>",
+                  "description": "Filter by exact MCP server URL"
+                }
+              ],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "namespace",
+                  "description": "(Required) "
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "00f3c3d2-ecab-4013-a38b-8dc650cce75d",
+              "name": "List of connections",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "connect",
+                    ":namespace"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "limit",
+                      "value": "50"
+                    },
+                    {
+                      "key": "cursor",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "name",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "mcpUrl",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "namespace",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"connections\": [\n    {\n      \"connectionId\": \"clever-dolphin-a9X3\",\n      \"name\": \"string\",\n      \"mcpUrl\": \"string\",\n      \"metadata\": {\n        \"key_0\": {},\n        \"key_1\": {},\n        \"key_2\": {}\n      },\n      \"transport\": \"http\",\n      \"mock\": {\n        \"enabled\": true,\n        \"scenario\": \"Slack workspace with an active #community-ops channel containing recent event-planning messages, plus 50 Airtable candidate records with mixed tenure and interests.\"\n      },\n      \"iconUrl\": \"string\",\n      \"createdAt\": \"string\",\n      \"status\": {\n        \"state\": \"string\"\n      },\n      \"serverInfo\": {\n        \"name\": \"string\",\n        \"version\": \"string\",\n        \"title\": \"string\",\n        \"icons\": [\n          {\n            \"src\": \"string\",\n            \"mimeType\": \"string\",\n            \"sizes\": [\n              \"string\",\n              \"string\"\n            ],\n            \"theme\": \"light\"\n          },\n          {\n            \"src\": \"string\",\n            \"mimeType\": \"string\",\n            \"sizes\": [\n              \"string\",\n              \"string\"\n            ],\n            \"theme\": \"light\"\n          }\n        ],\n        \"websiteUrl\": \"string\",\n        \"description\": \"string\"\n      }\n    },\n    {\n      \"connectionId\": \"clever-dolphin-a9X3\",\n      \"name\": \"string\",\n      \"mcpUrl\": \"string\",\n      \"metadata\": {\n        \"key_0\": {},\n        \"key_1\": {},\n        \"key_2\": {}\n      },\n      \"transport\": \"http\",\n      \"mock\": {\n        \"enabled\": true,\n        \"scenario\": \"Slack workspace with an active #community-ops channel containing recent event-planning messages, plus 50 Airtable candidate records with mixed tenure and interests.\"\n      },\n      \"iconUrl\": \"string\",\n      \"createdAt\": \"string\",\n      \"status\": {\n        \"state\": \"string\"\n      },\n      \"serverInfo\": {\n        \"name\": \"string\",\n        \"version\": \"string\",\n        \"title\": \"string\",\n        \"icons\": [\n          {\n            \"src\": \"string\",\n            \"mimeType\": \"string\",\n            \"sizes\": [\n              \"string\",\n              \"string\"\n            ],\n            \"theme\": \"light\"\n          },\n          {\n            \"src\": \"string\",\n            \"mimeType\": \"string\",\n            \"sizes\": [\n              \"string\",\n              \"string\"\n            ],\n            \"theme\": \"light\"\n          }\n        ],\n        \"websiteUrl\": \"string\",\n        \"description\": \"string\"\n      }\n    }\n  ],\n  \"nextCursor\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "04260f22-9e3c-48f8-93ca-7ee610b58ded",
+              "name": "Bad request",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "connect",
+                    ":namespace"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "limit",
+                      "value": "50"
+                    },
+                    {
+                      "key": "cursor",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "name",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "mcpUrl",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "namespace",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": \"not_found\",\n  \"message\": \"Resource not found\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "beb58e8a-41f2-4677-86b5-acd44492ae72",
+          "name": "Create connection",
+          "request": {
+            "name": "Create connection",
+            "description": {
+              "content": "Create a new MCP connection with an auto-generated ID. Requires API key and namespace ownership.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "connect",
+                ":namespace"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "namespace",
+                  "description": "(Required) "
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"transport\": \"<string>\",\n  \"mcpUrl\": \"<uri>\",\n  \"name\": \"<string>\",\n  \"metadata\": {\n    \"key_0\": {}\n  },\n  \"headers\": {\n    \"key_0\": \"<string>\",\n    \"key_1\": \"<string>\"\n  },\n  \"mock\": {\n    \"enabled\": \"<boolean>\",\n    \"scenario\": \"<string>\"\n  }\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "44ca356e-9f6c-4ba5-8b89-3eafd50371f3",
+              "name": "Connection created",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "connect",
+                    ":namespace"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "namespace",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"transport\": \"http\",\n  \"mcpUrl\": \"https://mcp.example.com/sse\",\n  \"name\": \"My MCP Server\",\n  \"metadata\": {\n    \"key_0\": {}\n  },\n  \"headers\": {\n    \"X-API-Key\": \"secret-key\"\n  },\n  \"mock\": {\n    \"enabled\": true,\n    \"scenario\": \"A developer inbox with 3 unread Q4 planning threads.\"\n  }\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Created",
+              "code": 201,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"connectionId\": \"clever-dolphin-a9X3\",\n  \"name\": \"string\",\n  \"mcpUrl\": \"string\",\n  \"metadata\": {\n    \"key_0\": {},\n    \"key_1\": {}\n  },\n  \"transport\": \"uplink\",\n  \"mock\": {\n    \"enabled\": false,\n    \"scenario\": \"Slack workspace with an active #community-ops channel containing recent event-planning messages, plus 50 Airtable candidate records with mixed tenure and interests.\"\n  },\n  \"iconUrl\": \"string\",\n  \"createdAt\": \"string\",\n  \"status\": {\n    \"state\": \"string\"\n  },\n  \"serverInfo\": {\n    \"name\": \"string\",\n    \"version\": \"string\",\n    \"title\": \"string\",\n    \"icons\": [\n      {\n        \"src\": \"string\",\n        \"mimeType\": \"string\",\n        \"sizes\": [\n          \"string\",\n          \"string\"\n        ],\n        \"theme\": \"dark\"\n      },\n      {\n        \"src\": \"string\",\n        \"mimeType\": \"string\",\n        \"sizes\": [\n          \"string\",\n          \"string\"\n        ],\n        \"theme\": \"dark\"\n      }\n    ],\n    \"websiteUrl\": \"string\",\n    \"description\": \"string\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "c1ea15fa-1b11-4165-8ac0-1b10de0d7f2b",
+              "name": "Validation error",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "connect",
+                    ":namespace"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "namespace",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"transport\": \"http\",\n  \"mcpUrl\": \"https://mcp.example.com/sse\",\n  \"name\": \"My MCP Server\",\n  \"metadata\": {\n    \"key_0\": {}\n  },\n  \"headers\": {\n    \"X-API-Key\": \"secret-key\"\n  },\n  \"mock\": {\n    \"enabled\": true,\n    \"scenario\": \"A developer inbox with 3 unread Q4 planning threads.\"\n  }\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": \"string\",\n  \"message\": \"Invalid request\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "d2b68318-71b0-4b77-b84d-3c89e5689ff4",
+              "name": "Namespace not found or access denied",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "connect",
+                    ":namespace"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "namespace",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"transport\": \"http\",\n  \"mcpUrl\": \"https://mcp.example.com/sse\",\n  \"name\": \"My MCP Server\",\n  \"metadata\": {\n    \"key_0\": {}\n  },\n  \"headers\": {\n    \"X-API-Key\": \"secret-key\"\n  },\n  \"mock\": {\n    \"enabled\": true,\n    \"scenario\": \"A developer inbox with 3 unread Q4 planning threads.\"\n  }\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": \"not_found\",\n  \"message\": \"Resource not found\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "327e61e7-b319-443f-9ff6-ffeb74ea92fd",
+          "name": "List triggers",
+          "request": {
+            "name": "List triggers",
+            "description": {
+              "content": "List trigger types exposed by a connection.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "connect",
+                ":namespace",
+                ":connectionId",
+                ".triggers"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "namespace",
+                  "description": "(Required) "
+                },
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "connectionId",
+                  "description": "(Required) "
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "447265c4-d2bd-4d3d-b404-5a23bb54632d",
+              "name": "Trigger definitions",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "connect",
+                    ":namespace",
+                    ":connectionId",
+                    ".triggers"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "namespace",
+                      "description": "(Required) "
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "connectionId",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "[\n  {\n    \"name\": \"page.updated\",\n    \"delivery\": [\n      \"webhook\"\n    ],\n    \"description\": \"string\",\n    \"inputSchema\": {\n      \"key_0\": {},\n      \"key_1\": {}\n    },\n    \"payloadSchema\": {\n      \"key_0\": {}\n    }\n  },\n  {\n    \"name\": \"page.updated\",\n    \"delivery\": [\n      \"webhook\"\n    ],\n    \"description\": \"string\",\n    \"inputSchema\": {\n      \"key_0\": {},\n      \"key_1\": {},\n      \"key_2\": {}\n    },\n    \"payloadSchema\": {\n      \"key_0\": {}\n    }\n  }\n]",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "ab7af2af-e142-4012-93ee-7bce8774ff99",
+              "name": "Connection not found",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "connect",
+                    ":namespace",
+                    ":connectionId",
+                    ".triggers"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "namespace",
+                      "description": "(Required) "
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "connectionId",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": \"not_found\",\n  \"message\": \"Resource not found\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "6aec409e-a622-49a8-8455-1c042b526b99",
+          "name": "Get trigger",
+          "request": {
+            "name": "Get trigger",
+            "description": {
+              "content": "Get the schema for a single trigger type.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "connect",
+                ":namespace",
+                ":connectionId",
+                ".triggers",
+                ":triggerName"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "namespace",
+                  "description": "(Required) "
+                },
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "connectionId",
+                  "description": "(Required) "
+                },
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "triggerName",
+                  "description": "(Required) "
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "fe11d5c8-e553-4620-9951-eb13f5672bd7",
+              "name": "Trigger definition",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "connect",
+                    ":namespace",
+                    ":connectionId",
+                    ".triggers",
+                    ":triggerName"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "namespace",
+                      "description": "(Required) "
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "connectionId",
+                      "description": "(Required) "
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "triggerName",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"name\": \"page.updated\",\n  \"delivery\": [\n    \"webhook\"\n  ],\n  \"description\": \"string\",\n  \"inputSchema\": {\n    \"key_0\": {},\n    \"key_1\": {},\n    \"key_2\": {}\n  },\n  \"payloadSchema\": {\n    \"key_0\": {},\n    \"key_1\": {},\n    \"key_2\": {},\n    \"key_3\": {}\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "f8e488b5-489c-4f15-a3e9-4d8edb4ca124",
+              "name": "Trigger not found",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "connect",
+                    ":namespace",
+                    ":connectionId",
+                    ".triggers",
+                    ":triggerName"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "namespace",
+                      "description": "(Required) "
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "connectionId",
+                      "description": "(Required) "
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "triggerName",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": \"not_found\",\n  \"message\": \"Resource not found\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "153f81fe-181b-450d-abaf-4092ac16943c",
+          "name": "Subscribe to trigger",
+          "request": {
+            "name": "Subscribe to trigger",
+            "description": {
+              "content": "Subscribe to (or refresh) a trigger. Supplying the same (params, delivery.url) refreshes the TTL and may rotate the secret.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "connect",
+                ":namespace",
+                ":connectionId",
+                ".triggers",
+                ":triggerName"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "namespace",
+                  "description": "(Required) "
+                },
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "connectionId",
+                  "description": "(Required) "
+                },
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "triggerName",
+                  "description": "(Required) "
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"params\": {},\n  \"delivery\": {\n    \"url\": \"<string>\",\n    \"secret\": \"<string>\"\n  }\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "66a72b7b-07c8-40b3-a1b0-5b686a14e282",
+              "name": "Subscription created or refreshed",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "connect",
+                    ":namespace",
+                    ":connectionId",
+                    ".triggers",
+                    ":triggerName"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "namespace",
+                      "description": "(Required) "
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "connectionId",
+                      "description": "(Required) "
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "triggerName",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"params\": {},\n  \"delivery\": {\n    \"url\": \"https://my-app.example.com/events\",\n    \"secret\": \"whsec_dGVzdF9zZWNyZXRfMjRfYnl0ZXNfbWluaW11bSE=\"\n  }\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"id\": \"trg_01HW1234567890\",\n  \"refreshBefore\": \"2026-04-22T13:00:00.000Z\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "ee1994bd-3267-4c12-94a6-441ff77c9def",
+              "name": "Validation error",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "connect",
+                    ":namespace",
+                    ":connectionId",
+                    ".triggers",
+                    ":triggerName"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "namespace",
+                      "description": "(Required) "
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "connectionId",
+                      "description": "(Required) "
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "triggerName",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"params\": {},\n  \"delivery\": {\n    \"url\": \"https://my-app.example.com/events\",\n    \"secret\": \"whsec_dGVzdF9zZWNyZXRfMjRfYnl0ZXNfbWluaW11bSE=\"\n  }\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": \"string\",\n  \"message\": \"Invalid request\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "6f1b4cb7-0a67-4934-9995-3c2457b202a6",
+              "name": "Connection or trigger not found",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "connect",
+                    ":namespace",
+                    ":connectionId",
+                    ".triggers",
+                    ":triggerName"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "namespace",
+                      "description": "(Required) "
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "connectionId",
+                      "description": "(Required) "
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "triggerName",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"params\": {},\n  \"delivery\": {\n    \"url\": \"https://my-app.example.com/events\",\n    \"secret\": \"whsec_dGVzdF9zZWNyZXRfMjRfYnl0ZXNfbWluaW11bSE=\"\n  }\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": \"not_found\",\n  \"message\": \"Resource not found\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "acfcdc89-1a4d-42f4-a991-2c996485f0d4",
+          "name": "Unsubscribe from trigger",
+          "request": {
+            "name": "Unsubscribe from trigger",
+            "description": {
+              "content": "Unsubscribe by subscription key (params + delivery.url). Eager teardown — subscriptions also expire naturally on TTL.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "connect",
+                ":namespace",
+                ":connectionId",
+                ".triggers",
+                ":triggerName"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "namespace",
+                  "description": "(Required) "
+                },
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "connectionId",
+                  "description": "(Required) "
+                },
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "triggerName",
+                  "description": "(Required) "
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "DELETE",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"params\": {},\n  \"delivery\": {\n    \"url\": \"<string>\"\n  }\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "dc5e2d03-46b6-407e-8e7e-c0e615b6a5aa",
+              "name": "Subscription removed",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "connect",
+                    ":namespace",
+                    ":connectionId",
+                    ".triggers",
+                    ":triggerName"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "namespace",
+                      "description": "(Required) "
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "connectionId",
+                      "description": "(Required) "
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "triggerName",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "DELETE",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"params\": {},\n  \"delivery\": {\n    \"url\": \"https://my-app.example.com/events\"\n  }\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"success\": true\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "fb31ab98-36d9-4dcd-8e92-fa288e62749a",
+              "name": "Subscription not found",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "connect",
+                    ":namespace",
+                    ":connectionId",
+                    ".triggers",
+                    ":triggerName"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "namespace",
+                      "description": "(Required) "
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "connectionId",
+                      "description": "(Required) "
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "triggerName",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "DELETE",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"params\": {},\n  \"delivery\": {\n    \"url\": \"https://my-app.example.com/events\"\n  }\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": \"not_found\",\n  \"message\": \"Resource not found\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "a3cf7b59-fa7d-4354-843d-6e8751b8ab11",
+          "name": "Get connection",
+          "request": {
+            "name": "Get connection",
+            "description": {
+              "content": "Get details for a specific connection. Requires service token with connections:read scope.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "connect",
+                ":namespace",
+                ":connectionId"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "namespace",
+                  "description": "(Required) "
+                },
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "connectionId",
+                  "description": "(Required) "
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "178edcd6-5f38-4fc0-9835-7b8687c3de73",
+              "name": "Connection details",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "connect",
+                    ":namespace",
+                    ":connectionId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "namespace",
+                      "description": "(Required) "
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "connectionId",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"connectionId\": \"clever-dolphin-a9X3\",\n  \"name\": \"string\",\n  \"mcpUrl\": \"string\",\n  \"metadata\": {\n    \"key_0\": {},\n    \"key_1\": {}\n  },\n  \"transport\": \"uplink\",\n  \"mock\": {\n    \"enabled\": false,\n    \"scenario\": \"Slack workspace with an active #community-ops channel containing recent event-planning messages, plus 50 Airtable candidate records with mixed tenure and interests.\"\n  },\n  \"iconUrl\": \"string\",\n  \"createdAt\": \"string\",\n  \"status\": {\n    \"state\": \"string\"\n  },\n  \"serverInfo\": {\n    \"name\": \"string\",\n    \"version\": \"string\",\n    \"title\": \"string\",\n    \"icons\": [\n      {\n        \"src\": \"string\",\n        \"mimeType\": \"string\",\n        \"sizes\": [\n          \"string\",\n          \"string\"\n        ],\n        \"theme\": \"dark\"\n      },\n      {\n        \"src\": \"string\",\n        \"mimeType\": \"string\",\n        \"sizes\": [\n          \"string\",\n          \"string\"\n        ],\n        \"theme\": \"dark\"\n      }\n    ],\n    \"websiteUrl\": \"string\",\n    \"description\": \"string\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "744f6c8d-ef9a-4dea-85f7-43953eb25b39",
+              "name": "Bad request",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "connect",
+                    ":namespace",
+                    ":connectionId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "namespace",
+                      "description": "(Required) "
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "connectionId",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": \"not_found\",\n  \"message\": \"Resource not found\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "d7c398ff-8af4-477d-92f6-ad5e2634a8b3",
+              "name": "Connection not found",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "connect",
+                    ":namespace",
+                    ":connectionId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "namespace",
+                      "description": "(Required) "
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "connectionId",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": \"not_found\",\n  \"message\": \"Resource not found\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "9aab3ee5-6a67-4f6e-b827-2e1b527f294a",
+          "name": "Create or update connection",
+          "request": {
+            "name": "Create or update connection",
+            "description": {
+              "content": "Create or update an MCP connection with the given ID. mcpUrl is required when creating a new connection, but optional when updating. Returns 409 if a different mcpUrl is provided, except while the connection is input_required and the new URL keeps the same host and path.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "connect",
+                ":namespace",
+                ":connectionId"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "namespace",
+                  "description": "(Required) "
+                },
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "connectionId",
+                  "description": "(Required) "
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "PUT",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"transport\": \"<string>\",\n  \"mcpUrl\": \"<uri>\",\n  \"name\": \"<string>\",\n  \"metadata\": {\n    \"key_0\": {},\n    \"key_1\": {},\n    \"key_2\": {}\n  },\n  \"headers\": {\n    \"key_0\": \"<string>\",\n    \"key_1\": \"<string>\"\n  },\n  \"mock\": {\n    \"enabled\": \"<boolean>\",\n    \"scenario\": \"<string>\"\n  }\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "e08f685b-12ad-4c3b-963c-538146235441",
+              "name": "Connection updated",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "connect",
+                    ":namespace",
+                    ":connectionId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "namespace",
+                      "description": "(Required) "
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "connectionId",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "PUT",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"transport\": \"http\",\n  \"mcpUrl\": \"https://mcp.example.com/sse\",\n  \"name\": \"My MCP Server\",\n  \"metadata\": {\n    \"key_0\": {}\n  },\n  \"headers\": {\n    \"X-API-Key\": \"secret-key\"\n  },\n  \"mock\": {\n    \"enabled\": true\n  }\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"connectionId\": \"clever-dolphin-a9X3\",\n  \"name\": \"string\",\n  \"mcpUrl\": \"string\",\n  \"metadata\": {\n    \"key_0\": {},\n    \"key_1\": {}\n  },\n  \"transport\": \"uplink\",\n  \"mock\": {\n    \"enabled\": false,\n    \"scenario\": \"Slack workspace with an active #community-ops channel containing recent event-planning messages, plus 50 Airtable candidate records with mixed tenure and interests.\"\n  },\n  \"iconUrl\": \"string\",\n  \"createdAt\": \"string\",\n  \"status\": {\n    \"state\": \"string\"\n  },\n  \"serverInfo\": {\n    \"name\": \"string\",\n    \"version\": \"string\",\n    \"title\": \"string\",\n    \"icons\": [\n      {\n        \"src\": \"string\",\n        \"mimeType\": \"string\",\n        \"sizes\": [\n          \"string\",\n          \"string\"\n        ],\n        \"theme\": \"dark\"\n      },\n      {\n        \"src\": \"string\",\n        \"mimeType\": \"string\",\n        \"sizes\": [\n          \"string\",\n          \"string\"\n        ],\n        \"theme\": \"dark\"\n      }\n    ],\n    \"websiteUrl\": \"string\",\n    \"description\": \"string\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "57d109e0-be7c-4873-8d45-d5e45e1a8fdb",
+              "name": "Connection created",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "connect",
+                    ":namespace",
+                    ":connectionId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "namespace",
+                      "description": "(Required) "
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "connectionId",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "PUT",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"transport\": \"http\",\n  \"mcpUrl\": \"https://mcp.example.com/sse\",\n  \"name\": \"My MCP Server\",\n  \"metadata\": {\n    \"key_0\": {}\n  },\n  \"headers\": {\n    \"X-API-Key\": \"secret-key\"\n  },\n  \"mock\": {\n    \"enabled\": true\n  }\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Created",
+              "code": 201,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"connectionId\": \"clever-dolphin-a9X3\",\n  \"name\": \"string\",\n  \"mcpUrl\": \"string\",\n  \"metadata\": {\n    \"key_0\": {},\n    \"key_1\": {}\n  },\n  \"transport\": \"uplink\",\n  \"mock\": {\n    \"enabled\": false,\n    \"scenario\": \"Slack workspace with an active #community-ops channel containing recent event-planning messages, plus 50 Airtable candidate records with mixed tenure and interests.\"\n  },\n  \"iconUrl\": \"string\",\n  \"createdAt\": \"string\",\n  \"status\": {\n    \"state\": \"string\"\n  },\n  \"serverInfo\": {\n    \"name\": \"string\",\n    \"version\": \"string\",\n    \"title\": \"string\",\n    \"icons\": [\n      {\n        \"src\": \"string\",\n        \"mimeType\": \"string\",\n        \"sizes\": [\n          \"string\",\n          \"string\"\n        ],\n        \"theme\": \"dark\"\n      },\n      {\n        \"src\": \"string\",\n        \"mimeType\": \"string\",\n        \"sizes\": [\n          \"string\",\n          \"string\"\n        ],\n        \"theme\": \"dark\"\n      }\n    ],\n    \"websiteUrl\": \"string\",\n    \"description\": \"string\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "91119bac-7804-4ae9-9978-af624047f000",
+              "name": "Validation error",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "connect",
+                    ":namespace",
+                    ":connectionId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "namespace",
+                      "description": "(Required) "
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "connectionId",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "PUT",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"transport\": \"http\",\n  \"mcpUrl\": \"https://mcp.example.com/sse\",\n  \"name\": \"My MCP Server\",\n  \"metadata\": {\n    \"key_0\": {}\n  },\n  \"headers\": {\n    \"X-API-Key\": \"secret-key\"\n  },\n  \"mock\": {\n    \"enabled\": true\n  }\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": \"string\",\n  \"message\": \"Invalid request\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "bf355974-f012-4854-a40b-c18571201a43",
+              "name": "Namespace not found or access denied",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "connect",
+                    ":namespace",
+                    ":connectionId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "namespace",
+                      "description": "(Required) "
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "connectionId",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "PUT",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"transport\": \"http\",\n  \"mcpUrl\": \"https://mcp.example.com/sse\",\n  \"name\": \"My MCP Server\",\n  \"metadata\": {\n    \"key_0\": {}\n  },\n  \"headers\": {\n    \"X-API-Key\": \"secret-key\"\n  },\n  \"mock\": {\n    \"enabled\": true\n  }\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": \"not_found\",\n  \"message\": \"Resource not found\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "a3d70bf4-cf04-4312-87dc-3d7a19e10004",
+              "name": "URL mismatch",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "connect",
+                    ":namespace",
+                    ":connectionId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "namespace",
+                      "description": "(Required) "
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "connectionId",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "PUT",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"transport\": \"http\",\n  \"mcpUrl\": \"https://mcp.example.com/sse\",\n  \"name\": \"My MCP Server\",\n  \"metadata\": {\n    \"key_0\": {}\n  },\n  \"headers\": {\n    \"X-API-Key\": \"secret-key\"\n  },\n  \"mock\": {\n    \"enabled\": true\n  }\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Conflict",
+              "code": 409,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": \"not_found\",\n  \"message\": \"Resource not found\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "598cf5c1-d9a8-45a0-980e-d8529e7e2eb1",
+          "name": "Delete connection",
+          "request": {
+            "name": "Delete connection",
+            "description": {
+              "content": "Delete a connection and terminate its MCP session. Requires API key and namespace ownership.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "connect",
+                ":namespace",
+                ":connectionId"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "namespace",
+                  "description": "(Required) "
+                },
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "connectionId",
+                  "description": "(Required) "
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "DELETE",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "82570c4a-9dc6-4146-bc1b-3258c682bf55",
+              "name": "Connection deleted",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "connect",
+                    ":namespace",
+                    ":connectionId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "namespace",
+                      "description": "(Required) "
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "connectionId",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "DELETE",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"success\": true\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "47ff8f51-90d1-4c84-928f-00bb1f10fa84",
+              "name": "Bad request",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "connect",
+                    ":namespace",
+                    ":connectionId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "namespace",
+                      "description": "(Required) "
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "connectionId",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "DELETE",
+                "body": {}
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": \"not_found\",\n  \"message\": \"Resource not found\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "8a930073-8f28-4a92-84bf-3c86672965da",
+              "name": "Namespace or connection not found",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "connect",
+                    ":namespace",
+                    ":connectionId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "namespace",
+                      "description": "(Required) "
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "connectionId",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "DELETE",
+                "body": {}
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": \"not_found\",\n  \"message\": \"Resource not found\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "f50b5cdd-cb29-41b3-ac50-3e9875e31285",
+          "name": "List tools across a namespace",
+          "request": {
+            "name": "List tools across a namespace",
+            "description": {
+              "content": "List tools for every connection in a namespace in one response. Each connection is wrapped in an envelope so a failure on one upstream doesn't fail the request. Skips connections in `auth_required`/`input_required` states without calling the upstream.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "connect",
+                ":namespace",
+                ".tools"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "namespace",
+                  "description": "(Required) "
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "0a86cdf1-b801-4439-8f99-7e3c05894a54",
+              "name": "Tools by connection",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "connect",
+                    ":namespace",
+                    ".tools"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "namespace",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"key_0\": {}\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "96f7897c-25fe-4b5d-94f1-f97f8fc98d28",
+          "name": "List tools",
+          "request": {
+            "name": "List tools",
+            "description": {
+              "content": "List tools exposed by a connection.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "connect",
+                ":namespace",
+                ":connectionId",
+                ".tools"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "namespace",
+                  "description": "(Required) "
+                },
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "connectionId",
+                  "description": "(Required) "
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "7620c902-0f94-46ca-83b9-a6b403afa81f",
+              "name": "Tool list",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "connect",
+                    ":namespace",
+                    ":connectionId",
+                    ".tools"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "namespace",
+                      "description": "(Required) "
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "connectionId",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"tools\": [\n    {\n      \"name\": \"string\",\n      \"inputSchema\": {\n        \"type\": \"string\",\n        \"properties\": {\n          \"key_0\": {}\n        },\n        \"required\": [\n          \"string\",\n          \"string\"\n        ]\n      },\n      \"title\": \"string\",\n      \"icons\": [\n        {\n          \"src\": \"string\",\n          \"mimeType\": \"string\",\n          \"sizes\": [\n            \"string\",\n            \"string\"\n          ],\n          \"theme\": \"dark\"\n        },\n        {\n          \"src\": \"string\",\n          \"mimeType\": \"string\",\n          \"sizes\": [\n            \"string\",\n            \"string\"\n          ],\n          \"theme\": \"light\"\n        }\n      ],\n      \"description\": \"string\",\n      \"outputSchema\": {\n        \"type\": \"string\",\n        \"properties\": {\n          \"key_0\": {},\n          \"key_1\": {}\n        },\n        \"required\": [\n          \"string\",\n          \"string\"\n        ]\n      },\n      \"annotations\": {\n        \"title\": \"string\",\n        \"readOnlyHint\": false,\n        \"destructiveHint\": true,\n        \"idempotentHint\": false,\n        \"openWorldHint\": true\n      },\n      \"execution\": {\n        \"taskSupport\": \"forbidden\"\n      },\n      \"_meta\": {\n        \"key_0\": {},\n        \"key_1\": {}\n      }\n    },\n    {\n      \"name\": \"string\",\n      \"inputSchema\": {\n        \"type\": \"string\",\n        \"properties\": {\n          \"key_0\": {},\n          \"key_1\": {}\n        },\n        \"required\": [\n          \"string\",\n          \"string\"\n        ]\n      },\n      \"title\": \"string\",\n      \"icons\": [\n        {\n          \"src\": \"string\",\n          \"mimeType\": \"string\",\n          \"sizes\": [\n            \"string\",\n            \"string\"\n          ],\n          \"theme\": \"light\"\n        },\n        {\n          \"src\": \"string\",\n          \"mimeType\": \"string\",\n          \"sizes\": [\n            \"string\",\n            \"string\"\n          ],\n          \"theme\": \"light\"\n        }\n      ],\n      \"description\": \"string\",\n      \"outputSchema\": {\n        \"type\": \"string\",\n        \"properties\": {\n          \"key_0\": {}\n        },\n        \"required\": [\n          \"string\",\n          \"string\"\n        ]\n      },\n      \"annotations\": {\n        \"title\": \"string\",\n        \"readOnlyHint\": true,\n        \"destructiveHint\": true,\n        \"idempotentHint\": false,\n        \"openWorldHint\": false\n      },\n      \"execution\": {\n        \"taskSupport\": \"optional\"\n      },\n      \"_meta\": {\n        \"key_0\": {}\n      }\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "5ff19597-9215-4610-bacb-721c830b031c",
+              "name": "Connection not found",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "connect",
+                    ":namespace",
+                    ":connectionId",
+                    ".tools"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "namespace",
+                      "description": "(Required) "
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "connectionId",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": \"not_found\",\n  \"message\": \"Resource not found\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "b85b9b25-186f-4b6f-bfea-76dd192d5f19",
+          "name": "Get tool",
+          "request": {
+            "name": "Get tool",
+            "description": {
+              "content": "Get one tool or list tools under a slash-separated category.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "connect",
+                ":namespace",
+                ":connectionId",
+                ".tools",
+                ":toolPath"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "namespace",
+                  "description": "(Required) "
+                },
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "connectionId",
+                  "description": "(Required) "
+                },
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "toolPath",
+                  "description": "(Required) "
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "9b34045a-5764-4b93-bdfc-9f8f2d2c5aaa",
+              "name": "Tool metadata or category listing",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "connect",
+                    ":namespace",
+                    ":connectionId",
+                    ".tools",
+                    ":toolPath"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "namespace",
+                      "description": "(Required) "
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "connectionId",
+                      "description": "(Required) "
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "toolPath",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"name\": \"string\",\n  \"inputSchema\": {\n    \"type\": \"string\",\n    \"properties\": {\n      \"key_0\": {}\n    },\n    \"required\": [\n      \"string\",\n      \"string\"\n    ]\n  },\n  \"title\": \"string\",\n  \"icons\": [\n    {\n      \"src\": \"string\",\n      \"mimeType\": \"string\",\n      \"sizes\": [\n        \"string\",\n        \"string\"\n      ],\n      \"theme\": \"light\"\n    },\n    {\n      \"src\": \"string\",\n      \"mimeType\": \"string\",\n      \"sizes\": [\n        \"string\",\n        \"string\"\n      ],\n      \"theme\": \"dark\"\n    }\n  ],\n  \"description\": \"string\",\n  \"outputSchema\": {\n    \"type\": \"string\",\n    \"properties\": {\n      \"key_0\": {}\n    },\n    \"required\": [\n      \"string\",\n      \"string\"\n    ]\n  },\n  \"annotations\": {\n    \"title\": \"string\",\n    \"readOnlyHint\": false,\n    \"destructiveHint\": true,\n    \"idempotentHint\": false,\n    \"openWorldHint\": false\n  },\n  \"execution\": {\n    \"taskSupport\": \"optional\"\n  },\n  \"_meta\": {\n    \"key_0\": {},\n    \"key_1\": {}\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "2f79a501-9d92-45b5-810b-64eefc2aaaeb",
+              "name": "Connection or tool not found",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "connect",
+                    ":namespace",
+                    ":connectionId",
+                    ".tools",
+                    ":toolPath"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "namespace",
+                      "description": "(Required) "
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "connectionId",
+                      "description": "(Required) "
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "toolPath",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": \"not_found\",\n  \"message\": \"Resource not found\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "01151723-8f7e-4abf-bc7a-08fcc5dba428",
+          "name": "Call tool",
+          "request": {
+            "name": "Call tool",
+            "description": {
+              "content": "Invoke a tool with JSON arguments.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "connect",
+                ":namespace",
+                ":connectionId",
+                ".tools",
+                ":toolPath"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "namespace",
+                  "description": "(Required) "
+                },
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "connectionId",
+                  "description": "(Required) "
+                },
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "toolPath",
+                  "description": "(Required) "
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"key_0\": {},\n  \"key_1\": {},\n  \"key_2\": {},\n  \"key_3\": {}\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "364f95d3-488b-48fa-b388-752f0104d9dc",
+              "name": "Tool result",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "connect",
+                    ":namespace",
+                    ":connectionId",
+                    ".tools",
+                    ":toolPath"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "namespace",
+                      "description": "(Required) "
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "connectionId",
+                      "description": "(Required) "
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "toolPath",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"key_0\": {}\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"key_0\": {}\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "36ec9630-7bc1-4649-a925-8b0638f1b1fe",
+              "name": "Validation error",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "connect",
+                    ":namespace",
+                    ":connectionId",
+                    ".tools",
+                    ":toolPath"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "namespace",
+                      "description": "(Required) "
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "connectionId",
+                      "description": "(Required) "
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "toolPath",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"key_0\": {}\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": \"string\",\n  \"message\": \"Invalid request\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "11a9add4-08b0-4aba-a2a1-1c570e6c759a",
+              "name": "Connection not found",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "connect",
+                    ":namespace",
+                    ":connectionId",
+                    ".tools",
+                    ":toolPath"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "namespace",
+                      "description": "(Required) "
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "connectionId",
+                      "description": "(Required) "
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "toolPath",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"key_0\": {}\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": \"not_found\",\n  \"message\": \"Resource not found\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "fc1450c5-90a3-4cf3-b887-194e45609f27",
+              "name": "Tool error",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "connect",
+                    ":namespace",
+                    ":connectionId",
+                    ".tools",
+                    ":toolPath"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "namespace",
+                      "description": "(Required) "
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "connectionId",
+                      "description": "(Required) "
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "toolPath",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"key_0\": {}\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Unprocessable Entity (WebDAV) (RFC 4918)",
+              "code": 422,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": \"not_found\",\n  \"message\": \"Resource not found\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "9acdf8cb-80e9-40a6-9bff-cc74bfb5120a",
+          "name": "List namespace subscriptions",
+          "request": {
+            "name": "List namespace subscriptions",
+            "description": {
+              "content": "List namespace-scoped trigger subscriptions for all connections in the namespace.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "connect",
+                ":namespace",
+                ".subscriptions"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "namespace",
+                  "description": "(Required) "
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "47510993-0ee9-4b16-bc39-ab261cd1a0c8",
+              "name": "Namespace subscriptions",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "connect",
+                    ":namespace",
+                    ".subscriptions"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "namespace",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "[\n  {\n    \"id\": \"sub_01HW1234567890\",\n    \"url\": \"https://my-app.example.com/events\",\n    \"connection_id\": \"string\",\n    \"created_at\": \"2026-04-22T12:00:00.000Z\"\n  },\n  {\n    \"id\": \"sub_01HW1234567890\",\n    \"url\": \"https://my-app.example.com/events\",\n    \"connection_id\": \"string\",\n    \"created_at\": \"2026-04-22T12:00:00.000Z\"\n  }\n]",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "014e5f63-8a67-4eba-a3b2-6c8f73fd56ca",
+          "name": "Create namespace subscription",
+          "request": {
+            "name": "Create namespace subscription",
+            "description": {
+              "content": "Create a namespace-scoped subscription that receives events from every connection in the namespace.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "connect",
+                ":namespace",
+                ".subscriptions"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "namespace",
+                  "description": "(Required) "
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "2e0e74c1-3649-4916-bbc0-c18e7d7fa2c5",
+              "name": "Subscription created",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "connect",
+                    ":namespace",
+                    ".subscriptions"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "namespace",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"id\": \"sub_01HW1234567890\",\n  \"url\": \"https://my-app.example.com/events\",\n  \"connection_id\": \"string\",\n  \"created_at\": \"2026-04-22T12:00:00.000Z\",\n  \"secret\": \"whsec_0123456789abcdef\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "ae4d19a5-0120-4840-9b12-bc706a93bdce",
+              "name": "Validation error",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "connect",
+                    ":namespace",
+                    ".subscriptions"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "namespace",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {}
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": \"string\",\n  \"message\": \"Invalid request\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "cd31912f-a43d-4f06-af68-4880431e19a2",
+          "name": "Delete namespace subscription",
+          "request": {
+            "name": "Delete namespace subscription",
+            "description": {
+              "content": "Delete a namespace-scoped trigger subscription.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "connect",
+                ":namespace",
+                ".subscriptions",
+                ":subscriptionId"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "namespace",
+                  "description": "(Required) "
+                },
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "subscriptionId",
+                  "description": "(Required) "
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "DELETE",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "eec7edf5-f683-40fa-a309-79311ca84e3d",
+              "name": "Subscription deleted",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "connect",
+                    ":namespace",
+                    ".subscriptions",
+                    ":subscriptionId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "namespace",
+                      "description": "(Required) "
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "subscriptionId",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "DELETE",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"success\": true\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "21d1d6f1-e6e7-4a88-9bcf-96c07e56b128",
+              "name": "Subscription not found",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "connect",
+                    ":namespace",
+                    ".subscriptions",
+                    ":subscriptionId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "namespace",
+                      "description": "(Required) "
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "subscriptionId",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "DELETE",
+                "body": {}
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": \"not_found\",\n  \"message\": \"Resource not found\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "1d7654f5-fa19-461f-ac8d-aaa8a97396a4",
+          "name": "Get trigger instance",
+          "request": {
+            "name": "Get trigger instance",
+            "description": {
+              "content": "Get a specific trigger instance for a connection.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "connect",
+                ":namespace",
+                ":connectionId",
+                ".triggers",
+                ":triggerName",
+                ":triggerId"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "namespace",
+                  "description": "(Required) "
+                },
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "connectionId",
+                  "description": "(Required) "
+                },
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "triggerName",
+                  "description": "(Required) "
+                },
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "triggerId",
+                  "description": "(Required) "
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "261c2166-09de-4c29-b74e-63de13a993eb",
+              "name": "Trigger instance",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "connect",
+                    ":namespace",
+                    ":connectionId",
+                    ".triggers",
+                    ":triggerName",
+                    ":triggerId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "namespace",
+                      "description": "(Required) "
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "connectionId",
+                      "description": "(Required) "
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "triggerName",
+                      "description": "(Required) "
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "triggerId",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"id\": \"trg_01HW1234567890\",\n  \"name\": \"page.updated\",\n  \"connection_id\": \"notion\",\n  \"params\": {\n    \"key_0\": {}\n  },\n  \"created_at\": \"2026-04-22T12:00:00.000Z\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "db6e607b-b35b-468b-bc51-84ddac2d66f8",
+              "name": "Trigger instance not found",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "connect",
+                    ":namespace",
+                    ":connectionId",
+                    ".triggers",
+                    ":triggerName",
+                    ":triggerId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "namespace",
+                      "description": "(Required) "
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "connectionId",
+                      "description": "(Required) "
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "triggerName",
+                      "description": "(Required) "
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "triggerId",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": \"not_found\",\n  \"message\": \"Resource not found\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "b53d15e4-ee5e-4f17-bb37-7b3027430b4e",
+          "name": "Delete trigger instance",
+          "request": {
+            "name": "Delete trigger instance",
+            "description": {
+              "content": "Delete a trigger instance and deregister its upstream webhook.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "connect",
+                ":namespace",
+                ":connectionId",
+                ".triggers",
+                ":triggerName",
+                ":triggerId"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "namespace",
+                  "description": "(Required) "
+                },
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "connectionId",
+                  "description": "(Required) "
+                },
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "triggerName",
+                  "description": "(Required) "
+                },
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "triggerId",
+                  "description": "(Required) "
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "DELETE",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "6ec5a05e-149b-478a-a8f9-9dbace18ab83",
+              "name": "Trigger instance deleted",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "connect",
+                    ":namespace",
+                    ":connectionId",
+                    ".triggers",
+                    ":triggerName",
+                    ":triggerId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "namespace",
+                      "description": "(Required) "
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "connectionId",
+                      "description": "(Required) "
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "triggerName",
+                      "description": "(Required) "
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "triggerId",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "DELETE",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"success\": true\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "18ee614d-1140-4776-a25b-f542e2cf9cb6",
+              "name": "Trigger instance not found",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "connect",
+                    ":namespace",
+                    ":connectionId",
+                    ".triggers",
+                    ":triggerName",
+                    ":triggerId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "namespace",
+                      "description": "(Required) "
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "connectionId",
+                      "description": "(Required) "
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "triggerName",
+                      "description": "(Required) "
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "triggerId",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "DELETE",
+                "body": {}
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": \"not_found\",\n  \"message\": \"Resource not found\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "c662ed88-dd5c-4eb6-b287-272e0204fa81",
+          "name": "List connection subscriptions",
+          "request": {
+            "name": "List connection subscriptions",
+            "description": {
+              "content": "List trigger subscriptions scoped to a single connection.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "connect",
+                ":namespace",
+                ":connectionId",
+                ".subscriptions"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "namespace",
+                  "description": "(Required) "
+                },
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "connectionId",
+                  "description": "(Required) "
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "7fb66fd5-5a81-4288-aa67-b2d31dc40633",
+              "name": "Connection subscriptions",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "connect",
+                    ":namespace",
+                    ":connectionId",
+                    ".subscriptions"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "namespace",
+                      "description": "(Required) "
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "connectionId",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "[\n  {\n    \"id\": \"sub_01HW1234567890\",\n    \"url\": \"https://my-app.example.com/events\",\n    \"connection_id\": \"string\",\n    \"created_at\": \"2026-04-22T12:00:00.000Z\"\n  },\n  {\n    \"id\": \"sub_01HW1234567890\",\n    \"url\": \"https://my-app.example.com/events\",\n    \"connection_id\": \"string\",\n    \"created_at\": \"2026-04-22T12:00:00.000Z\"\n  }\n]",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "527484d0-b7b3-40cf-ab99-82b44e663518",
+              "name": "Connection not found",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "connect",
+                    ":namespace",
+                    ":connectionId",
+                    ".subscriptions"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "namespace",
+                      "description": "(Required) "
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "connectionId",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": \"not_found\",\n  \"message\": \"Resource not found\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "87d3ff6c-a9e3-427d-8834-08c3b92a1197",
+          "name": "Create connection subscription",
+          "request": {
+            "name": "Create connection subscription",
+            "description": {
+              "content": "Create a connection-scoped subscription that receives events from one connection.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "connect",
+                ":namespace",
+                ":connectionId",
+                ".subscriptions"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "namespace",
+                  "description": "(Required) "
+                },
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "connectionId",
+                  "description": "(Required) "
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "aa0bc421-26fb-4ba5-8d62-af26f500c935",
+              "name": "Subscription created",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "connect",
+                    ":namespace",
+                    ":connectionId",
+                    ".subscriptions"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "namespace",
+                      "description": "(Required) "
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "connectionId",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"id\": \"sub_01HW1234567890\",\n  \"url\": \"https://my-app.example.com/events\",\n  \"connection_id\": \"string\",\n  \"created_at\": \"2026-04-22T12:00:00.000Z\",\n  \"secret\": \"whsec_0123456789abcdef\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "5c6f4b0f-fb9c-46aa-952e-7081a50881be",
+              "name": "Validation error",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "connect",
+                    ":namespace",
+                    ":connectionId",
+                    ".subscriptions"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "namespace",
+                      "description": "(Required) "
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "connectionId",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {}
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": \"string\",\n  \"message\": \"Invalid request\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "31f0c783-5c77-48db-9eb0-8957909d0d54",
+              "name": "Connection not found",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "connect",
+                    ":namespace",
+                    ":connectionId",
+                    ".subscriptions"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "namespace",
+                      "description": "(Required) "
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "connectionId",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {}
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": \"not_found\",\n  \"message\": \"Resource not found\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "d2eee3dd-250d-4be9-9baa-a52d214e4a77",
+          "name": "Delete connection subscription",
+          "request": {
+            "name": "Delete connection subscription",
+            "description": {
+              "content": "Delete a connection-scoped trigger subscription.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "connect",
+                ":namespace",
+                ":connectionId",
+                ".subscriptions",
+                ":subscriptionId"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "namespace",
+                  "description": "(Required) "
+                },
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "connectionId",
+                  "description": "(Required) "
+                },
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "subscriptionId",
+                  "description": "(Required) "
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "DELETE",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "a2733d61-da8d-40e6-881b-a401debaeeba",
+              "name": "Subscription deleted",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "connect",
+                    ":namespace",
+                    ":connectionId",
+                    ".subscriptions",
+                    ":subscriptionId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "namespace",
+                      "description": "(Required) "
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "connectionId",
+                      "description": "(Required) "
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "subscriptionId",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "DELETE",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"success\": true\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "2f88907b-e91d-4a8f-b772-977fc00e216e",
+              "name": "Subscription not found",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "connect",
+                    ":namespace",
+                    ":connectionId",
+                    ".subscriptions",
+                    ":subscriptionId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "namespace",
+                      "description": "(Required) "
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "connectionId",
+                      "description": "(Required) "
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "subscriptionId",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "DELETE",
+                "body": {}
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": \"not_found\",\n  \"message\": \"Resource not found\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "type": "string",
+      "value": "https://api.smithery.ai",
+      "key": "baseUrl"
+    }
+  ],
+  "auth": {
+    "type": "bearer",
+    "bearer": [
+      {
+        "key": "token",
+        "value": "{{bearerToken}}"
+      }
+    ]
+  },
+  "info": {
+    "_postman_id": "bbdd18ab-bab8-4597-aae5-2683e82217f5",
+    "name": "Smithery Platform connect API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "API for the Smithery platform — discover, deploy, and manage MCP (Model Context Protocol) servers. Provides endpoints for browsing the server registry, managing deployments, creating scoped access tokens, and connecting to MCP servers.",
+      "type": "text/plain"
+    }
+  }
+}

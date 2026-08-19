@@ -1,0 +1,151 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Smithery Platform connect namespaces API",
+    "version": "1.0.0"
+  },
+  "request": {
+    "auth": {
+      "type": "bearer",
+      "token": "{{bearerToken}}"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "namespaces",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Get user's namespaces or search namespaces",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.smithery.ai/namespaces",
+            "params": [
+              {
+                "name": "q",
+                "value": "",
+                "type": "query",
+                "description": "Text search query (prefix match on name)"
+              },
+              {
+                "name": "ownerId",
+                "value": "",
+                "type": "query",
+                "description": "Filter by owner ID"
+              },
+              {
+                "name": "hasServers",
+                "value": "",
+                "type": "query",
+                "description": "Filter namespaces with servers"
+              },
+              {
+                "name": "hasSkills",
+                "value": "",
+                "type": "query",
+                "description": "Filter namespaces with skills"
+              },
+              {
+                "name": "page",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "pageSize",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "fields",
+                "value": "",
+                "type": "query",
+                "description": "Comma-separated list of fields to include in response"
+              }
+            ]
+          },
+          "docs": "When called without query params, returns the authenticated user's namespaces (backwards compatible). When query params are provided, searches public namespaces with pagination. Use ownerId to filter by owner, hasServers/hasSkills to filter by content, q for text search."
+        },
+        {
+          "info": {
+            "name": "Create a new namespace with generated name",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.smithery.ai/namespaces"
+          },
+          "docs": "Create a new namespace with a server-generated human-readable name, owned by the authenticated user"
+        },
+        {
+          "info": {
+            "name": "Create a new namespace",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "https://api.smithery.ai/namespaces/:name",
+            "params": [
+              {
+                "name": "name",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "Create a new namespace owned by the authenticated user or an organization. This endpoint is idempotent - if the namespace already exists and is owned by the user/org, returns success. Pass organizationId in the request body to create an org-owned namespace."
+        },
+        {
+          "info": {
+            "name": "Delete a namespace",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://api.smithery.ai/namespaces/:name",
+            "params": [
+              {
+                "name": "name",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "Delete a namespace owned by the authenticated user. The namespace must not contain any servers. Skills and connections in the namespace will be deleted automatically."
+        },
+        {
+          "info": {
+            "name": "Create a server under a namespace (deprecated)",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "https://api.smithery.ai/namespaces/:namespace/servers/:server",
+            "params": [
+              {
+                "name": "server",
+                "value": "",
+                "type": "path"
+              },
+              {
+                "name": "namespace",
+                "value": "",
+                "type": "path"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "**Deprecated:** Use PUT /servers/{namespace}/{server} instead. Create a new server under the specified namespace. This endpoint is idempotent."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

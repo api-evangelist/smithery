@@ -1,0 +1,35 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Smithery Platform connect Health API",
+    "version": "1.0.0"
+  },
+  "request": {
+    "auth": {
+      "type": "bearer",
+      "token": "{{bearerToken}}"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Health",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Health check",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.smithery.ai/health"
+          },
+          "docs": "Check if the service is running"
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

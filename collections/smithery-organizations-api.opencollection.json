@@ -1,0 +1,87 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Smithery Platform connect organizations API",
+    "version": "1.0.0"
+  },
+  "request": {
+    "auth": {
+      "type": "bearer",
+      "token": "{{bearerToken}}"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "organizations",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "List team API keys",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.smithery.ai/organizations/:orgId/api-keys",
+            "params": [
+              {
+                "name": "orgId",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "Returns all API keys belonging to the organization. Requires admin role. Key values are not included in the response."
+        },
+        {
+          "info": {
+            "name": "Create a team API key",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.smithery.ai/organizations/:orgId/api-keys",
+            "params": [
+              {
+                "name": "orgId",
+                "value": "",
+                "type": "path"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Creates an API key owned by the organization. Requires admin role."
+        },
+        {
+          "info": {
+            "name": "Revoke a team API key",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://api.smithery.ai/organizations/:orgId/api-keys/:keyId",
+            "params": [
+              {
+                "name": "orgId",
+                "value": "",
+                "type": "path"
+              },
+              {
+                "name": "keyId",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "Deletes an API key belonging to the organization. Requires admin role."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

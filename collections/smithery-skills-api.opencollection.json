@@ -1,0 +1,270 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Smithery Platform connect skills API",
+    "version": "1.0.0"
+  },
+  "request": {
+    "auth": {
+      "type": "bearer",
+      "token": "{{bearerToken}}"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "skills",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "List or search skills",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.smithery.ai/skills",
+            "params": [
+              {
+                "name": "q",
+                "value": "",
+                "type": "query",
+                "description": "Search query for full-text and semantic search across skill names and descriptions."
+              },
+              {
+                "name": "category",
+                "value": "",
+                "type": "query",
+                "description": "Filter by skill category (e.g. 'code', 'data', 'web')."
+              },
+              {
+                "name": "namespace",
+                "value": "",
+                "type": "query",
+                "description": "Filter by the namespace that owns the skill."
+              },
+              {
+                "name": "slug",
+                "value": "",
+                "type": "query",
+                "description": "Filter by exact skill slug within a namespace. Deprecated: use GET /skills/:namespace/:slug instead."
+              },
+              {
+                "name": "ownerId",
+                "value": "",
+                "type": "query",
+                "description": "Filter by the skill owner's organization ID."
+              },
+              {
+                "name": "verified",
+                "value": "",
+                "type": "query",
+                "description": "Filter by whether the skill's namespace is verified."
+              },
+              {
+                "name": "page",
+                "value": "",
+                "type": "query",
+                "description": "Page number (1-indexed)."
+              },
+              {
+                "name": "pageSize",
+                "value": "",
+                "type": "query",
+                "description": "Number of results per page (default 20, max 100)."
+              },
+              {
+                "name": "topK",
+                "value": "",
+                "type": "query",
+                "description": "Maximum number of candidate results to consider from the search index before pagination. The server applies a hard cap of 500 to keep the rerank window bounded; pass `seed` for stable deep pagination."
+              },
+              {
+                "name": "fields",
+                "value": "",
+                "type": "query",
+                "description": "Comma-separated list of fields to include in response"
+              },
+              {
+                "name": "seed",
+                "value": "",
+                "type": "query",
+                "description": "Random seed for deterministic pagination. When provided, results use a stable sort order that is consistent across pages for the same seed value."
+              }
+            ]
+          },
+          "docs": "Search and browse reusable prompt-based skills. Supports full-text and semantic search via the `q` parameter, and filtering by category, namespace, or slug."
+        },
+        {
+          "info": {
+            "name": "Create a new skill (deprecated)",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.smithery.ai/skills",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "**Deprecated:** Use PUT /skills/{namespace}/{slug} instead. Create a new skill by linking a GitHub repository containing a SKILL.md file."
+        },
+        {
+          "info": {
+            "name": "Get a skill",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.smithery.ai/skills/:namespace/:slug",
+            "params": [
+              {
+                "name": "namespace",
+                "value": "",
+                "type": "path"
+              },
+              {
+                "name": "slug",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "Get a single skill by its namespace and slug."
+        },
+        {
+          "info": {
+            "name": "Create or update a skill",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "https://api.smithery.ai/skills/:namespace/:slug",
+            "params": [
+              {
+                "name": "namespace",
+                "value": "",
+                "type": "path"
+              },
+              {
+                "name": "slug",
+                "value": "",
+                "type": "path"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Idempotent endpoint to create or update a GitHub-backed skill. Send application/json with `gitUrl`."
+        },
+        {
+          "info": {
+            "name": "Delete a skill",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://api.smithery.ai/skills/:namespace/:slug",
+            "params": [
+              {
+                "name": "namespace",
+                "value": "",
+                "type": "path"
+              },
+              {
+                "name": "slug",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "Delete a skill by namespace and slug. Requires ownership of the namespace."
+        },
+        {
+          "info": {
+            "name": "Download skill bundle",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.smithery.ai/skills/:namespace/:slug/download",
+            "params": [
+              {
+                "name": "namespace",
+                "value": "",
+                "type": "path"
+              },
+              {
+                "name": "slug",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "Download a ZIP bundle containing all skill files."
+        },
+        {
+          "info": {
+            "name": "Sync skill metadata from GitHub (deprecated)",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.smithery.ai/skills/:namespace/:slug/sync",
+            "params": [
+              {
+                "name": "namespace",
+                "value": "",
+                "type": "path"
+              },
+              {
+                "name": "slug",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "**Deprecated:** Use PUT /skills/{namespace}/{slug} instead. Refetch SKILL.md and repository stars from GitHub and update the skill record."
+        },
+        {
+          "info": {
+            "name": "Upload a skill bundle",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "https://api.smithery.ai/skills/:namespace/:slug/upload",
+            "params": [
+              {
+                "name": "namespace",
+                "value": "",
+                "type": "path"
+              },
+              {
+                "name": "slug",
+                "value": "",
+                "type": "path"
+              }
+            ],
+            "body": {
+              "type": "multipart-form",
+              "data": [
+                {
+                  "name": "archive",
+                  "type": "text",
+                  "value": ""
+                }
+              ]
+            }
+          },
+          "docs": "Upload or replace a skill bundle via multipart/form-data with an `archive` file."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

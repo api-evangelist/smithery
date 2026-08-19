@@ -1,0 +1,571 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Smithery Platform connect servers API",
+    "version": "1.0.0"
+  },
+  "request": {
+    "auth": {
+      "type": "bearer",
+      "token": "{{bearerToken}}"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "servers",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Get a server",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.smithery.ai/servers/:qualifiedName",
+            "params": [
+              {
+                "name": "qualifiedName",
+                "value": "",
+                "type": "path",
+                "description": "The server's qualified name (e.g. 'namespace/server' or 'namespace' for namespace-only servers). Use %2F to encode the slash."
+              }
+            ]
+          },
+          "docs": "Retrieve server details including connections, tools, and security status."
+        },
+        {
+          "info": {
+            "name": "Create a server",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "https://api.smithery.ai/servers/:qualifiedName",
+            "params": [
+              {
+                "name": "qualifiedName",
+                "value": "",
+                "type": "path",
+                "description": "The server's qualified name (e.g. 'namespace/server' or 'namespace' for namespace-only servers). Use %2F to encode the slash."
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Create a new server. Idempotent — returns success if the server already exists and is owned by the caller."
+        },
+        {
+          "info": {
+            "name": "Update a server",
+            "type": "http"
+          },
+          "http": {
+            "method": "PATCH",
+            "url": "https://api.smithery.ai/servers/:qualifiedName",
+            "params": [
+              {
+                "name": "qualifiedName",
+                "value": "",
+                "type": "path",
+                "description": "The server's qualified name (e.g. 'namespace/server' or 'namespace' for namespace-only servers). Use %2F to encode the slash."
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Update server metadata such as display name, description, repository, icon, or visibility."
+        },
+        {
+          "info": {
+            "name": "Delete a server",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://api.smithery.ai/servers/:qualifiedName",
+            "params": [
+              {
+                "name": "qualifiedName",
+                "value": "",
+                "type": "path",
+                "description": "The server's qualified name (e.g. 'namespace/server' or 'namespace' for namespace-only servers). Use %2F to encode the slash."
+              }
+            ]
+          },
+          "docs": "Permanently delete a server, its releases, and associated resources."
+        },
+        {
+          "info": {
+            "name": "Download server bundle",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.smithery.ai/servers/:qualifiedName/download",
+            "params": [
+              {
+                "name": "qualifiedName",
+                "value": "",
+                "type": "path",
+                "description": "The server's qualified name (e.g. 'namespace/server' or 'namespace' for namespace-only servers). Use %2F to encode the slash."
+              }
+            ]
+          },
+          "docs": "Download the MCPB bundle for the latest successful stdio release."
+        },
+        {
+          "info": {
+            "name": "List releases",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.smithery.ai/servers/:qualifiedName/releases",
+            "params": [
+              {
+                "name": "page",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "pageSize",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "qualifiedName",
+                "value": "",
+                "type": "path",
+                "description": "The server's qualified name (e.g. 'namespace/server' or 'namespace' for namespace-only servers). Use %2F to encode the slash."
+              }
+            ]
+          },
+          "docs": "List releases ordered by most recent first. Logs are omitted — fetch a specific release to see logs."
+        },
+        {
+          "info": {
+            "name": "Publish a server",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "https://api.smithery.ai/servers/:qualifiedName/releases",
+            "params": [
+              {
+                "name": "qualifiedName",
+                "value": "",
+                "type": "path",
+                "description": "The server's qualified name (e.g. 'namespace/server' or 'namespace' for namespace-only servers). Use %2F to encode the slash."
+              }
+            ],
+            "body": {
+              "type": "multipart-form",
+              "data": [
+                {
+                  "name": "payload",
+                  "type": "text",
+                  "value": ""
+                },
+                {
+                  "name": "module",
+                  "type": "text",
+                  "value": ""
+                },
+                {
+                  "name": "sourcemap",
+                  "type": "text",
+                  "value": ""
+                },
+                {
+                  "name": "bundle",
+                  "type": "text",
+                  "value": ""
+                }
+              ]
+            }
+          },
+          "docs": "Submit a release via multipart form. Supports hosted (JS module upload), external (URL), and stdio (MCPB bundle) release types."
+        },
+        {
+          "info": {
+            "name": "Get a release",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.smithery.ai/servers/:qualifiedName/releases/:id",
+            "params": [
+              {
+                "name": "qualifiedName",
+                "value": "",
+                "type": "path",
+                "description": "The server's qualified name (e.g. 'namespace/server' or 'namespace' for namespace-only servers). Use %2F to encode the slash."
+              },
+              {
+                "name": "id",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "Retrieve release details including status, git metadata, pipeline logs, and MCP endpoint URL."
+        },
+        {
+          "info": {
+            "name": "Stream release logs",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.smithery.ai/servers/:qualifiedName/releases/:id/stream",
+            "params": [
+              {
+                "name": "qualifiedName",
+                "value": "",
+                "type": "path",
+                "description": "The server's qualified name (e.g. 'namespace/server' or 'namespace' for namespace-only servers). Use %2F to encode the slash."
+              },
+              {
+                "name": "id",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "Real-time SSE stream of release logs and status updates."
+        },
+        {
+          "info": {
+            "name": "Resume a release",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.smithery.ai/servers/:qualifiedName/releases/:id/resume",
+            "params": [
+              {
+                "name": "qualifiedName",
+                "value": "",
+                "type": "path",
+                "description": "The server's qualified name (e.g. 'namespace/server' or 'namespace' for namespace-only servers). Use %2F to encode the slash."
+              },
+              {
+                "name": "id",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "Resume a paused release (e.g. after OAuth authorization). Use id='latest' to resume the most recent one."
+        },
+        {
+          "info": {
+            "name": "List runtime logs",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.smithery.ai/servers/:qualifiedName/logs",
+            "params": [
+              {
+                "name": "from",
+                "value": "",
+                "type": "query",
+                "description": "Start of time range (ISO 8601)."
+              },
+              {
+                "name": "to",
+                "value": "",
+                "type": "query",
+                "description": "End of time range (ISO 8601)."
+              },
+              {
+                "name": "limit",
+                "value": "",
+                "type": "query",
+                "description": "Max invocations to return. Defaults to 20."
+              },
+              {
+                "name": "search",
+                "value": "",
+                "type": "query",
+                "description": "Text search across log messages."
+              },
+              {
+                "name": "qualifiedName",
+                "value": "",
+                "type": "path",
+                "description": "The server's qualified name (e.g. 'namespace/server' or 'namespace' for namespace-only servers). Use %2F to encode the slash."
+              }
+            ]
+          },
+          "docs": "Fetch recent runtime logs grouped by invocation."
+        },
+        {
+          "info": {
+            "name": "List secrets",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.smithery.ai/servers/:qualifiedName/secrets",
+            "params": [
+              {
+                "name": "qualifiedName",
+                "value": "",
+                "type": "path",
+                "description": "The server's qualified name (e.g. 'namespace/server' or 'namespace' for namespace-only servers). Use %2F to encode the slash."
+              }
+            ]
+          },
+          "docs": "List secret names. Values are not returned."
+        },
+        {
+          "info": {
+            "name": "Set a secret",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "https://api.smithery.ai/servers/:qualifiedName/secrets",
+            "params": [
+              {
+                "name": "qualifiedName",
+                "value": "",
+                "type": "path",
+                "description": "The server's qualified name (e.g. 'namespace/server' or 'namespace' for namespace-only servers). Use %2F to encode the slash."
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Create or update a secret value."
+        },
+        {
+          "info": {
+            "name": "Delete a secret",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://api.smithery.ai/servers/:qualifiedName/secrets/:secretName",
+            "params": [
+              {
+                "name": "qualifiedName",
+                "value": "",
+                "type": "path",
+                "description": "The server's qualified name (e.g. 'namespace/server' or 'namespace' for namespace-only servers). Use %2F to encode the slash."
+              },
+              {
+                "name": "secretName",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "Remove a secret by name."
+        },
+        {
+          "info": {
+            "name": "Get server icon",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.smithery.ai/servers/:qualifiedName/icon",
+            "params": [
+              {
+                "name": "qualifiedName",
+                "value": "",
+                "type": "path",
+                "description": "The server's qualified name (e.g. 'namespace/server' or 'namespace' for namespace-only servers). Use %2F to encode the slash."
+              }
+            ]
+          },
+          "docs": "Retrieve the server's icon image. Returns the image directly with appropriate content type."
+        },
+        {
+          "info": {
+            "name": "Upload server icon",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "https://api.smithery.ai/servers/:qualifiedName/icon",
+            "params": [
+              {
+                "name": "qualifiedName",
+                "value": "",
+                "type": "path",
+                "description": "The server's qualified name (e.g. 'namespace/server' or 'namespace' for namespace-only servers). Use %2F to encode the slash."
+              }
+            ]
+          },
+          "docs": "Upload or replace the server icon. Accepts a single image file via multipart/form-data. Max 1MB. Supported formats: PNG, JPEG, GIF, SVG, WebP."
+        },
+        {
+          "info": {
+            "name": "Delete server icon",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://api.smithery.ai/servers/:qualifiedName/icon",
+            "params": [
+              {
+                "name": "qualifiedName",
+                "value": "",
+                "type": "path",
+                "description": "The server's qualified name (e.g. 'namespace/server' or 'namespace' for namespace-only servers). Use %2F to encode the slash."
+              }
+            ]
+          },
+          "docs": "Remove the server's icon."
+        },
+        {
+          "info": {
+            "name": "Infer a tool output schema",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.smithery.ai/servers/:qualifiedName/experimental/tools/:toolName/output-schema",
+            "params": [
+              {
+                "name": "qualifiedName",
+                "value": "",
+                "type": "path",
+                "description": "The server's qualified name (e.g. 'namespace/server' or 'namespace' for namespace-only servers). Use %2F to encode the slash."
+              },
+              {
+                "name": "toolName",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "Infer a best-effort Zod schema from recent successful Tinybird tool outputs. All discovered object fields are marked optional."
+        },
+        {
+          "info": {
+            "name": "List all servers",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.smithery.ai/servers",
+            "params": [
+              {
+                "name": "q",
+                "value": "",
+                "type": "query",
+                "description": "Search query for full-text and semantic search across server names and descriptions."
+              },
+              {
+                "name": "page",
+                "value": "",
+                "type": "query",
+                "description": "Page number (1-indexed)."
+              },
+              {
+                "name": "pageSize",
+                "value": "",
+                "type": "query",
+                "description": "Number of results per page (default 10, max 100)."
+              },
+              {
+                "name": "topK",
+                "value": "",
+                "type": "query",
+                "description": "Maximum number of candidate results to consider from the search index before pagination. The server applies a hard cap of 500 to keep the rerank window bounded; pass `seed` for stable deep pagination."
+              },
+              {
+                "name": "fields",
+                "value": "",
+                "type": "query",
+                "description": "Comma-separated list of fields to include in response"
+              },
+              {
+                "name": "ids",
+                "value": "",
+                "type": "query",
+                "description": "Filter by specific server IDs."
+              },
+              {
+                "name": "qualifiedName",
+                "value": "",
+                "type": "query",
+                "description": "Exact match on the server's qualified name (e.g. \"smithery/hello-world\"). Deprecated: use GET /servers/:namespace/:server instead."
+              },
+              {
+                "name": "namespace",
+                "value": "",
+                "type": "query",
+                "description": "Filter by the namespace that owns the server."
+              },
+              {
+                "name": "remote",
+                "value": "",
+                "type": "query",
+                "description": "Filter by remote status. Remote servers are accessed via URL; non-remote servers run locally via stdio."
+              },
+              {
+                "name": "isDeployed",
+                "value": "",
+                "type": "query",
+                "description": "Filter by deployment status. Deployed servers are hosted on Smithery infrastructure."
+              },
+              {
+                "name": "verified",
+                "value": "",
+                "type": "query",
+                "description": "Filter to only verified servers."
+              },
+              {
+                "name": "smitheryManaged",
+                "value": "",
+                "type": "query",
+                "description": "Filter to servers whose namespace is owned by the Smithery org."
+              },
+              {
+                "name": "ownerId",
+                "value": "",
+                "type": "query",
+                "description": "Filter by the server owner's user ID."
+              },
+              {
+                "name": "repoOwner",
+                "value": "",
+                "type": "query",
+                "description": "Filter by GitHub repository owner from repository_url."
+              },
+              {
+                "name": "repoName",
+                "value": "",
+                "type": "query",
+                "description": "Filter by GitHub repository name from repository_url."
+              },
+              {
+                "name": "seed",
+                "value": "",
+                "type": "query",
+                "description": "Random seed for deterministic pagination. When provided, results use a stable sort order that is consistent across pages for the same seed value."
+              }
+            ]
+          },
+          "docs": "Search and browse public MCP servers in the Smithery registry. Supports full-text and semantic search via the `q` parameter, and filtering by deployment status, verification, ownership, and more."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

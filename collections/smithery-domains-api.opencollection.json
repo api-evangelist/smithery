@@ -1,0 +1,71 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Smithery Platform connect domains API",
+    "version": "1.0.0"
+  },
+  "request": {
+    "auth": {
+      "type": "bearer",
+      "token": "{{bearerToken}}"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "domains",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "List domains",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.smithery.ai/servers/:qualifiedName/domains",
+            "params": [
+              {
+                "name": "qualifiedName",
+                "value": "",
+                "type": "path",
+                "description": "The server's qualified name (e.g. 'namespace/server' or 'namespace' for namespace-only servers). Use %2F to encode the slash."
+              }
+            ]
+          },
+          "docs": "List the domains for a server."
+        },
+        {
+          "info": {
+            "name": "Update managed domain",
+            "type": "http"
+          },
+          "http": {
+            "method": "PATCH",
+            "url": "https://api.smithery.ai/servers/:qualifiedName/domains/:domainId",
+            "params": [
+              {
+                "name": "qualifiedName",
+                "value": "",
+                "type": "path",
+                "description": "The server's qualified name (e.g. 'namespace/server' or 'namespace' for namespace-only servers). Use %2F to encode the slash."
+              },
+              {
+                "name": "domainId",
+                "value": "",
+                "type": "path"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Update the managed run.tools slug for a server."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

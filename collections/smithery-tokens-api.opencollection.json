@@ -1,0 +1,39 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Smithery Platform connect tokens API",
+    "version": "1.0.0"
+  },
+  "request": {
+    "auth": {
+      "type": "bearer",
+      "token": "{{bearerToken}}"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "tokens",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Create a service token",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.smithery.ai/tokens",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Create a service token for machine-to-machine authentication. Accepts API key or bearer token. Optionally apply restrictions."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

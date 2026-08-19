@@ -1,0 +1,4600 @@
+{
+  "item": [
+    {
+      "id": "9ab331c4-f906-4e0f-bcaa-0eaf0dae9ef9",
+      "name": "servers",
+      "description": {
+        "content": "Browse the MCP server registry, manage server configuration, and handle deployments",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "a0a8dd1b-671a-4588-ab2a-080450276dfb",
+          "name": "Get a server",
+          "request": {
+            "name": "Get a server",
+            "description": {
+              "content": "Retrieve server details including connections, tools, and security status.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "servers",
+                ":qualifiedName"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "qualifiedName",
+                  "description": "(Required) The server's qualified name (e.g. 'namespace/server' or 'namespace' for namespace-only servers). Use %2F to encode the slash."
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "803b8ac4-3b39-4189-bb87-a5dbf1ba0abc",
+              "name": "Server found",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "servers",
+                    ":qualifiedName"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "qualifiedName",
+                      "description": "(Required) The server's qualified name (e.g. 'namespace/server' or 'namespace' for namespace-only servers). Use %2F to encode the slash."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"qualifiedName\": \"smithery/hello-world\",\n  \"displayName\": \"Hello World\",\n  \"description\": \"A simple hello world server\",\n  \"iconUrl\": \"string\",\n  \"remote\": true,\n  \"deploymentUrl\": \"string\",\n  \"connections\": [\n    {\n      \"type\": \"string\",\n      \"bundleUrl\": \"http://OqsKHlcTrrmbCoUCaouyTTIGvBQpiQsC.kxlSny,tH9zvq2OMLY,PMtOvXjYOMQaI,\",\n      \"runtime\": \"binary\",\n      \"configSchema\": {\n        \"key_0\": {}\n      }\n    },\n    {\n      \"type\": \"string\",\n      \"bundleUrl\": \"http://jFgYQkFuSYCwLwRH.dpsktE7hkeAzIFBjBaGMGt\",\n      \"runtime\": \"bun\",\n      \"configSchema\": {\n        \"key_0\": {}\n      }\n    }\n  ],\n  \"security\": {\n    \"scanPassed\": true\n  },\n  \"tools\": [\n    {\n      \"name\": \"get_weather\",\n      \"description\": \"string\",\n      \"inputSchema\": {\n        \"type\": \"string\",\n        \"properties\": {\n          \"key_0\": {},\n          \"key_1\": {},\n          \"key_2\": {}\n        }\n      },\n      \"outputSchema\": {\n        \"type\": \"string\",\n        \"properties\": {\n          \"key_0\": {},\n          \"key_1\": {}\n        },\n        \"required\": [\n          \"string\",\n          \"string\"\n        ]\n      }\n    },\n    {\n      \"name\": \"get_weather\",\n      \"description\": \"string\",\n      \"inputSchema\": {\n        \"type\": \"string\",\n        \"properties\": {\n          \"key_0\": {},\n          \"key_1\": {},\n          \"key_2\": {}\n        }\n      },\n      \"outputSchema\": {\n        \"type\": \"string\",\n        \"properties\": {\n          \"key_0\": {}\n        },\n        \"required\": [\n          \"string\",\n          \"string\"\n        ]\n      }\n    }\n  ],\n  \"resources\": [\n    {\n      \"name\": \"config://settings\",\n      \"uri\": \"config://app/settings\",\n      \"description\": \"Application settings\",\n      \"mimeType\": \"application/json\"\n    },\n    {\n      \"name\": \"config://settings\",\n      \"uri\": \"config://app/settings\",\n      \"description\": \"Application settings\",\n      \"mimeType\": \"application/json\"\n    }\n  ],\n  \"prompts\": [\n    {\n      \"name\": \"summarize\",\n      \"description\": \"Summarize the given text\",\n      \"arguments\": [\n        {\n          \"name\": \"text\",\n          \"description\": \"The text to summarize\",\n          \"required\": true\n        },\n        {\n          \"name\": \"text\",\n          \"description\": \"The text to summarize\",\n          \"required\": true\n        }\n      ]\n    },\n    {\n      \"name\": \"summarize\",\n      \"description\": \"Summarize the given text\",\n      \"arguments\": [\n        {\n          \"name\": \"text\",\n          \"description\": \"The text to summarize\",\n          \"required\": true\n        },\n        {\n          \"name\": \"text\",\n          \"description\": \"The text to summarize\",\n          \"required\": true\n        }\n      ]\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "c030890b-76d0-4846-b1fd-25c5a373c44a",
+              "name": "Server or namespace not found",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "servers",
+                    ":qualifiedName"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "qualifiedName",
+                      "description": "(Required) The server's qualified name (e.g. 'namespace/server' or 'namespace' for namespace-only servers). Use %2F to encode the slash."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": \"Server not found\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "b961a397-80c8-40ce-a961-09141ef22e3d",
+          "name": "Create a server",
+          "request": {
+            "name": "Create a server",
+            "description": {
+              "content": "Create a new server. Idempotent — returns success if the server already exists and is owned by the caller.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "servers",
+                ":qualifiedName"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "qualifiedName",
+                  "description": "(Required) The server's qualified name (e.g. 'namespace/server' or 'namespace' for namespace-only servers). Use %2F to encode the slash."
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "PUT",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"displayName\": \"<string>\",\n  \"description\": \"<string>\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "6fa69c68-f7fd-4e12-9e5e-20279c5b995c",
+              "name": "Server created successfully",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "servers",
+                    ":qualifiedName"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "qualifiedName",
+                      "description": "(Required) The server's qualified name (e.g. 'namespace/server' or 'namespace' for namespace-only servers). Use %2F to encode the slash."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "PUT",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"displayName\": \"My Server\",\n  \"description\": \"A simple server\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Created",
+              "code": 201,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"namespace\": \"myorg\",\n  \"server\": \"\",\n  \"displayName\": \"My Server\",\n  \"description\": \"A simple server\",\n  \"createdAt\": \"2024-01-01T00:00:00.000Z\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "b41455b0-a2f3-4afe-a617-d04834688e74",
+              "name": "Bad request (invalid name format)",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "servers",
+                    ":qualifiedName"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "qualifiedName",
+                      "description": "(Required) The server's qualified name (e.g. 'namespace/server' or 'namespace' for namespace-only servers). Use %2F to encode the slash."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "PUT",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"displayName\": \"My Server\",\n  \"description\": \"A simple server\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": \"Server not found\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "ed18a14d-02f6-4432-9eeb-20046d48908e",
+              "name": "Unauthorized",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "servers",
+                    ":qualifiedName"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "qualifiedName",
+                      "description": "(Required) The server's qualified name (e.g. 'namespace/server' or 'namespace' for namespace-only servers). Use %2F to encode the slash."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "PUT",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"displayName\": \"My Server\",\n  \"description\": \"A simple server\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": \"Server not found\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "5d0abce9-ad19-454f-9ca3-b6b00f5026ea",
+              "name": "Forbidden (namespace not owned by user or missing servers:write permission)",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "servers",
+                    ":qualifiedName"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "qualifiedName",
+                      "description": "(Required) The server's qualified name (e.g. 'namespace/server' or 'namespace' for namespace-only servers). Use %2F to encode the slash."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "PUT",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"displayName\": \"My Server\",\n  \"description\": \"A simple server\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Forbidden",
+              "code": 403,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": \"Server not found\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "c6f211e6-3be7-4fd0-8fba-f038ac174d1a",
+              "name": "Namespace not found",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "servers",
+                    ":qualifiedName"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "qualifiedName",
+                      "description": "(Required) The server's qualified name (e.g. 'namespace/server' or 'namespace' for namespace-only servers). Use %2F to encode the slash."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "PUT",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"displayName\": \"My Server\",\n  \"description\": \"A simple server\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": \"Server not found\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "854c8a85-f9ad-4ef4-b881-1f7f9f28c86b",
+          "name": "Update a server",
+          "request": {
+            "name": "Update a server",
+            "description": {
+              "content": "Update server metadata such as display name, description, repository, icon, or visibility.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "servers",
+                ":qualifiedName"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "qualifiedName",
+                  "description": "(Required) The server's qualified name (e.g. 'namespace/server' or 'namespace' for namespace-only servers). Use %2F to encode the slash."
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "PATCH",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"displayName\": \"<string>\",\n  \"description\": \"<string>\",\n  \"homepage\": \"<string>\",\n  \"repositoryUrl\": \"<string>\",\n  \"backlinkUrl\": \"<string>\",\n  \"license\": \"<string>\",\n  \"iconUrl\": \"<string>\",\n  \"unlisted\": \"<boolean>\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "b7b50a60-503a-4f76-87da-fb4fe094b23d",
+              "name": "Server updated",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "servers",
+                    ":qualifiedName"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "qualifiedName",
+                      "description": "(Required) The server's qualified name (e.g. 'namespace/server' or 'namespace' for namespace-only servers). Use %2F to encode the slash."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "PATCH",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"displayName\": \"<string>\",\n  \"description\": \"<string>\",\n  \"homepage\": \"<string>\",\n  \"repositoryUrl\": \"<string>\",\n  \"backlinkUrl\": \"<string>\",\n  \"license\": \"<string>\",\n  \"iconUrl\": \"<string>\",\n  \"unlisted\": \"<boolean>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"success\": true,\n  \"namespace\": \"string\",\n  \"server\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "1bbdc560-0f63-4854-b623-647898c1901e",
+              "name": "Bad request",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "servers",
+                    ":qualifiedName"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "qualifiedName",
+                      "description": "(Required) The server's qualified name (e.g. 'namespace/server' or 'namespace' for namespace-only servers). Use %2F to encode the slash."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "PATCH",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"displayName\": \"<string>\",\n  \"description\": \"<string>\",\n  \"homepage\": \"<string>\",\n  \"repositoryUrl\": \"<string>\",\n  \"backlinkUrl\": \"<string>\",\n  \"license\": \"<string>\",\n  \"iconUrl\": \"<string>\",\n  \"unlisted\": \"<boolean>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": \"Server not found\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "c490da6a-1326-4829-ac1f-c5ffe9e1a194",
+              "name": "Forbidden",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "servers",
+                    ":qualifiedName"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "qualifiedName",
+                      "description": "(Required) The server's qualified name (e.g. 'namespace/server' or 'namespace' for namespace-only servers). Use %2F to encode the slash."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "PATCH",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"displayName\": \"<string>\",\n  \"description\": \"<string>\",\n  \"homepage\": \"<string>\",\n  \"repositoryUrl\": \"<string>\",\n  \"backlinkUrl\": \"<string>\",\n  \"license\": \"<string>\",\n  \"iconUrl\": \"<string>\",\n  \"unlisted\": \"<boolean>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Forbidden",
+              "code": 403,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": \"Server not found\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "d6726463-dc93-4810-8f82-c1f6ca0c0688",
+              "name": "Server not found",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "servers",
+                    ":qualifiedName"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "qualifiedName",
+                      "description": "(Required) The server's qualified name (e.g. 'namespace/server' or 'namespace' for namespace-only servers). Use %2F to encode the slash."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "PATCH",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"displayName\": \"<string>\",\n  \"description\": \"<string>\",\n  \"homepage\": \"<string>\",\n  \"repositoryUrl\": \"<string>\",\n  \"backlinkUrl\": \"<string>\",\n  \"license\": \"<string>\",\n  \"iconUrl\": \"<string>\",\n  \"unlisted\": \"<boolean>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": \"Server not found\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "778b5a7b-7421-41e4-8127-0fa73a786e1d",
+          "name": "Delete a server",
+          "request": {
+            "name": "Delete a server",
+            "description": {
+              "content": "Permanently delete a server, its releases, and associated resources.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "servers",
+                ":qualifiedName"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "qualifiedName",
+                  "description": "(Required) The server's qualified name (e.g. 'namespace/server' or 'namespace' for namespace-only servers). Use %2F to encode the slash."
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "DELETE",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "bbaed3c8-843d-4153-8965-f84bd6c4e537",
+              "name": "Server deleted",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "servers",
+                    ":qualifiedName"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "qualifiedName",
+                      "description": "(Required) The server's qualified name (e.g. 'namespace/server' or 'namespace' for namespace-only servers). Use %2F to encode the slash."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "DELETE",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"success\": false,\n  \"namespace\": \"string\",\n  \"server\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "4252e8ed-140b-43f8-b7db-e24b5d8e8f7a",
+              "name": "Server not found or not owned by user",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "servers",
+                    ":qualifiedName"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "qualifiedName",
+                      "description": "(Required) The server's qualified name (e.g. 'namespace/server' or 'namespace' for namespace-only servers). Use %2F to encode the slash."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "DELETE",
+                "body": {}
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": \"Server not found\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "359e9b9a-04ff-4921-bc6d-2cc1b9394881",
+          "name": "Download server bundle",
+          "request": {
+            "name": "Download server bundle",
+            "description": {
+              "content": "Download the MCPB bundle for the latest successful stdio release.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "servers",
+                ":qualifiedName",
+                "download"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "qualifiedName",
+                  "description": "(Required) The server's qualified name (e.g. 'namespace/server' or 'namespace' for namespace-only servers). Use %2F to encode the slash."
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/zip"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "834f22e5-2de7-4246-83ff-54b3a9dadad9",
+              "name": "Bundle file",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "servers",
+                    ":qualifiedName",
+                    "download"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "qualifiedName",
+                      "description": "(Required) The server's qualified name (e.g. 'namespace/server' or 'namespace' for namespace-only servers). Use %2F to encode the slash."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/zip"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/zip"
+                }
+              ],
+              "body": "string",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "5614831f-becc-4184-969e-5747c90172ed",
+              "name": "Bundle not found",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "servers",
+                    ":qualifiedName",
+                    "download"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "qualifiedName",
+                      "description": "(Required) The server's qualified name (e.g. 'namespace/server' or 'namespace' for namespace-only servers). Use %2F to encode the slash."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "72233dd8-8858-4488-9213-17af0da74284",
+          "name": "Publish a server",
+          "request": {
+            "name": "Publish a server",
+            "description": {
+              "content": "Submit a release via multipart form. Supports hosted (JS module upload), external (URL), and stdio (MCPB bundle) release types.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "servers",
+                ":qualifiedName",
+                "releases"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "qualifiedName",
+                  "description": "(Required) The server's qualified name (e.g. 'namespace/server' or 'namespace' for namespace-only servers). Use %2F to encode the slash."
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "multipart/form-data"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "PUT",
+            "auth": null,
+            "body": {
+              "mode": "formdata",
+              "formdata": [
+                {
+                  "key": "payload",
+                  "value": "<string>",
+                  "type": "text",
+                  "description": "(Required) JSON-encoded release payload. See DeployPayload schema for structure."
+                },
+                {
+                  "key": "module",
+                  "type": "file",
+                  "description": "JavaScript module file (for hosted releases)"
+                },
+                {
+                  "key": "sourcemap",
+                  "type": "file",
+                  "description": "Source map file (for hosted releases)"
+                },
+                {
+                  "key": "bundle",
+                  "type": "file",
+                  "description": "MCPB bundle file (for stdio releases)"
+                }
+              ]
+            }
+          },
+          "response": [
+            {
+              "id": "8f376fc7-2a1b-40d0-8009-a166f9e2d6f4",
+              "name": "Release accepted",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "servers",
+                    ":qualifiedName",
+                    "releases"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "qualifiedName",
+                      "description": "(Required) The server's qualified name (e.g. 'namespace/server' or 'namespace' for namespace-only servers). Use %2F to encode the slash."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "PUT",
+                "body": {
+                  "mode": "formdata",
+                  "formdata": [
+                    {
+                      "description": {
+                        "content": "(Required) JSON-encoded release payload. See DeployPayload schema for structure.",
+                        "type": "text/plain"
+                      },
+                      "key": "payload",
+                      "value": "<string>",
+                      "type": "text"
+                    },
+                    {
+                      "description": {
+                        "content": "JavaScript module file (for hosted releases)",
+                        "type": "text/plain"
+                      },
+                      "key": "module",
+                      "value": "<binary>",
+                      "type": "text"
+                    },
+                    {
+                      "description": {
+                        "content": "Source map file (for hosted releases)",
+                        "type": "text/plain"
+                      },
+                      "key": "sourcemap",
+                      "value": "<binary>",
+                      "type": "text"
+                    },
+                    {
+                      "description": {
+                        "content": "MCPB bundle file (for stdio releases)",
+                        "type": "text/plain"
+                      },
+                      "key": "bundle",
+                      "value": "<binary>",
+                      "type": "text"
+                    }
+                  ]
+                }
+              },
+              "status": "Accepted",
+              "code": 202,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"deploymentId\": \"123e4567-e89b-12d3-a456-426614174000\",\n  \"status\": \"WORKING\",\n  \"mcpUrl\": \"https://slug.run.tools\",\n  \"warnings\": [\n    \"string\",\n    \"string\"\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "f6b1bbd5-ea59-4251-9252-8a0144285cf7",
+              "name": "Invalid payload",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "servers",
+                    ":qualifiedName",
+                    "releases"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "qualifiedName",
+                      "description": "(Required) The server's qualified name (e.g. 'namespace/server' or 'namespace' for namespace-only servers). Use %2F to encode the slash."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "PUT",
+                "body": {
+                  "mode": "formdata",
+                  "formdata": [
+                    {
+                      "description": {
+                        "content": "(Required) JSON-encoded release payload. See DeployPayload schema for structure.",
+                        "type": "text/plain"
+                      },
+                      "key": "payload",
+                      "value": "<string>",
+                      "type": "text"
+                    },
+                    {
+                      "description": {
+                        "content": "JavaScript module file (for hosted releases)",
+                        "type": "text/plain"
+                      },
+                      "key": "module",
+                      "value": "<binary>",
+                      "type": "text"
+                    },
+                    {
+                      "description": {
+                        "content": "Source map file (for hosted releases)",
+                        "type": "text/plain"
+                      },
+                      "key": "sourcemap",
+                      "value": "<binary>",
+                      "type": "text"
+                    },
+                    {
+                      "description": {
+                        "content": "MCPB bundle file (for stdio releases)",
+                        "type": "text/plain"
+                      },
+                      "key": "bundle",
+                      "value": "<binary>",
+                      "type": "text"
+                    }
+                  ]
+                }
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": \"Server not found\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "fd796f95-1a1f-4f3f-9751-51d396b0b76f",
+          "name": "List releases",
+          "request": {
+            "name": "List releases",
+            "description": {
+              "content": "List releases ordered by most recent first. Logs are omitted — fetch a specific release to see logs.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "servers",
+                ":qualifiedName",
+                "releases"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "page",
+                  "value": "1"
+                },
+                {
+                  "disabled": false,
+                  "key": "pageSize",
+                  "value": "20"
+                }
+              ],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "qualifiedName",
+                  "description": "(Required) The server's qualified name (e.g. 'namespace/server' or 'namespace' for namespace-only servers). Use %2F to encode the slash."
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "5d6dc030-dd48-4f47-8875-e55ced23f8f2",
+              "name": "Paginated list of releases",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "servers",
+                    ":qualifiedName",
+                    "releases"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "page",
+                      "value": "1"
+                    },
+                    {
+                      "key": "pageSize",
+                      "value": "20"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "qualifiedName",
+                      "description": "(Required) The server's qualified name (e.g. 'namespace/server' or 'namespace' for namespace-only servers). Use %2F to encode the slash."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"releases\": [\n    {\n      \"id\": \"02Ded9c0-5ab1-804B-b358-04eAA8DbB95F\",\n      \"status\": \"string\",\n      \"type\": \"string\",\n      \"createdAt\": \"string\",\n      \"updatedAt\": \"string\",\n      \"commit\": \"string\",\n      \"commitMessage\": \"string\",\n      \"branch\": \"string\",\n      \"upstreamUrl\": \"string\",\n      \"mcpUrl\": \"http://TFWfrjlFm.txasxBKLeD-fuWxWPbnQJJGuVPaBzF5e7NIOn0eY+dzjr3Gys3\"\n    },\n    {\n      \"id\": \"ffffffff-ffff-ffff-ffff-ffffffffffff\",\n      \"status\": \"string\",\n      \"type\": \"string\",\n      \"createdAt\": \"string\",\n      \"updatedAt\": \"string\",\n      \"commit\": \"string\",\n      \"commitMessage\": \"string\",\n      \"branch\": \"string\",\n      \"upstreamUrl\": \"string\",\n      \"mcpUrl\": \"https://bQernydPjfLAnYUFTMZRpgmYMWrXjA.cgsEhOch2o3xeMuCplmkbdHPKX-O\"\n    }\n  ],\n  \"pagination\": {\n    \"currentPage\": -4000130234734504,\n    \"pageSize\": -598715451387960,\n    \"totalPages\": 3312646871940675,\n    \"totalCount\": -4579724368982350\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "0c13088f-940b-420a-b036-a47d10258f4a",
+              "name": "Server not found",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "servers",
+                    ":qualifiedName",
+                    "releases"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "page",
+                      "value": "1"
+                    },
+                    {
+                      "key": "pageSize",
+                      "value": "20"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "qualifiedName",
+                      "description": "(Required) The server's qualified name (e.g. 'namespace/server' or 'namespace' for namespace-only servers). Use %2F to encode the slash."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": \"Server not found\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "b679ff01-b735-4774-956f-a0e437336eef",
+          "name": "Get a release",
+          "request": {
+            "name": "Get a release",
+            "description": {
+              "content": "Retrieve release details including status, git metadata, pipeline logs, and MCP endpoint URL.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "servers",
+                ":qualifiedName",
+                "releases",
+                ":id"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "qualifiedName",
+                  "description": "(Required) The server's qualified name (e.g. 'namespace/server' or 'namespace' for namespace-only servers). Use %2F to encode the slash."
+                },
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "id",
+                  "description": "(Required) "
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "1b1191d6-4dbe-443b-b607-68512319348f",
+              "name": "Release info",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "servers",
+                    ":qualifiedName",
+                    "releases",
+                    ":id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "qualifiedName",
+                      "description": "(Required) The server's qualified name (e.g. 'namespace/server' or 'namespace' for namespace-only servers). Use %2F to encode the slash."
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "id",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"id\": \"00000000-0000-0000-0000-000000000000\",\n  \"status\": \"string\",\n  \"type\": \"string\",\n  \"createdAt\": \"string\",\n  \"updatedAt\": \"string\",\n  \"commit\": \"string\",\n  \"commitMessage\": \"string\",\n  \"branch\": \"string\",\n  \"upstreamUrl\": \"string\",\n  \"logs\": [\n    {\n      \"stage\": \"metadata\",\n      \"level\": \"string\",\n      \"message\": \"string\",\n      \"timestamp\": \"string\",\n      \"error\": {\n        \"message\": \"string\"\n      }\n    },\n    {\n      \"stage\": \"scan\",\n      \"level\": \"string\",\n      \"message\": \"string\",\n      \"timestamp\": \"string\",\n      \"error\": {\n        \"message\": \"string\"\n      }\n    }\n  ],\n  \"mcpUrl\": \"https://cYsFYAcibkiBwqOOrnN.obljiAYB96fe1OKV.tGn.pmYGGJ1TJnU\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "fd9f579a-80be-4357-a2f3-b1185dde64bd",
+              "name": "Server or release not found",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "servers",
+                    ":qualifiedName",
+                    "releases",
+                    ":id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "qualifiedName",
+                      "description": "(Required) The server's qualified name (e.g. 'namespace/server' or 'namespace' for namespace-only servers). Use %2F to encode the slash."
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "id",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": \"Server not found\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "6130a1dc-d78d-43ea-87b3-d45399158fbc",
+          "name": "Stream release logs",
+          "request": {
+            "name": "Stream release logs",
+            "description": {
+              "content": "Real-time SSE stream of release logs and status updates.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "servers",
+                ":qualifiedName",
+                "releases",
+                ":id",
+                "stream"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "qualifiedName",
+                  "description": "(Required) The server's qualified name (e.g. 'namespace/server' or 'namespace' for namespace-only servers). Use %2F to encode the slash."
+                },
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "id",
+                  "description": "(Required) "
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "text/event-stream"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "36744575-9d1f-43af-8909-713baa1c7296",
+              "name": "SSE stream of release events",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "servers",
+                    ":qualifiedName",
+                    "releases",
+                    ":id",
+                    "stream"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "qualifiedName",
+                      "description": "(Required) The server's qualified name (e.g. 'namespace/server' or 'namespace' for namespace-only servers). Use %2F to encode the slash."
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "id",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "text/event-stream"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/event-stream"
+                }
+              ],
+              "body": "string",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "0db1d00b-1393-46fd-8a3e-8fb2b78c302c",
+              "name": "Release not found",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "servers",
+                    ":qualifiedName",
+                    "releases",
+                    ":id",
+                    "stream"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "qualifiedName",
+                      "description": "(Required) The server's qualified name (e.g. 'namespace/server' or 'namespace' for namespace-only servers). Use %2F to encode the slash."
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "id",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": \"Server not found\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "70f47de5-f859-44cb-8a0d-5da068c52968",
+          "name": "Resume a release",
+          "request": {
+            "name": "Resume a release",
+            "description": {
+              "content": "Resume a paused release (e.g. after OAuth authorization). Use id='latest' to resume the most recent one.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "servers",
+                ":qualifiedName",
+                "releases",
+                ":id",
+                "resume"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "qualifiedName",
+                  "description": "(Required) The server's qualified name (e.g. 'namespace/server' or 'namespace' for namespace-only servers). Use %2F to encode the slash."
+                },
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "id",
+                  "description": "(Required) "
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "2c38750c-ed38-4f71-92af-d6a43bcde5f7",
+              "name": "Resume accepted",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "servers",
+                    ":qualifiedName",
+                    "releases",
+                    ":id",
+                    "resume"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "qualifiedName",
+                      "description": "(Required) The server's qualified name (e.g. 'namespace/server' or 'namespace' for namespace-only servers). Use %2F to encode the slash."
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "id",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {}
+              },
+              "status": "Accepted",
+              "code": 202,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"status\": \"WORKING\",\n  \"deploymentId\": \"00000000-0000-0000-0000-000000000000\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "3f4246f2-01bb-4450-a749-fdd27f4c8923",
+              "name": "Release not in resumable state",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "servers",
+                    ":qualifiedName",
+                    "releases",
+                    ":id",
+                    "resume"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "qualifiedName",
+                      "description": "(Required) The server's qualified name (e.g. 'namespace/server' or 'namespace' for namespace-only servers). Use %2F to encode the slash."
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "id",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {}
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": \"Server not found\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "5713b8bf-0a27-4535-8c9c-7fccd622bd09",
+              "name": "Server or release not found",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "servers",
+                    ":qualifiedName",
+                    "releases",
+                    ":id",
+                    "resume"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "qualifiedName",
+                      "description": "(Required) The server's qualified name (e.g. 'namespace/server' or 'namespace' for namespace-only servers). Use %2F to encode the slash."
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "id",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {}
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": \"Server not found\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "58b89251-e663-49d5-9fdd-8e459e618809",
+          "name": "List runtime logs",
+          "request": {
+            "name": "List runtime logs",
+            "description": {
+              "content": "Fetch recent runtime logs grouped by invocation.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "servers",
+                ":qualifiedName",
+                "logs"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "from",
+                  "value": "<string>",
+                  "description": "Start of time range (ISO 8601)."
+                },
+                {
+                  "disabled": false,
+                  "key": "to",
+                  "value": "<string>",
+                  "description": "End of time range (ISO 8601)."
+                },
+                {
+                  "disabled": false,
+                  "key": "limit",
+                  "value": "<integer>",
+                  "description": "Max invocations to return. Defaults to 20."
+                },
+                {
+                  "disabled": false,
+                  "key": "search",
+                  "value": "<string>",
+                  "description": "Text search across log messages."
+                }
+              ],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "qualifiedName",
+                  "description": "(Required) The server's qualified name (e.g. 'namespace/server' or 'namespace' for namespace-only servers). Use %2F to encode the slash."
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "89ef06af-cb97-43ae-b922-c3e032c5c363",
+              "name": "Logs fetched successfully",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "servers",
+                    ":qualifiedName",
+                    "logs"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "from",
+                      "value": "2026-01-01T00:00:00Z"
+                    },
+                    {
+                      "key": "to",
+                      "value": "2026-01-01T01:00:00Z"
+                    },
+                    {
+                      "key": "limit",
+                      "value": "20"
+                    },
+                    {
+                      "key": "search",
+                      "value": "error"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "qualifiedName",
+                      "description": "(Required) The server's qualified name (e.g. 'namespace/server' or 'namespace' for namespace-only servers). Use %2F to encode the slash."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"invocations\": [\n    {\n      \"id\": \"625f9ce6-f179-4f23-b3e3-4de28b52b39d\",\n      \"timestamp\": \"2026-01-04 10:53:39\",\n      \"request\": {\n        \"method\": \"POST\",\n        \"url\": \"https://gateway.smithery.ai/@smithery/unicorn\"\n      },\n      \"response\": {\n        \"status\": 200,\n        \"outcome\": \"ok\"\n      },\n      \"duration\": {\n        \"cpuMs\": 5,\n        \"wallMs\": 743\n      },\n      \"logs\": [\n        {\n          \"timestamp\": \"2026-01-04 10:53:39\",\n          \"level\": \"info\",\n          \"message\": \"Processing request...\"\n        },\n        {\n          \"timestamp\": \"2026-01-04 10:53:39\",\n          \"level\": \"info\",\n          \"message\": \"Processing request...\"\n        }\n      ],\n      \"exceptions\": [\n        {\n          \"timestamp\": \"2026-01-04 10:53:39\",\n          \"name\": \"TypeError\",\n          \"message\": \"Cannot read property 'x' of undefined\"\n        },\n        {\n          \"timestamp\": \"2026-01-04 10:53:39\",\n          \"name\": \"TypeError\",\n          \"message\": \"Cannot read property 'x' of undefined\"\n        }\n      ]\n    },\n    {\n      \"id\": \"625f9ce6-f179-4f23-b3e3-4de28b52b39d\",\n      \"timestamp\": \"2026-01-04 10:53:39\",\n      \"request\": {\n        \"method\": \"POST\",\n        \"url\": \"https://gateway.smithery.ai/@smithery/unicorn\"\n      },\n      \"response\": {\n        \"status\": 200,\n        \"outcome\": \"ok\"\n      },\n      \"duration\": {\n        \"cpuMs\": 5,\n        \"wallMs\": 743\n      },\n      \"logs\": [\n        {\n          \"timestamp\": \"2026-01-04 10:53:39\",\n          \"level\": \"info\",\n          \"message\": \"Processing request...\"\n        },\n        {\n          \"timestamp\": \"2026-01-04 10:53:39\",\n          \"level\": \"info\",\n          \"message\": \"Processing request...\"\n        }\n      ],\n      \"exceptions\": [\n        {\n          \"timestamp\": \"2026-01-04 10:53:39\",\n          \"name\": \"TypeError\",\n          \"message\": \"Cannot read property 'x' of undefined\"\n        },\n        {\n          \"timestamp\": \"2026-01-04 10:53:39\",\n          \"name\": \"TypeError\",\n          \"message\": \"Cannot read property 'x' of undefined\"\n        }\n      ]\n    }\n  ],\n  \"total\": 6213.5797382483215\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "2219f548-26d1-4303-9965-cc8a50f63469",
+              "name": "Forbidden",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "servers",
+                    ":qualifiedName",
+                    "logs"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "from",
+                      "value": "2026-01-01T00:00:00Z"
+                    },
+                    {
+                      "key": "to",
+                      "value": "2026-01-01T01:00:00Z"
+                    },
+                    {
+                      "key": "limit",
+                      "value": "20"
+                    },
+                    {
+                      "key": "search",
+                      "value": "error"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "qualifiedName",
+                      "description": "(Required) The server's qualified name (e.g. 'namespace/server' or 'namespace' for namespace-only servers). Use %2F to encode the slash."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Forbidden",
+              "code": 403,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": \"Server not found\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "3457e23d-126f-4e9a-bc34-e68bdcf38621",
+              "name": "Server not found",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "servers",
+                    ":qualifiedName",
+                    "logs"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "from",
+                      "value": "2026-01-01T00:00:00Z"
+                    },
+                    {
+                      "key": "to",
+                      "value": "2026-01-01T01:00:00Z"
+                    },
+                    {
+                      "key": "limit",
+                      "value": "20"
+                    },
+                    {
+                      "key": "search",
+                      "value": "error"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "qualifiedName",
+                      "description": "(Required) The server's qualified name (e.g. 'namespace/server' or 'namespace' for namespace-only servers). Use %2F to encode the slash."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": \"Server not found\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "0e16df4e-8638-4177-ab8f-371993dac805",
+              "name": "Internal server error",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "servers",
+                    ":qualifiedName",
+                    "logs"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "from",
+                      "value": "2026-01-01T00:00:00Z"
+                    },
+                    {
+                      "key": "to",
+                      "value": "2026-01-01T01:00:00Z"
+                    },
+                    {
+                      "key": "limit",
+                      "value": "20"
+                    },
+                    {
+                      "key": "search",
+                      "value": "error"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "qualifiedName",
+                      "description": "(Required) The server's qualified name (e.g. 'namespace/server' or 'namespace' for namespace-only servers). Use %2F to encode the slash."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": \"Server not found\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "a43b9f0d-7dd6-4d67-af67-9d474551a8e2",
+          "name": "List secrets",
+          "request": {
+            "name": "List secrets",
+            "description": {
+              "content": "List secret names. Values are not returned.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "servers",
+                ":qualifiedName",
+                "secrets"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "qualifiedName",
+                  "description": "(Required) The server's qualified name (e.g. 'namespace/server' or 'namespace' for namespace-only servers). Use %2F to encode the slash."
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "05b3ca8e-3799-403d-a42a-8a61e4e7cf65",
+              "name": "Secrets listed",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "servers",
+                    ":qualifiedName",
+                    "secrets"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "qualifiedName",
+                      "description": "(Required) The server's qualified name (e.g. 'namespace/server' or 'namespace' for namespace-only servers). Use %2F to encode the slash."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "[\n  {\n    \"name\": \"API_KEY\",\n    \"type\": \"secret_text\"\n  },\n  {\n    \"name\": \"API_KEY\",\n    \"type\": \"secret_text\"\n  }\n]",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "c762c6a4-b51c-47ca-a428-168bb83bf836",
+              "name": "Server not found",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "servers",
+                    ":qualifiedName",
+                    "secrets"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "qualifiedName",
+                      "description": "(Required) The server's qualified name (e.g. 'namespace/server' or 'namespace' for namespace-only servers). Use %2F to encode the slash."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": \"Server not found\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "8fd353a8-8906-4116-b967-52c08cbd3063",
+          "name": "Set a secret",
+          "request": {
+            "name": "Set a secret",
+            "description": {
+              "content": "Create or update a secret value.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "servers",
+                ":qualifiedName",
+                "secrets"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "qualifiedName",
+                  "description": "(Required) The server's qualified name (e.g. 'namespace/server' or 'namespace' for namespace-only servers). Use %2F to encode the slash."
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "PUT",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"name\": \"<string>\",\n  \"value\": \"<string>\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "1dcf5495-5b40-4ea3-b4d6-57ab937ca670",
+              "name": "Secret updated",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "servers",
+                    ":qualifiedName",
+                    "secrets"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "qualifiedName",
+                      "description": "(Required) The server's qualified name (e.g. 'namespace/server' or 'namespace' for namespace-only servers). Use %2F to encode the slash."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "PUT",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"name\": \"<string>\",\n  \"value\": \"<string>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"success\": false\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "4005eea9-db89-4a06-a90c-31b771ad70f5",
+              "name": "Server not found",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "servers",
+                    ":qualifiedName",
+                    "secrets"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "qualifiedName",
+                      "description": "(Required) The server's qualified name (e.g. 'namespace/server' or 'namespace' for namespace-only servers). Use %2F to encode the slash."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "PUT",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"name\": \"<string>\",\n  \"value\": \"<string>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": \"Server not found\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "28e73fdd-2121-4a89-a9f0-08743097686a",
+          "name": "Delete a secret",
+          "request": {
+            "name": "Delete a secret",
+            "description": {
+              "content": "Remove a secret by name.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "servers",
+                ":qualifiedName",
+                "secrets",
+                ":secretName"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "qualifiedName",
+                  "description": "(Required) The server's qualified name (e.g. 'namespace/server' or 'namespace' for namespace-only servers). Use %2F to encode the slash."
+                },
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "secretName",
+                  "description": "(Required) "
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "DELETE",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "66620e7a-8333-434e-b5f6-4aed51d5b9d8",
+              "name": "Secret deleted",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "servers",
+                    ":qualifiedName",
+                    "secrets",
+                    ":secretName"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "qualifiedName",
+                      "description": "(Required) The server's qualified name (e.g. 'namespace/server' or 'namespace' for namespace-only servers). Use %2F to encode the slash."
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "secretName",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "DELETE",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"success\": false\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "2537f31f-67b9-44f6-9e4b-410900868997",
+              "name": "Server not found",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "servers",
+                    ":qualifiedName",
+                    "secrets",
+                    ":secretName"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "qualifiedName",
+                      "description": "(Required) The server's qualified name (e.g. 'namespace/server' or 'namespace' for namespace-only servers). Use %2F to encode the slash."
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "secretName",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "DELETE",
+                "body": {}
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": \"Server not found\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "96383b36-3d06-4fd8-b0b2-efb208cab42d",
+          "name": "Upload server icon",
+          "request": {
+            "name": "Upload server icon",
+            "description": {
+              "content": "Upload or replace the server icon. Accepts a single image file via multipart/form-data. Max 1MB. Supported formats: PNG, JPEG, GIF, SVG, WebP.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "servers",
+                ":qualifiedName",
+                "icon"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "qualifiedName",
+                  "description": "(Required) The server's qualified name (e.g. 'namespace/server' or 'namespace' for namespace-only servers). Use %2F to encode the slash."
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "PUT",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "42c4ba69-a29c-446b-89de-335c31cce625",
+              "name": "Icon uploaded successfully",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "servers",
+                    ":qualifiedName",
+                    "icon"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "qualifiedName",
+                      "description": "(Required) The server's qualified name (e.g. 'namespace/server' or 'namespace' for namespace-only servers). Use %2F to encode the slash."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "PUT",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"iconUrl\": \"https://icons.smithery.ai/server-id.png\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "0f28d3e9-b5db-473b-95f1-39104307acc2",
+              "name": "Bad request (invalid file type, too large, or no file)",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "servers",
+                    ":qualifiedName",
+                    "icon"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "qualifiedName",
+                      "description": "(Required) The server's qualified name (e.g. 'namespace/server' or 'namespace' for namespace-only servers). Use %2F to encode the slash."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "PUT",
+                "body": {}
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": \"File too large\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "d1678715-b4da-463a-b9ec-f69752b8f9a0",
+              "name": "Forbidden (user doesn't own server)",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "servers",
+                    ":qualifiedName",
+                    "icon"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "qualifiedName",
+                      "description": "(Required) The server's qualified name (e.g. 'namespace/server' or 'namespace' for namespace-only servers). Use %2F to encode the slash."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "PUT",
+                "body": {}
+              },
+              "status": "Forbidden",
+              "code": 403,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": \"File too large\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "5b4d5bda-8ba9-4524-9fcd-5b74a3ca7fce",
+              "name": "Server not found",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "servers",
+                    ":qualifiedName",
+                    "icon"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "qualifiedName",
+                      "description": "(Required) The server's qualified name (e.g. 'namespace/server' or 'namespace' for namespace-only servers). Use %2F to encode the slash."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "PUT",
+                "body": {}
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": \"File too large\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "bd818102-1dbc-41f3-9045-b0de2ea1ab7a",
+          "name": "Delete server icon",
+          "request": {
+            "name": "Delete server icon",
+            "description": {
+              "content": "Remove the server's icon.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "servers",
+                ":qualifiedName",
+                "icon"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "qualifiedName",
+                  "description": "(Required) The server's qualified name (e.g. 'namespace/server' or 'namespace' for namespace-only servers). Use %2F to encode the slash."
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "DELETE",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "6d9b632c-5eba-4cac-b0a2-7844b22a8c88",
+              "name": "Icon deleted successfully",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "servers",
+                    ":qualifiedName",
+                    "icon"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "qualifiedName",
+                      "description": "(Required) The server's qualified name (e.g. 'namespace/server' or 'namespace' for namespace-only servers). Use %2F to encode the slash."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "DELETE",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"success\": true\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "af477c4e-16a1-4d51-9bba-fdb5fd44370f",
+              "name": "Forbidden (user doesn't own server)",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "servers",
+                    ":qualifiedName",
+                    "icon"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "qualifiedName",
+                      "description": "(Required) The server's qualified name (e.g. 'namespace/server' or 'namespace' for namespace-only servers). Use %2F to encode the slash."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "DELETE",
+                "body": {}
+              },
+              "status": "Forbidden",
+              "code": 403,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": \"File too large\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "ccf862ca-b89c-4b18-b56d-2fc2ab778698",
+              "name": "Server not found",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "servers",
+                    ":qualifiedName",
+                    "icon"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "qualifiedName",
+                      "description": "(Required) The server's qualified name (e.g. 'namespace/server' or 'namespace' for namespace-only servers). Use %2F to encode the slash."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "DELETE",
+                "body": {}
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": \"File too large\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "37630fbb-c760-428d-a4f9-9caf5ed9c21c",
+          "name": "Get server icon",
+          "request": {
+            "name": "Get server icon",
+            "description": {
+              "content": "Retrieve the server's icon image. Returns the image directly with appropriate content type.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "servers",
+                ":qualifiedName",
+                "icon"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "qualifiedName",
+                  "description": "(Required) The server's qualified name (e.g. 'namespace/server' or 'namespace' for namespace-only servers). Use %2F to encode the slash."
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "image/*"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "a9240a75-8807-4608-9ae5-a95b87f9536e",
+              "name": "Icon image",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "servers",
+                    ":qualifiedName",
+                    "icon"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "qualifiedName",
+                      "description": "(Required) The server's qualified name (e.g. 'namespace/server' or 'namespace' for namespace-only servers). Use %2F to encode the slash."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "image/*"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "image/*"
+                }
+              ],
+              "body": "string",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "081e380c-ee9b-4bc1-957f-c7832d1f333e",
+              "name": "No icon found",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "servers",
+                    ":qualifiedName",
+                    "icon"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "qualifiedName",
+                      "description": "(Required) The server's qualified name (e.g. 'namespace/server' or 'namespace' for namespace-only servers). Use %2F to encode the slash."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": \"File too large\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "b6b0c867-837d-40a9-940c-9dc28a8ad289",
+          "name": "Infer a tool output schema",
+          "request": {
+            "name": "Infer a tool output schema",
+            "description": {
+              "content": "Infer a best-effort Zod schema from recent successful Tinybird tool outputs. All discovered object fields are marked optional.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "servers",
+                ":qualifiedName",
+                "experimental",
+                "tools",
+                ":toolName",
+                "output-schema"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "qualifiedName",
+                  "description": "(Required) The server's qualified name (e.g. 'namespace/server' or 'namespace' for namespace-only servers). Use %2F to encode the slash."
+                },
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "toolName",
+                  "description": "(Required) "
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "69e0a004-75d8-4f2a-b29e-b82858651d76",
+              "name": "Inferred tool output schema",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "servers",
+                    ":qualifiedName",
+                    "experimental",
+                    "tools",
+                    ":toolName",
+                    "output-schema"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "qualifiedName",
+                      "description": "(Required) The server's qualified name (e.g. 'namespace/server' or 'namespace' for namespace-only servers). Use %2F to encode the slash."
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "toolName",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"qualifiedName\": \"smithery-ai/github\",\n  \"toolName\": \"search_repositories\",\n  \"sampleCount\": 25,\n  \"zodSchema\": \"z.object({ \\\"items\\\": z.array(z.object({})).optional() })\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "da6c1e90-2fda-4103-b837-986c36a28f05",
+              "name": "Unauthorized",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "servers",
+                    ":qualifiedName",
+                    "experimental",
+                    "tools",
+                    ":toolName",
+                    "output-schema"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "qualifiedName",
+                      "description": "(Required) The server's qualified name (e.g. 'namespace/server' or 'namespace' for namespace-only servers). Use %2F to encode the slash."
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "toolName",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": \"No output samples found\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "3f780376-d73b-4e22-ad59-e45f38bb2616",
+              "name": "Forbidden",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "servers",
+                    ":qualifiedName",
+                    "experimental",
+                    "tools",
+                    ":toolName",
+                    "output-schema"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "qualifiedName",
+                      "description": "(Required) The server's qualified name (e.g. 'namespace/server' or 'namespace' for namespace-only servers). Use %2F to encode the slash."
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "toolName",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Forbidden",
+              "code": 403,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": \"No output samples found\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "cb338328-7e99-4c87-a0d7-0c05307018ab",
+              "name": "No output samples found",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "servers",
+                    ":qualifiedName",
+                    "experimental",
+                    "tools",
+                    ":toolName",
+                    "output-schema"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "qualifiedName",
+                      "description": "(Required) The server's qualified name (e.g. 'namespace/server' or 'namespace' for namespace-only servers). Use %2F to encode the slash."
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "toolName",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": \"No output samples found\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "5a37c5c1-9027-4659-93c7-e319cd509f49",
+              "name": "Tinybird is not configured",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "servers",
+                    ":qualifiedName",
+                    "experimental",
+                    "tools",
+                    ":toolName",
+                    "output-schema"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "qualifiedName",
+                      "description": "(Required) The server's qualified name (e.g. 'namespace/server' or 'namespace' for namespace-only servers). Use %2F to encode the slash."
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "toolName",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Service Unavailable",
+              "code": 503,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": \"No output samples found\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "b070ab04-55ae-483e-98f6-0d02ce3531a6",
+          "name": "List all servers",
+          "request": {
+            "name": "List all servers",
+            "description": {
+              "content": "Search and browse public MCP servers in the Smithery registry. Supports full-text and semantic search via the `q` parameter, and filtering by deployment status, verification, ownership, and more.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "servers"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "q",
+                  "value": "<string>",
+                  "description": "Search query for full-text and semantic search across server names and descriptions."
+                },
+                {
+                  "disabled": false,
+                  "key": "page",
+                  "value": "<integer>",
+                  "description": "Page number (1-indexed)."
+                },
+                {
+                  "disabled": false,
+                  "key": "pageSize",
+                  "value": "<integer>",
+                  "description": "Number of results per page (default 10, max 100)."
+                },
+                {
+                  "disabled": false,
+                  "key": "topK",
+                  "value": "<integer>",
+                  "description": "Maximum number of candidate results to consider from the search index before pagination. The server applies a hard cap of 500 to keep the rerank window bounded; pass `seed` for stable deep pagination."
+                },
+                {
+                  "disabled": false,
+                  "key": "fields",
+                  "value": "<string>",
+                  "description": "Comma-separated list of fields to include in response"
+                },
+                {
+                  "disabled": false,
+                  "key": "ids",
+                  "value": "<uuid>",
+                  "description": "Filter by specific server IDs."
+                },
+                {
+                  "disabled": false,
+                  "key": "ids",
+                  "value": "<uuid>",
+                  "description": "Filter by specific server IDs."
+                },
+                {
+                  "disabled": false,
+                  "key": "qualifiedName",
+                  "value": "<string>",
+                  "description": "Exact match on the server's qualified name (e.g. \"smithery/hello-world\"). Deprecated: use GET /servers/:namespace/:server instead."
+                },
+                {
+                  "disabled": false,
+                  "key": "namespace",
+                  "value": "<string>",
+                  "description": "Filter by the namespace that owns the server."
+                },
+                {
+                  "disabled": false,
+                  "key": "remote",
+                  "value": "<string>",
+                  "description": "Filter by remote status. Remote servers are accessed via URL; non-remote servers run locally via stdio."
+                },
+                {
+                  "disabled": false,
+                  "key": "isDeployed",
+                  "value": "<string>",
+                  "description": "Filter by deployment status. Deployed servers are hosted on Smithery infrastructure."
+                },
+                {
+                  "disabled": false,
+                  "key": "verified",
+                  "value": "<string>",
+                  "description": "Filter to only verified servers."
+                },
+                {
+                  "disabled": false,
+                  "key": "smitheryManaged",
+                  "value": "<string>",
+                  "description": "Filter to servers whose namespace is owned by the Smithery org."
+                },
+                {
+                  "disabled": false,
+                  "key": "ownerId",
+                  "value": "<string>",
+                  "description": "Filter by the server owner's user ID."
+                },
+                {
+                  "disabled": false,
+                  "key": "repoOwner",
+                  "value": "<string>",
+                  "description": "Filter by GitHub repository owner from repository_url."
+                },
+                {
+                  "disabled": false,
+                  "key": "repoName",
+                  "value": "<string>",
+                  "description": "Filter by GitHub repository name from repository_url."
+                },
+                {
+                  "disabled": false,
+                  "key": "seed",
+                  "value": "<integer>",
+                  "description": "Random seed for deterministic pagination. When provided, results use a stable sort order that is consistent across pages for the same seed value."
+                }
+              ],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "cfe1e8d2-28f5-4457-8e8e-f7cd7bb32c85",
+              "name": "Successful response",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "servers"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "q",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "page",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "pageSize",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "topK",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "fields",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "ids",
+                      "value": "<uuid>"
+                    },
+                    {
+                      "key": "ids",
+                      "value": "<uuid>"
+                    },
+                    {
+                      "key": "qualifiedName",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "namespace",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "remote",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "isDeployed",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "verified",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "smitheryManaged",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "ownerId",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "repoOwner",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "repoName",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "seed",
+                      "value": "<integer>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"servers\": [\n    {\n      \"id\": \"abc123\",\n      \"qualifiedName\": \"smithery/hello-world\",\n      \"namespace\": \"string\",\n      \"slug\": \"string\",\n      \"displayName\": \"Hello World\",\n      \"description\": \"A simple hello world server\",\n      \"iconUrl\": \"string\",\n      \"verified\": true,\n      \"useCount\": 42,\n      \"remote\": false,\n      \"isDeployed\": true,\n      \"createdAt\": \"2024-01-01T00:00:00.000Z\",\n      \"homepage\": \"https://example.com\",\n      \"bySmithery\": false,\n      \"owner\": \"string\",\n      \"score\": 4048.8599066185147\n    },\n    {\n      \"id\": \"abc123\",\n      \"qualifiedName\": \"smithery/hello-world\",\n      \"namespace\": \"string\",\n      \"slug\": \"string\",\n      \"displayName\": \"Hello World\",\n      \"description\": \"A simple hello world server\",\n      \"iconUrl\": \"string\",\n      \"verified\": true,\n      \"useCount\": 42,\n      \"remote\": true,\n      \"isDeployed\": true,\n      \"createdAt\": \"2024-01-01T00:00:00.000Z\",\n      \"homepage\": \"https://example.com\",\n      \"bySmithery\": false,\n      \"owner\": \"string\",\n      \"score\": 7572.537637174418\n    }\n  ],\n  \"pagination\": {\n    \"currentPage\": 1,\n    \"pageSize\": 10,\n    \"totalPages\": 5,\n    \"totalCount\": 42\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "8291f211-86ca-4579-b17a-43b35fa7dd4e",
+              "name": "Bad request",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "servers"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "q",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "page",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "pageSize",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "topK",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "fields",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "ids",
+                      "value": "<uuid>"
+                    },
+                    {
+                      "key": "ids",
+                      "value": "<uuid>"
+                    },
+                    {
+                      "key": "qualifiedName",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "namespace",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "remote",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "isDeployed",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "verified",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "smitheryManaged",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "ownerId",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "repoOwner",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "repoName",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "seed",
+                      "value": "<integer>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": \"Server not found\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "844a3567-e180-42d1-9124-846416a4da50",
+              "name": "Unauthorized",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "servers"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "q",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "page",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "pageSize",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "topK",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "fields",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "ids",
+                      "value": "<uuid>"
+                    },
+                    {
+                      "key": "ids",
+                      "value": "<uuid>"
+                    },
+                    {
+                      "key": "qualifiedName",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "namespace",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "remote",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "isDeployed",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "verified",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "smitheryManaged",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "ownerId",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "repoOwner",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "repoName",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "seed",
+                      "value": "<integer>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": \"Server not found\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "f8cf4143-433a-4142-80e1-78a6c01db938",
+              "name": "Unprocessable entity",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "servers"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "q",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "page",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "pageSize",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "topK",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "fields",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "ids",
+                      "value": "<uuid>"
+                    },
+                    {
+                      "key": "ids",
+                      "value": "<uuid>"
+                    },
+                    {
+                      "key": "qualifiedName",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "namespace",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "remote",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "isDeployed",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "verified",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "smitheryManaged",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "ownerId",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "repoOwner",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "repoName",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "seed",
+                      "value": "<integer>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Unprocessable Entity (WebDAV) (RFC 4918)",
+              "code": 422,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": \"Server not found\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "type": "string",
+      "value": "https://api.smithery.ai",
+      "key": "baseUrl"
+    }
+  ],
+  "auth": {
+    "type": "bearer",
+    "bearer": [
+      {
+        "key": "token",
+        "value": "{{bearerToken}}"
+      }
+    ]
+  },
+  "info": {
+    "_postman_id": "7a389894-cc62-4c82-b49a-fa4e5c745657",
+    "name": "Smithery Platform connect servers API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "API for the Smithery platform — discover, deploy, and manage MCP (Model Context Protocol) servers. Provides endpoints for browsing the server registry, managing deployments, creating scoped access tokens, and connecting to MCP servers.",
+      "type": "text/plain"
+    }
+  }
+}

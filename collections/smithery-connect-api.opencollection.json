@@ -1,0 +1,576 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Smithery Platform connect API",
+    "version": "1.0.0"
+  },
+  "request": {
+    "auth": {
+      "type": "bearer",
+      "token": "{{bearerToken}}"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "connect",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "List connections",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.smithery.ai/connect/:namespace",
+            "params": [
+              {
+                "name": "limit",
+                "value": "",
+                "type": "query",
+                "description": "Maximum number of items to return (default 100, max 100)"
+              },
+              {
+                "name": "cursor",
+                "value": "",
+                "type": "query",
+                "description": "Pagination cursor from previous response's nextCursor"
+              },
+              {
+                "name": "name",
+                "value": "",
+                "type": "query",
+                "description": "Filter by exact connection name"
+              },
+              {
+                "name": "mcpUrl",
+                "value": "",
+                "type": "query",
+                "description": "Filter by exact MCP server URL"
+              },
+              {
+                "name": "namespace",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "List all connections in a namespace. Supports filtering by metadata using `metadata.{key}={value}` query params."
+        },
+        {
+          "info": {
+            "name": "Create connection",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.smithery.ai/connect/:namespace",
+            "params": [
+              {
+                "name": "namespace",
+                "value": "",
+                "type": "path"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Create a new MCP connection with an auto-generated ID. Requires API key and namespace ownership."
+        },
+        {
+          "info": {
+            "name": "List triggers",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.smithery.ai/connect/:namespace/:connectionId/.triggers",
+            "params": [
+              {
+                "name": "namespace",
+                "value": "",
+                "type": "path"
+              },
+              {
+                "name": "connectionId",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "List trigger types exposed by a connection."
+        },
+        {
+          "info": {
+            "name": "Get trigger",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.smithery.ai/connect/:namespace/:connectionId/.triggers/:triggerName",
+            "params": [
+              {
+                "name": "namespace",
+                "value": "",
+                "type": "path"
+              },
+              {
+                "name": "connectionId",
+                "value": "",
+                "type": "path"
+              },
+              {
+                "name": "triggerName",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "Get the schema for a single trigger type."
+        },
+        {
+          "info": {
+            "name": "Subscribe to trigger",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.smithery.ai/connect/:namespace/:connectionId/.triggers/:triggerName",
+            "params": [
+              {
+                "name": "namespace",
+                "value": "",
+                "type": "path"
+              },
+              {
+                "name": "connectionId",
+                "value": "",
+                "type": "path"
+              },
+              {
+                "name": "triggerName",
+                "value": "",
+                "type": "path"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Subscribe to (or refresh) a trigger. Supplying the same (params, delivery.url) refreshes the TTL and may rotate the secret."
+        },
+        {
+          "info": {
+            "name": "Unsubscribe from trigger",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://api.smithery.ai/connect/:namespace/:connectionId/.triggers/:triggerName",
+            "params": [
+              {
+                "name": "namespace",
+                "value": "",
+                "type": "path"
+              },
+              {
+                "name": "connectionId",
+                "value": "",
+                "type": "path"
+              },
+              {
+                "name": "triggerName",
+                "value": "",
+                "type": "path"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Unsubscribe by subscription key (params + delivery.url). Eager teardown — subscriptions also expire naturally on TTL."
+        },
+        {
+          "info": {
+            "name": "Get connection",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.smithery.ai/connect/:namespace/:connectionId",
+            "params": [
+              {
+                "name": "namespace",
+                "value": "",
+                "type": "path"
+              },
+              {
+                "name": "connectionId",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "Get details for a specific connection. Requires service token with connections:read scope."
+        },
+        {
+          "info": {
+            "name": "Create or update connection",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "https://api.smithery.ai/connect/:namespace/:connectionId",
+            "params": [
+              {
+                "name": "namespace",
+                "value": "",
+                "type": "path"
+              },
+              {
+                "name": "connectionId",
+                "value": "",
+                "type": "path"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Create or update an MCP connection with the given ID. mcpUrl is required when creating a new connection, but optional when updating. Returns 409 if a different mcpUrl is provided, except while the connection is input_required and the new URL keeps the same host and path."
+        },
+        {
+          "info": {
+            "name": "Delete connection",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://api.smithery.ai/connect/:namespace/:connectionId",
+            "params": [
+              {
+                "name": "namespace",
+                "value": "",
+                "type": "path"
+              },
+              {
+                "name": "connectionId",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "Delete a connection and terminate its MCP session. Requires API key and namespace ownership."
+        },
+        {
+          "info": {
+            "name": "List tools across a namespace",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.smithery.ai/connect/:namespace/.tools",
+            "params": [
+              {
+                "name": "namespace",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "List tools for every connection in a namespace in one response. Each connection is wrapped in an envelope so a failure on one upstream doesn't fail the request. Skips connections in `auth_required`/`input_required` states without calling the upstream."
+        },
+        {
+          "info": {
+            "name": "List tools",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.smithery.ai/connect/:namespace/:connectionId/.tools",
+            "params": [
+              {
+                "name": "namespace",
+                "value": "",
+                "type": "path"
+              },
+              {
+                "name": "connectionId",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "List tools exposed by a connection."
+        },
+        {
+          "info": {
+            "name": "Get tool",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.smithery.ai/connect/:namespace/:connectionId/.tools/:toolPath",
+            "params": [
+              {
+                "name": "namespace",
+                "value": "",
+                "type": "path"
+              },
+              {
+                "name": "connectionId",
+                "value": "",
+                "type": "path"
+              },
+              {
+                "name": "toolPath",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "Get one tool or list tools under a slash-separated category."
+        },
+        {
+          "info": {
+            "name": "Call tool",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.smithery.ai/connect/:namespace/:connectionId/.tools/:toolPath",
+            "params": [
+              {
+                "name": "namespace",
+                "value": "",
+                "type": "path"
+              },
+              {
+                "name": "connectionId",
+                "value": "",
+                "type": "path"
+              },
+              {
+                "name": "toolPath",
+                "value": "",
+                "type": "path"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Invoke a tool with JSON arguments."
+        },
+        {
+          "info": {
+            "name": "List namespace subscriptions",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.smithery.ai/connect/:namespace/.subscriptions",
+            "params": [
+              {
+                "name": "namespace",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "List namespace-scoped trigger subscriptions for all connections in the namespace."
+        },
+        {
+          "info": {
+            "name": "Create namespace subscription",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.smithery.ai/connect/:namespace/.subscriptions",
+            "params": [
+              {
+                "name": "namespace",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "Create a namespace-scoped subscription that receives events from every connection in the namespace."
+        },
+        {
+          "info": {
+            "name": "Delete namespace subscription",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://api.smithery.ai/connect/:namespace/.subscriptions/:subscriptionId",
+            "params": [
+              {
+                "name": "namespace",
+                "value": "",
+                "type": "path"
+              },
+              {
+                "name": "subscriptionId",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "Delete a namespace-scoped trigger subscription."
+        },
+        {
+          "info": {
+            "name": "Get trigger instance",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.smithery.ai/connect/:namespace/:connectionId/.triggers/:triggerName/:triggerId",
+            "params": [
+              {
+                "name": "namespace",
+                "value": "",
+                "type": "path"
+              },
+              {
+                "name": "connectionId",
+                "value": "",
+                "type": "path"
+              },
+              {
+                "name": "triggerName",
+                "value": "",
+                "type": "path"
+              },
+              {
+                "name": "triggerId",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "Get a specific trigger instance for a connection."
+        },
+        {
+          "info": {
+            "name": "Delete trigger instance",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://api.smithery.ai/connect/:namespace/:connectionId/.triggers/:triggerName/:triggerId",
+            "params": [
+              {
+                "name": "namespace",
+                "value": "",
+                "type": "path"
+              },
+              {
+                "name": "connectionId",
+                "value": "",
+                "type": "path"
+              },
+              {
+                "name": "triggerName",
+                "value": "",
+                "type": "path"
+              },
+              {
+                "name": "triggerId",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "Delete a trigger instance and deregister its upstream webhook."
+        },
+        {
+          "info": {
+            "name": "List connection subscriptions",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.smithery.ai/connect/:namespace/:connectionId/.subscriptions",
+            "params": [
+              {
+                "name": "namespace",
+                "value": "",
+                "type": "path"
+              },
+              {
+                "name": "connectionId",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "List trigger subscriptions scoped to a single connection."
+        },
+        {
+          "info": {
+            "name": "Create connection subscription",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.smithery.ai/connect/:namespace/:connectionId/.subscriptions",
+            "params": [
+              {
+                "name": "namespace",
+                "value": "",
+                "type": "path"
+              },
+              {
+                "name": "connectionId",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "Create a connection-scoped subscription that receives events from one connection."
+        },
+        {
+          "info": {
+            "name": "Delete connection subscription",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://api.smithery.ai/connect/:namespace/:connectionId/.subscriptions/:subscriptionId",
+            "params": [
+              {
+                "name": "namespace",
+                "value": "",
+                "type": "path"
+              },
+              {
+                "name": "connectionId",
+                "value": "",
+                "type": "path"
+              },
+              {
+                "name": "subscriptionId",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "Delete a connection-scoped trigger subscription."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

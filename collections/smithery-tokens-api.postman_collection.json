@@ -1,0 +1,293 @@
+{
+  "item": [
+    {
+      "id": "2fe10634-c061-4830-9552-6d8c03f12125",
+      "name": "tokens",
+      "description": {
+        "content": "",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "5938be12-68aa-463b-b14c-c0a20c7d2bdc",
+          "name": "Create a service token",
+          "request": {
+            "name": "Create a service token",
+            "description": {
+              "content": "Create a service token for machine-to-machine authentication. Accepts API key or bearer token. Optionally apply restrictions.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "tokens"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"policy\": [\n    {\n      \"namespaces\": \"<string>\",\n      \"resources\": \"<string>\",\n      \"operations\": \"<string>\",\n      \"metadata\": {\n        \"key_0\": \"<string>\",\n        \"key_1\": \"<string>\"\n      },\n      \"ttl\": \"<string>\",\n      \"rpcReqMatch\": {\n        \"key_0\": \"<string>\"\n      }\n    }\n  ],\n  \"organizationId\": \"<string>\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "e449776c-c5ae-424b-8011-cf7d51656277",
+              "name": "Token created successfully",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "tokens"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"policy\": [\n    {\n      \"namespaces\": \"string\",\n      \"resources\": \"connections\",\n      \"operations\": \"write\",\n      \"metadata\": {\n        \"key_0\": \"string\",\n        \"key_1\": \"string\"\n      },\n      \"ttl\": \"string\",\n      \"rpcReqMatch\": {\n        \"params.name\": \"^(create_issue|search_issues)$\"\n      }\n    }\n  ],\n  \"organizationId\": \"org_01H1234567890\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"token\": \"string\",\n  \"expiresAt\": \"2024-01-01T01:00:00.000Z\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "a5fcebf4-2c32-48b5-9446-f0e3b7934493",
+              "name": "Bad request (invalid parameters)",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "tokens"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"policy\": [\n    {\n      \"namespaces\": \"string\",\n      \"resources\": \"connections\",\n      \"operations\": \"write\",\n      \"metadata\": {\n        \"key_0\": \"string\",\n        \"key_1\": \"string\"\n      },\n      \"ttl\": \"string\",\n      \"rpcReqMatch\": {\n        \"params.name\": \"^(create_issue|search_issues)$\"\n      }\n    }\n  ],\n  \"organizationId\": \"org_01H1234567890\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": \"unauthorized\",\n  \"message\": \"Invalid API key\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "5f25b823-a57c-4a51-aa67-67251e34e52e",
+              "name": "Unauthorized (missing or invalid credentials)",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "tokens"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"policy\": [\n    {\n      \"namespaces\": \"string\",\n      \"resources\": \"connections\",\n      \"operations\": \"write\",\n      \"metadata\": {\n        \"key_0\": \"string\",\n        \"key_1\": \"string\"\n      },\n      \"ttl\": \"string\",\n      \"rpcReqMatch\": {\n        \"params.name\": \"^(create_issue|search_issues)$\"\n      }\n    }\n  ],\n  \"organizationId\": \"org_01H1234567890\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": \"unauthorized\",\n  \"message\": \"Invalid API key\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "dd46fcb1-bcac-420f-a312-c883a829da92",
+              "name": "Forbidden",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "tokens"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"policy\": [\n    {\n      \"namespaces\": \"string\",\n      \"resources\": \"connections\",\n      \"operations\": \"write\",\n      \"metadata\": {\n        \"key_0\": \"string\",\n        \"key_1\": \"string\"\n      },\n      \"ttl\": \"string\",\n      \"rpcReqMatch\": {\n        \"params.name\": \"^(create_issue|search_issues)$\"\n      }\n    }\n  ],\n  \"organizationId\": \"org_01H1234567890\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Forbidden",
+              "code": 403,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": \"unauthorized\",\n  \"message\": \"Invalid API key\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "type": "string",
+      "value": "https://api.smithery.ai",
+      "key": "baseUrl"
+    }
+  ],
+  "auth": {
+    "type": "bearer",
+    "bearer": [
+      {
+        "key": "token",
+        "value": "{{bearerToken}}"
+      }
+    ]
+  },
+  "info": {
+    "_postman_id": "71f3f913-3503-4fd1-8804-cca406a3d444",
+    "name": "Smithery Platform connect tokens API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "API for the Smithery platform — discover, deploy, and manage MCP (Model Context Protocol) servers. Provides endpoints for browsing the server registry, managing deployments, creating scoped access tokens, and connecting to MCP servers.",
+      "type": "text/plain"
+    }
+  }
+}
