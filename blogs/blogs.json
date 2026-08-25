@@ -3,14 +3,10 @@
   "feeds": [
     {
       "source": "https://smithery.ai/blog",
-      "feed_url": "https://smithery.ai/blog",
-      "title": "",
-      "saved": 0,
-      "method": "none",
-      "error": "fetch_failed: HTTPError"
+      "error": "HTTPError"
     }
   ],
   "post_count": 0,
-  "fetched": "2026-08-15T12:11:08Z",
+  "fetched": "2026-08-22T20:20:02Z",
   "agent_pulled": "2026-07-04"
 }
