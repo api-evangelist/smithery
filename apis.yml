@@ -223,7 +223,7 @@ apis:
   humanURL: https://smithery.ai/docs
   baseURL: https://api.smithery.ai
   tags:
-  - Namespaces
+  - namespaces
   tags_raw:
   - namespaces
   properties:
