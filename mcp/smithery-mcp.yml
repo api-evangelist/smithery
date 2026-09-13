@@ -1,0 +1,21 @@
+generated: '2026-09-11'
+method: probed
+source: https://mcp.smithery.run
+status: gated
+server:
+  name: smithery
+  transport: http
+  url: https://mcp.smithery.ai/mcp
+deployment:
+  mode: remote
+  endpoint: https://mcp.smithery.ai/mcp
+  verified: probed
+  probe: gated
+  checked: '2026-09-11'
+  source: ptr_only reconciliation 2026-09-11 (apis.yml pointed here, no manifest existed)
+  probe_why: RFC 9728 challenge (host-wide OAuth-protected resource)
+tools_note: No tool list captured. This manifest records a PROBED, reachable endpoint only; anonymous
+  tools/list was auth-gated or the server requires an initialize handshake this reachability probe does
+  not perform. Run signals/audit_mcp_authorship.py --probe to enumerate tools and settle platform-vs-provider
+  authorship. Do NOT derive a tool list from the OpenAPI and store it here -- that is a candidate manifest,
+  and it belongs under an X-MCPServerCandidate pointer.
