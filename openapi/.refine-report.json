@@ -1,30 +1,63 @@
 {
   "provider": "smithery",
   "sources": [
-    "smithery-connect-api-openapi.yml",
-    "smithery-connect-mcp-api-openapi.yml",
-    "smithery-domains-api-openapi.yml",
-    "smithery-health-api-openapi.yml",
-    "smithery-namespaces-api-openapi.yml",
-    "smithery-organizations-api-openapi.yml",
-    "smithery-servers-api-openapi.yml",
-    "smithery-skills-api-openapi.yml",
-    "smithery-tokens-api-openapi.yml"
+    "_original/smithery-documented-openapi.yml",
+    "_original/smithery-openapi.json"
   ],
   "outputs": [
-    "smithery-connect-api-openapi.yml",
-    "smithery-connect-mcp-api-openapi.yml",
-    "smithery-domains-api-openapi.yml",
     "smithery-health-api-openapi.yml",
+    "smithery-connect-api-openapi.yml",
+    "smithery-domains-api-openapi.yml",
     "smithery-namespaces-api-openapi.yml",
     "smithery-organizations-api-openapi.yml",
     "smithery-servers-api-openapi.yml",
     "smithery-skills-api-openapi.yml",
-    "smithery-tokens-api-openapi.yml"
+    "smithery-tokens-api-openapi.yml",
+    "smithery-connect-mcp-api-openapi.yml"
   ],
   "archived": [],
-  "errors": [],
+  "errors": [
+    "smithery-openapi.json: dangling $ref: #/components/schemas/TeamApiKey"
+  ],
   "warnings": [],
-  "notes": [],
-  "skipped": []
+  "notes": [
+    "sourced from openapi/_original/ (2 archived document(s)); previously refined output at the top level was skipped rather than re-split",
+    "smithery-documented-openapi.yml: upgraded openapi 3.1.0 -> OpenAPI 3.2.0",
+    "smithery-documented-openapi.yml: tagged paths GET /health -> Health",
+    "smithery-documented-openapi.yml: declared missing tag: Health",
+    "smithery-documented-openapi.yml: declared missing tag: connect",
+    "smithery-documented-openapi.yml: declared missing tag: domains",
+    "smithery-documented-openapi.yml: declared missing tag: namespaces",
+    "smithery-documented-openapi.yml: declared missing tag: organizations",
+    "smithery-documented-openapi.yml: declared missing tag: tokens",
+    "smithery-openapi.json: upgraded openapi 3.1.0 -> OpenAPI 3.2.0",
+    "smithery-openapi.json: tagged paths GET /health -> Health",
+    "smithery-openapi.json: declared missing tag: Health",
+    "smithery-openapi.json: declared missing tag: connect",
+    "smithery-openapi.json: declared missing tag: connect.mcp",
+    "smithery-openapi.json: declared missing tag: domains",
+    "smithery-openapi.json: declared missing tag: namespaces",
+    "smithery-openapi.json: declared missing tag: organizations",
+    "smithery-openapi.json: declared missing tag: tokens",
+    "tag 'Health' spans 2 source specs (smithery-documented-openapi.yml, smithery-openapi.json): per-path servers applied",
+    "tag 'connect' spans 2 source specs (smithery-documented-openapi.yml, smithery-openapi.json): per-path servers applied",
+    "tag 'domains' spans 2 source specs (smithery-documented-openapi.yml, smithery-openapi.json): per-path servers applied",
+    "tag 'namespaces' spans 2 source specs (smithery-documented-openapi.yml, smithery-openapi.json): per-path servers applied",
+    "tag 'organizations' spans 2 source specs (smithery-documented-openapi.yml, smithery-openapi.json): per-path servers applied",
+    "tag 'servers' spans 2 source specs (smithery-documented-openapi.yml, smithery-openapi.json): per-path servers applied",
+    "tag 'skills' spans 2 source specs (smithery-documented-openapi.yml, smithery-openapi.json): per-path servers applied",
+    "tag 'tokens' spans 2 source specs (smithery-documented-openapi.yml, smithery-openapi.json): per-path servers applied",
+    "apis.yml register: already-registered"
+  ],
+  "skipped": [
+    "smithery-connect-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "smithery-connect-mcp-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "smithery-domains-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "smithery-health-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "smithery-namespaces-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "smithery-organizations-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "smithery-servers-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "smithery-skills-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "smithery-tokens-api-openapi.yml: previously refined output, superseded by openapi/_original/"
+  ]
 }

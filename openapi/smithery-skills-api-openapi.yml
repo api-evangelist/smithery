@@ -1,21 +1,21 @@
-openapi: 3.1.0
+openapi: 3.2.0
 info:
-  title: Smithery Platform connect skills API
-  description: API for the Smithery platform — discover, deploy, and manage MCP (Model Context Protocol) servers. Provides endpoints for browsing the server registry, managing deployments, creating scoped access tokens, and connecting to MCP servers.
+  title: Smithery Skills API
   version: 1.0.0
+  description: 'Operations tagged skills across 2 of this provider''s published API definitions: smithery-documented-openapi.yml, smithery-openapi.json. Each path carries the servers of the definition it was published in.'
 servers:
 - url: https://api.smithery.ai
 security:
 - bearerAuth: []
 tags:
-- name: skills
+- name: Skills
   description: Discover and search reusable prompt-based skills for MCP servers
 paths:
   /skills:
     get:
       operationId: getSkills
       tags:
-      - skills
+      - Skills
       summary: List or search skills
       description: Search and browse reusable prompt-based skills. Supports full-text and semantic search via the `q` parameter, and filtering by category, namespace, or slug.
       responses:
@@ -101,7 +101,7 @@ paths:
     post:
       operationId: postSkills
       tags:
-      - skills
+      - Skills
       summary: Create a new skill (deprecated)
       description: '**Deprecated:** Use PUT /skills/{namespace}/{slug} instead. Create a new skill by linking a GitHub repository containing a SKILL.md file.'
       deprecated: true
@@ -222,11 +222,13 @@ paths:
       x-codeSamples:
       - lang: JavaScript
         source: "import Smithery from '@smithery/api';\n\nconst client = new Smithery({\n  apiKey: process.env['SMITHERY_API_KEY'], // This is the default and can be omitted\n});\n\nconst skill = await client.skills.create({\n  gitUrl: 'https://example.com',\n  namespace: 'x',\n  slug: 'slug',\n});\n\nconsole.log(skill.id);"
+    servers:
+    - url: https://api.smithery.ai
   /skills/{namespace}/{slug}:
     get:
       operationId: getSkills:namespace:slug
       tags:
-      - skills
+      - Skills
       summary: Get a skill
       description: Get a single skill by its namespace and slug.
       responses:
@@ -332,7 +334,7 @@ paths:
     put:
       operationId: putSkills:namespace:slug
       tags:
-      - skills
+      - Skills
       summary: Create or update a skill
       description: Idempotent endpoint to create or update a GitHub-backed skill. Send application/json with `gitUrl`.
       requestBody:
@@ -511,7 +513,7 @@ paths:
     delete:
       operationId: deleteSkills:namespace:slug
       tags:
-      - skills
+      - Skills
       summary: Delete a skill
       description: Delete a skill by namespace and slug. Requires ownership of the namespace.
       responses:
@@ -568,11 +570,13 @@ paths:
       x-codeSamples:
       - lang: JavaScript
         source: "import Smithery from '@smithery/api';\n\nconst client = new Smithery({\n  apiKey: process.env['SMITHERY_API_KEY'], // This is the default and can be omitted\n});\n\nconst skill = await client.skills.delete('slug', { namespace: 'namespace' });\n\nconsole.log(skill.qualifiedName);"
+    servers:
+    - url: https://api.smithery.ai
   /skills/{namespace}/{slug}/download:
     get:
       operationId: getSkills:namespace:slugDownload
       tags:
-      - skills
+      - Skills
       summary: Download skill bundle
       description: Download a ZIP bundle containing all skill files.
       responses:
@@ -610,11 +614,13 @@ paths:
       x-codeSamples:
       - lang: JavaScript
         source: "import Smithery from '@smithery/api';\n\nconst client = new Smithery({\n  apiKey: process.env['SMITHERY_API_KEY'], // This is the default and can be omitted\n});\n\nconst response = await client.skills.download('slug', { namespace: 'namespace' });\n\nconsole.log(response);\n\nconst content = await response.blob();\nconsole.log(content);"
+    servers:
+    - url: https://api.smithery.ai
   /skills/{namespace}/{slug}/sync:
     post:
       operationId: postSkills:namespace:slugSync
       tags:
-      - skills
+      - Skills
       summary: Sync skill metadata from GitHub (deprecated)
       description: '**Deprecated:** Use PUT /skills/{namespace}/{slug} instead. Refetch SKILL.md and repository stars from GitHub and update the skill record.'
       deprecated: true
@@ -705,11 +711,13 @@ paths:
       x-codeSamples:
       - lang: JavaScript
         source: "import Smithery from '@smithery/api';\n\nconst client = new Smithery({\n  apiKey: process.env['SMITHERY_API_KEY'], // This is the default and can be omitted\n});\n\nconst response = await client.skills.sync('slug', { namespace: 'namespace' });\n\nconsole.log(response.id);"
+    servers:
+    - url: https://api.smithery.ai
   /skills/{namespace}/{slug}/upload:
     put:
       operationId: putSkills:namespace:slugUpload
       tags:
-      - skills
+      - Skills
       summary: Upload a skill bundle
       description: Upload or replace a skill bundle via multipart/form-data with an `archive` file.
       requestBody:
@@ -893,6 +901,8 @@ paths:
       x-codeSamples:
       - lang: JavaScript
         source: "import fs from 'fs';\nimport Smithery from '@smithery/api';\n\nconst client = new Smithery({\n  apiKey: process.env['SMITHERY_API_KEY'], // This is the default and can be omitted\n});\n\nconst response = await client.skills.upload('slug', {\n  namespace: 'namespace',\n  archive: fs.createReadStream('path/to/file'),\n});\n\nconsole.log(response.id);"
+    servers:
+    - url: https://api.smithery.ai
 components:
   schemas:
     SkillsListError:
@@ -902,6 +912,46 @@ components:
           type: string
       required:
       - error
+      additionalProperties: false
+    SkillsListResponse:
+      type: object
+      properties:
+        skills:
+          type: array
+          items:
+            $ref: '#/components/schemas/SkillSummary'
+        pagination:
+          type: object
+          properties:
+            currentPage:
+              type: integer
+              minimum: -9007199254740991
+              maximum: 9007199254740991
+              description: Current page number (1-indexed).
+            pageSize:
+              type: integer
+              minimum: -9007199254740991
+              maximum: 9007199254740991
+              description: Number of results per page.
+            totalPages:
+              type: integer
+              minimum: -9007199254740991
+              maximum: 9007199254740991
+              description: Total number of pages available.
+            totalCount:
+              type: integer
+              minimum: -9007199254740991
+              maximum: 9007199254740991
+              description: Total number of matching skills.
+          required:
+          - currentPage
+          - pageSize
+          - totalPages
+          - totalCount
+          additionalProperties: false
+      required:
+      - skills
+      - pagination
       additionalProperties: false
     SkillSummary:
       type: object
@@ -975,48 +1025,11 @@ components:
       - createdAt
       additionalProperties: false
       id: SkillSummary
-    SkillsListResponse:
-      type: object
-      properties:
-        skills:
-          type: array
-          items:
-            $ref: '#/components/schemas/SkillSummary'
-        pagination:
-          type: object
-          properties:
-            currentPage:
-              type: integer
-              minimum: -9007199254740991
-              maximum: 9007199254740991
-              description: Current page number (1-indexed).
-            pageSize:
-              type: integer
-              minimum: -9007199254740991
-              maximum: 9007199254740991
-              description: Number of results per page.
-            totalPages:
-              type: integer
-              minimum: -9007199254740991
-              maximum: 9007199254740991
-              description: Total number of pages available.
-            totalCount:
-              type: integer
-              minimum: -9007199254740991
-              maximum: 9007199254740991
-              description: Total number of matching skills.
-          required:
-          - currentPage
-          - pageSize
-          - totalPages
-          - totalCount
-          additionalProperties: false
-      required:
-      - skills
-      - pagination
-      additionalProperties: false
   securitySchemes:
     bearerAuth:
       type: http
       scheme: bearer
       description: Smithery API key as Bearer token
+x-refined-from:
+- smithery-documented-openapi.yml
+- smithery-openapi.json
