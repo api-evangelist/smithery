@@ -419,6 +419,8 @@ apis:
   - type: FinOps
     url: finops/smithery-finops.yml
 common:
+  - type: VendorFacets
+    url: vendor-facets/smithery-vendor-facets.yml
   - type: PostmanWorkspace
     url: https://www.postman.com/kinlaneapi/smithery/overview
   - type: AgenticAccess

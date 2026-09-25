@@ -1,0 +1,219 @@
+# Vendor facets — Smithery. An MCP registry and gateway (now part of Arcade.dev) that no longer
+# builds or hosts a provider's server: publishing is "bring your own hosting" (a URL) or an MCPB
+# bundle, and the Smithery Gateway proxies it at server.smithery.ai / *.run.tools / mcp.smithery.run.
+# The gateway endpoint is Smithery's domain and one shared proxy shape, so it grades `platform`
+# (0.25); a provider's own server on its own domain earns its own grade with or without Smithery.
+vendor: smithery
+name: Smithery
+website: https://smithery.ai
+areas:
+- mcp-hosting
+registry_keys:
+- smithery
+rubric_schema_version: 0.22.0
+generated: '2026-09-25'
+features_refreshed: '2026-09-25'
+basis: capability
+summary: >-
+  Smithery is distribution for an MCP server the provider already runs, not a way to get one: the publish
+  flow takes your own HTTPS URL (or an MCPB bundle) and fronts it with the Smithery Gateway. If a provider
+  declares the gateway URL as its MCP server, 0.22.0 grades it `platform` (0.25 of 12 agent-readiness
+  points); the full credit comes from the provider's own server on its own domain, which Smithery neither
+  creates nor serves. The registry page, skills listing and gateway-side OAuth metadata are discoverability
+  for Smithery, not checks the provider passes.
+features:
+- id: url-publishing
+  name: URL publishing through the Smithery Gateway
+  description: >-
+    The provider enters its own Streamable HTTP server URL; the Smithery Gateway proxies to that upstream
+    and adds a server page, config UI and analytics.
+  source: https://smithery.ai/docs/build/publish.md
+  tier: all
+- id: gateway-endpoints
+  name: Gateway connection URLs on Smithery domains
+  description: >-
+    Connections are made through Smithery-owned hosts (server.smithery.ai/<server>, <server>.run.tools,
+    mcp.smithery.run/<namespace>), not the provider's domain.
+  source: https://smithery.ai/docs/use/connect.md
+  tier: all
+- id: mcpb-bundles
+  name: MCPB bundle distribution for local stdio servers
+  description: Smithery distributes a provider-built .mcpb bundle that clients download and run locally.
+  source: https://smithery.ai/docs/build/publish.md
+  tier: all
+- id: server-card
+  name: Static server card at /.well-known/mcp/server-card.json
+  description: >-
+    When scanning fails, the provider may serve a SEP-1649 server card on its own server so Smithery can
+    read tools, resources and prompts.
+  source: https://smithery.ai/docs/build/publish.md
+  tier: all
+- id: managed-oauth
+  name: Managed OAuth connections and gateway protected-resource metadata
+  description: >-
+    Smithery maintains OAuth apps, registers clients via Client ID Metadata Documents, stores tokens,
+    and its namespace endpoint advertises protected-resource metadata.
+  source: https://smithery.ai/docs/use/connect.md
+  tier: all
+- id: skills-registry
+  name: Smithery Skills registry (GitHub-backed)
+  description: >-
+    A searchable registry of ~23,800 Agent Skills; a skill is registered from a gitUrl and installed with
+    the Smithery CLI.
+  source: https://smithery.ai/skills
+  tier: all
+- id: skills-api
+  name: Skills create-or-update API
+  description: Idempotent PUT /skills/{namespace}/{slug} that registers a GitHub-backed skill in the registry.
+  source: https://smithery.ai/docs/api-reference/skills/create-or-update-a-skill.md
+  tier: all
+- id: cli
+  name: Smithery CLI
+  description: Search, add, publish MCP servers and add skills to agents from the terminal.
+  source: https://smithery.ai/docs/concepts/cli.md
+  tier: all
+maps:
+- feature: gateway-endpoints
+  check: mcp_server
+  layer: agent_readiness
+  grade: platform
+  credit: 0.25
+  provider_must: >-
+    Declare the server in its own mcp/ manifest. If the manifest points at the Smithery gateway URL, the
+    rubric reads a Smithery-domain proxy (platform, 0.25). Pointing it at the provider's own upstream
+    URL earns that server's own grade, which is the provider's work, not Smithery's.
+  note: >-
+    Smithery no longer builds or hosts server code for a provider; the gateway is one shared proxy shape
+    on Smithery's domain, which 0.22.0 grades `platform`.
+  points: 12
+  baseline_pass_rate: 0.22
+- feature: skills-registry
+  check: agent_skill_present
+  layer: composite
+  conditional: true
+  condition: >-
+    Only if the provider itself authors the skill in its own GitHub repository and declares an AgentSkill
+    in apis.yml. Smithery indexes skills; it does not write them, and a listing of a skill someone else
+    wrote about the provider's API is not first-party.
+  provider_must: Author the skill, host it in its own repo, and declare the AgentSkill pointer.
+  catalog_pass_rate: 0.033
+  facet: developer_ergonomics
+  points: 3
+  baseline_pass_rate: 0.236
+- feature: gateway-endpoints
+  check: mcp_endpoint_discoverable
+  since: 0.23.0
+  layer: composite
+  credit: 1.0
+  conditional: true
+  condition: >-
+    Only if the provider runs an MCP server and declares it. A Smithery gateway URL (server.smithery.ai/<server>)
+    is concrete and public, so it grades `addressable`; the provider's own upstream URL would grade the
+    same without Smithery.
+  provider_must: Declare the server with a concrete endpoint URL in its mcp/ manifest.
+  facet: discoverability
+  points: 4
+earns_nothing:
+- feature: managed-oauth
+  check: protected_resource_metadata
+  why: >-
+    The protected-resource document Smithery advertises is served on mcp.smithery.run for Smithery's namespace
+    endpoint. The dimension reads /.well-known/oauth-protected-resource on the provider's own host; Smithery
+    only asks the provider's server to return 401 per RFC 9728.
+- feature: managed-oauth
+  check: dynamic_client_registration
+  why: >-
+    Smithery registers itself as a client via Client ID Metadata Documents; the dimension wants a registration_endpoint
+    in the provider's own discovery document, which Smithery does not serve.
+- feature: server-card
+  check: well_known_published
+  why: >-
+    The check reads an api-catalog, security.txt, protected-resource or AAuth resource document; an MCP
+    server card is none of them.
+- feature: url-publishing
+  check: well_known_catalog
+  why: >-
+    A Smithery registry listing is Smithery's discoverability; the dimension reads a WellKnown/APICatalog
+    pointer the provider declares.
+- feature: mcpb-bundles
+  check: mcp_server
+  why: >-
+    A downloadable stdio bundle is not a probed remote deployment on the provider's domain; the rubric
+    reads the mcp/ manifest deployment mode and probe verdict.
+out_of_reach:
+  checks:
+  - contract_present
+  - spec_presence
+  - llms_txt_published
+  - agent_card
+  - auth_clarity
+  - delegated_identity
+  - sdk_count_1
+  - cli_present
+  note: >-
+    Smithery touches only the MCP layer; it produces no contract, llms.txt, agent card or provider OAuth
+    discovery, and its CLI and SDKs are Smithery's, not the provider's.
+unscored_practice:
+- feature: server-card
+  why: >-
+    A /.well-known/mcp/server-card.json on the provider's MCP host is real metadata no 0.22.0 check reads.
+surface:
+  developer_ergonomics:
+    reachable: 3.0
+    total: 42
+  agent_readiness:
+    reachable: 3.0
+    total: 139
+hard_rule: >-
+  A model, not a score. Adopting this vendor changes a provider's Kin Score only when the provider publishes
+  the resulting artifacts on its own surface; nothing here writes a score, and no sponsorship or partnership
+  can.
+method: searched
+source:
+- https://smithery.ai/docs/api-reference/skills/create-or-update-a-skill.md
+- https://smithery.ai/docs/build/publish.md
+- https://smithery.ai/docs/concepts/cli.md
+- https://smithery.ai/docs/use/connect.md
+- https://smithery.ai/skills
+measured:
+  cohort:
+    method: vendors-catalog.json detections (CNAME / header / URL shape / markup), never a name match
+    detected: 0
+    in_baseline: 0
+  control:
+    basis: providers earning contract_present + documentation_present + api_reference_present, minus the
+      cohort
+    n: 5216
+  metric: >-
+    cohort_pct / control_pct = mean share of the check's points earned (derived and platform credit weighted),
+    x100
+  measured_on: '2026-09-25'
+  status: 'not measurable: 0 detected customers clear the baseline (need 20)'
+simulation:
+  simulated_on: '2026-09-25'
+  rubric: 0.23.0
+  population: providers publishing a contract (contract_present earned), replayable exactly
+  providers: 8977
+  providers_unreplayable: 987
+  providers_moved: 6825
+  conditional_rows: excluded (they depend on what the API already does)
+  composite_lift:
+    median: 0.0
+    p75: 0.0
+    p90: 0.0
+    max: 0.0
+    mean_among_movers: 0.0
+  agent_readiness_lift:
+    median: 2.1
+    p75: 2.2
+    p90: 2.2
+    max: 2.6
+    mean_among_movers: 2.2
+  facet_lift_median_among_movers: {}
+  composite_band_moves: {}
+  agent_readiness_band_moves:
+    agent-aware -> agent-ready: 639
+    agent-ready -> agent-native: 68
+  method: >-
+    each provider's own kin/checks file, the vendor's maps at their stated credit, the scorer's composite
+    formula; from -> to, nothing written
