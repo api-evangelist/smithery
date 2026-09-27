@@ -62,7 +62,7 @@ url: https://raw.githubusercontent.com/api-evangelist/smithery/refs/heads/main/a
 specificationVersion: '0.23'
 apis:
 - aid: smithery:smithery-connect-api
-  name: Smithery connect API
+  name: Smithery Connect API
   description: The connect API from Smithery — 12 operation(s) for connect.
   humanURL: https://smithery.ai/docs
   baseURL: https://api.smithery.ai
@@ -141,7 +141,7 @@ apis:
   - type: FinOps
     url: finops/smithery-finops.yml
 - aid: smithery:smithery-domains-api
-  name: Smithery domains API
+  name: Smithery Domains API
   description: The domains API from Smithery — 2 operation(s) for domains.
   humanURL: https://smithery.ai/docs
   baseURL: https://api.smithery.ai
@@ -219,7 +219,7 @@ apis:
   - type: FinOps
     url: finops/smithery-finops.yml
 - aid: smithery:smithery-namespaces-api
-  name: Smithery namespaces API
+  name: Smithery Namespaces API
   description: The namespaces API from Smithery — 3 operation(s) for namespaces.
   humanURL: https://smithery.ai/docs
   baseURL: https://api.smithery.ai
@@ -259,7 +259,7 @@ apis:
   - type: FinOps
     url: finops/smithery-finops.yml
 - aid: smithery:smithery-organizations-api
-  name: Smithery organizations API
+  name: Smithery Organizations API
   description: The organizations API from Smithery — 2 operation(s) for organizations.
   humanURL: https://smithery.ai/docs
   baseURL: https://api.smithery.ai
@@ -299,7 +299,7 @@ apis:
   - type: FinOps
     url: finops/smithery-finops.yml
 - aid: smithery:smithery-servers-api
-  name: Smithery servers API
+  name: Smithery Servers API
   description: Browse the MCP server registry, manage server configuration, and handle deployments
   humanURL: https://smithery.ai/docs
   baseURL: https://api.smithery.ai
@@ -339,7 +339,7 @@ apis:
   - type: FinOps
     url: finops/smithery-finops.yml
 - aid: smithery:smithery-skills-api
-  name: Smithery skills API
+  name: Smithery Skills API
   description: Discover and search reusable prompt-based skills for MCP servers
   humanURL: https://smithery.ai/docs
   baseURL: https://api.smithery.ai
@@ -379,7 +379,7 @@ apis:
   - type: FinOps
     url: finops/smithery-finops.yml
 - aid: smithery:smithery-tokens-api
-  name: Smithery tokens API
+  name: Smithery Tokens API
   description: The tokens API from Smithery — 1 operation(s) for tokens.
   humanURL: https://smithery.ai/docs
   baseURL: https://api.smithery.ai

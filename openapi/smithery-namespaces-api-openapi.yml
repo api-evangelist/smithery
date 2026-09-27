@@ -305,15 +305,6 @@ components:
       required:
       - error
       additionalProperties: false
-    NamespaceSearchResult:
-      type: object
-      properties:
-        name:
-          type: string
-          example: anthropic
-      required:
-      - name
-      additionalProperties: false
     CreateNamespaceResponse:
       type: object
       properties:
@@ -327,6 +318,15 @@ components:
       - name
       - createdAt
       additionalProperties: false
+    NamespaceSearchResult:
+      type: object
+      properties:
+        name:
+          type: string
+          example: anthropic
+      required:
+      - name
+      additionalProperties: false
     CreateServerRequest:
       type: object
       properties:
@@ -336,40 +336,6 @@ components:
         description:
           example: A simple server
           type: string
-      additionalProperties: false
-    NamespacesError:
-      type: object
-      properties:
-        error:
-          type: string
-          example: Unauthorized
-      required:
-      - error
-      additionalProperties: false
-    CreateServerResponse:
-      type: object
-      properties:
-        namespace:
-          type: string
-          example: myorg
-        server:
-          type: string
-          example: my-server
-        displayName:
-          type: string
-          example: My Server
-        description:
-          type: string
-          example: A simple server
-        createdAt:
-          type: string
-          example: '2024-01-01T00:00:00.000Z'
-      required:
-      - namespace
-      - server
-      - displayName
-      - description
-      - createdAt
       additionalProperties: false
     NamespacesSearchResponse:
       type: object
@@ -406,6 +372,40 @@ components:
       required:
       - namespaces
       - pagination
+      additionalProperties: false
+    CreateServerResponse:
+      type: object
+      properties:
+        namespace:
+          type: string
+          example: myorg
+        server:
+          type: string
+          example: my-server
+        displayName:
+          type: string
+          example: My Server
+        description:
+          type: string
+          example: A simple server
+        createdAt:
+          type: string
+          example: '2024-01-01T00:00:00.000Z'
+      required:
+      - namespace
+      - server
+      - displayName
+      - description
+      - createdAt
+      additionalProperties: false
+    NamespacesError:
+      type: object
+      properties:
+        error:
+          type: string
+          example: Unauthorized
+      required:
+      - error
       additionalProperties: false
   securitySchemes:
     bearerAuth:

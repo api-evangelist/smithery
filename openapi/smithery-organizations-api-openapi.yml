@@ -206,6 +206,20 @@ paths:
     - url: https://api.smithery.ai
 components:
   schemas:
+    TeamApiKey:
+      type: object
+      properties:
+        id:
+          type: string
+        name:
+          type: string
+        createdAt:
+          type: string
+      required:
+      - id
+      - name
+      - createdAt
+      additionalProperties: false
     CreateTeamApiKeyBody:
       type: object
       properties:
@@ -232,20 +246,6 @@ components:
       - id
       - name
       - key
-      - createdAt
-      additionalProperties: false
-    TeamApiKey:
-      type: object
-      properties:
-        id:
-          type: string
-        name:
-          type: string
-        createdAt:
-          type: string
-      required:
-      - id
-      - name
       - createdAt
       additionalProperties: false
   securitySchemes:

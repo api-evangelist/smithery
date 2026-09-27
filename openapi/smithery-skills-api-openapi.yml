@@ -905,14 +905,6 @@ paths:
     - url: https://api.smithery.ai
 components:
   schemas:
-    SkillsListError:
-      type: object
-      properties:
-        error:
-          type: string
-      required:
-      - error
-      additionalProperties: false
     SkillsListResponse:
       type: object
       properties:
@@ -1025,6 +1017,14 @@ components:
       - createdAt
       additionalProperties: false
       id: SkillSummary
+    SkillsListError:
+      type: object
+      properties:
+        error:
+          type: string
+      required:
+      - error
+      additionalProperties: false
   securitySchemes:
     bearerAuth:
       type: http

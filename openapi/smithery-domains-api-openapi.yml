@@ -94,6 +94,15 @@ paths:
     - url: https://api.smithery.ai
 components:
   schemas:
+    DomainsError:
+      type: object
+      properties:
+        error:
+          type: string
+          example: Server not found
+      required:
+      - error
+      additionalProperties: false
     DomainResource:
       type: object
       properties:
@@ -125,16 +134,6 @@ components:
       - createdAt
       - updatedAt
       additionalProperties: false
-    DomainListResponse:
-      type: object
-      properties:
-        domains:
-          type: array
-          items:
-            $ref: '#/components/schemas/DomainResource'
-      required:
-      - domains
-      additionalProperties: false
     UpdateDomainRequest:
       type: object
       properties:
@@ -144,14 +143,15 @@ components:
       required:
       - subdomain
       additionalProperties: false
-    DomainsError:
+    DomainListResponse:
       type: object
       properties:
-        error:
-          type: string
-          example: Server not found
+        domains:
+          type: array
+          items:
+            $ref: '#/components/schemas/DomainResource'
       required:
-      - error
+      - domains
       additionalProperties: false
   securitySchemes:
     bearerAuth:
