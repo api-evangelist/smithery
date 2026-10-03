@@ -905,45 +905,13 @@ paths:
     - url: https://api.smithery.ai
 components:
   schemas:
-    SkillsListResponse:
+    SkillsListError:
       type: object
       properties:
-        skills:
-          type: array
-          items:
-            $ref: '#/components/schemas/SkillSummary'
-        pagination:
-          type: object
-          properties:
-            currentPage:
-              type: integer
-              minimum: -9007199254740991
-              maximum: 9007199254740991
-              description: Current page number (1-indexed).
-            pageSize:
-              type: integer
-              minimum: -9007199254740991
-              maximum: 9007199254740991
-              description: Number of results per page.
-            totalPages:
-              type: integer
-              minimum: -9007199254740991
-              maximum: 9007199254740991
-              description: Total number of pages available.
-            totalCount:
-              type: integer
-              minimum: -9007199254740991
-              maximum: 9007199254740991
-              description: Total number of matching skills.
-          required:
-          - currentPage
-          - pageSize
-          - totalPages
-          - totalCount
-          additionalProperties: false
+        error:
+          type: string
       required:
-      - skills
-      - pagination
+      - error
       additionalProperties: false
     SkillSummary:
       type: object
@@ -1017,13 +985,45 @@ components:
       - createdAt
       additionalProperties: false
       id: SkillSummary
-    SkillsListError:
+    SkillsListResponse:
       type: object
       properties:
-        error:
-          type: string
+        skills:
+          type: array
+          items:
+            $ref: '#/components/schemas/SkillSummary'
+        pagination:
+          type: object
+          properties:
+            currentPage:
+              type: integer
+              minimum: -9007199254740991
+              maximum: 9007199254740991
+              description: Current page number (1-indexed).
+            pageSize:
+              type: integer
+              minimum: -9007199254740991
+              maximum: 9007199254740991
+              description: Number of results per page.
+            totalPages:
+              type: integer
+              minimum: -9007199254740991
+              maximum: 9007199254740991
+              description: Total number of pages available.
+            totalCount:
+              type: integer
+              minimum: -9007199254740991
+              maximum: 9007199254740991
+              description: Total number of matching skills.
+          required:
+          - currentPage
+          - pageSize
+          - totalPages
+          - totalCount
+          additionalProperties: false
       required:
-      - error
+      - skills
+      - pagination
       additionalProperties: false
   securitySchemes:
     bearerAuth:

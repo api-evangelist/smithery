@@ -68,6 +68,20 @@ components:
       - token
       - expiresAt
       additionalProperties: false
+    CreateTokenRequest:
+      type: object
+      properties:
+        policy:
+          description: Constraint objects to restrict the token. Each constraint may include a `ttl` field (max 24 hours). Default TTL is 1 hour. Maximum is 24 hours.
+          minItems: 1
+          type: array
+          items:
+            $ref: '#/components/schemas/Constraint'
+        organizationId:
+          description: Optional organization ID to scope the token to. When provided, the token is minted with org context. The authenticated user must be an admin or owner of the organization.
+          example: org_01H1234567890
+          type: string
+      additionalProperties: false
     Constraint:
       type: object
       properties:
@@ -152,20 +166,6 @@ components:
             maxLength: 500
       additionalProperties: false
       description: A policy constraint that restricts a token's scope. All specified fields within a single constraint are AND'd together. When multiple constraints are passed in the policy array, each is applied as an independent attenuation block.
-    CreateTokenRequest:
-      type: object
-      properties:
-        policy:
-          description: Constraint objects to restrict the token. Each constraint may include a `ttl` field (max 24 hours). Default TTL is 1 hour. Maximum is 24 hours.
-          minItems: 1
-          type: array
-          items:
-            $ref: '#/components/schemas/Constraint'
-        organizationId:
-          description: Optional organization ID to scope the token to. When provided, the token is minted with org context. The authenticated user must be an admin or owner of the organization.
-          example: org_01H1234567890
-          type: string
-      additionalProperties: false
     TokenError:
       type: object
       properties:

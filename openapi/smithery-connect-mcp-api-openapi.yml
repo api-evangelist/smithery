@@ -77,6 +77,19 @@ paths:
         required: true
 components:
   schemas:
+    HttpInputField:
+      type: object
+      properties:
+        label:
+          type: string
+        description:
+          type: string
+        required:
+          type: boolean
+      required:
+      - label
+      additionalProperties: false
+      id: HttpInputField
     CredentialProfileHttp:
       type: object
       properties:
@@ -124,19 +137,45 @@ components:
       - id
       - error
       additionalProperties: false
-    HttpInputField:
+    AuthRequiredError:
       type: object
       properties:
-        label:
+        jsonrpc:
           type: string
-        description:
-          type: string
-        required:
-          type: boolean
+          const: '2.0'
+        id:
+          anyOf:
+          - type: string
+          - type: number
+          - type: 'null'
+        error:
+          type: object
+          properties:
+            code:
+              type: number
+              const: -32001
+            message:
+              type: string
+              const: Authorization required
+            data:
+              type: object
+              properties:
+                authorizationUrl:
+                  type: string
+                  format: uri
+              required:
+              - authorizationUrl
+              additionalProperties: false
+          required:
+          - code
+          - message
+          - data
+          additionalProperties: false
       required:
-      - label
+      - jsonrpc
+      - id
+      - error
       additionalProperties: false
-      id: HttpInputField
     InputRequiredError:
       type: object
       properties:
@@ -180,45 +219,6 @@ components:
               required:
               - http
               - missing
-              additionalProperties: false
-          required:
-          - code
-          - message
-          - data
-          additionalProperties: false
-      required:
-      - jsonrpc
-      - id
-      - error
-      additionalProperties: false
-    AuthRequiredError:
-      type: object
-      properties:
-        jsonrpc:
-          type: string
-          const: '2.0'
-        id:
-          anyOf:
-          - type: string
-          - type: number
-          - type: 'null'
-        error:
-          type: object
-          properties:
-            code:
-              type: number
-              const: -32001
-            message:
-              type: string
-              const: Authorization required
-            data:
-              type: object
-              properties:
-                authorizationUrl:
-                  type: string
-                  format: uri
-              required:
-              - authorizationUrl
               additionalProperties: false
           required:
           - code

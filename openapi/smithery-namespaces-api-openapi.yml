@@ -305,6 +305,25 @@ components:
       required:
       - error
       additionalProperties: false
+    CreateServerRequest:
+      type: object
+      properties:
+        displayName:
+          example: My Server
+          type: string
+        description:
+          example: A simple server
+          type: string
+      additionalProperties: false
+    NamespacesError:
+      type: object
+      properties:
+        error:
+          type: string
+          example: Unauthorized
+      required:
+      - error
+      additionalProperties: false
     CreateNamespaceResponse:
       type: object
       properties:
@@ -317,25 +336,6 @@ components:
       required:
       - name
       - createdAt
-      additionalProperties: false
-    NamespaceSearchResult:
-      type: object
-      properties:
-        name:
-          type: string
-          example: anthropic
-      required:
-      - name
-      additionalProperties: false
-    CreateServerRequest:
-      type: object
-      properties:
-        displayName:
-          example: My Server
-          type: string
-        description:
-          example: A simple server
-          type: string
       additionalProperties: false
     NamespacesSearchResponse:
       type: object
@@ -373,6 +373,15 @@ components:
       - namespaces
       - pagination
       additionalProperties: false
+    NamespaceSearchResult:
+      type: object
+      properties:
+        name:
+          type: string
+          example: anthropic
+      required:
+      - name
+      additionalProperties: false
     CreateServerResponse:
       type: object
       properties:
@@ -397,15 +406,6 @@ components:
       - displayName
       - description
       - createdAt
-      additionalProperties: false
-    NamespacesError:
-      type: object
-      properties:
-        error:
-          type: string
-          example: Unauthorized
-      required:
-      - error
       additionalProperties: false
   securitySchemes:
     bearerAuth:

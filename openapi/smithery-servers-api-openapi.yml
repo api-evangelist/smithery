@@ -1230,43 +1230,42 @@ paths:
     - url: https://api.smithery.ai
 components:
   schemas:
-    DeploymentLogEntryError:
-      type: object
-      properties:
-        message:
-          type: string
-      additionalProperties: false
-      id: DeploymentLogEntryError
-    ServerTool:
+    ServerPrompt:
       type: object
       properties:
         name:
           type: string
-          example: get_weather
+          example: summarize
         description:
-          anyOf:
-          - type: string
-          - type: 'null'
-          example: Get current weather
-        inputSchema:
-          $ref: '#/components/schemas/ToolInputSchema'
-        outputSchema:
-          $ref: '#/components/schemas/ToolOutputSchema'
+          example: Summarize the given text
+          type: string
+        arguments:
+          type: array
+          items:
+            type: object
+            properties:
+              name:
+                type: string
+                example: text
+              description:
+                example: The text to summarize
+                type: string
+              required:
+                example: true
+                type: boolean
+            required:
+            - name
+            additionalProperties: false
       required:
       - name
-      - description
-      - inputSchema
       additionalProperties: false
-      id: ServerTool
-    ServersListError:
+      id: ServerPrompt
+    OutputSchemaProperties:
+      id: OutputSchemaProperties
       type: object
-      properties:
-        error:
-          type: string
-          example: Server not found
-      required:
-      - error
-      additionalProperties: false
+      propertyNames:
+        type: string
+      additionalProperties: {}
     RuntimeLogsError:
       type: object
       properties:
@@ -1276,39 +1275,14 @@ components:
       required:
       - error
       additionalProperties: false
-    Invocation:
+    DeploymentLogEntryError:
       type: object
       properties:
-        id:
+        message:
           type: string
-          example: 625f9ce6-f179-4f23-b3e3-4de28b52b39d
-        timestamp:
-          type: string
-          example: '2026-01-04 10:53:39'
-        request:
-          $ref: '#/components/schemas/InvocationRequest'
-        response:
-          $ref: '#/components/schemas/InvocationResponse'
-        duration:
-          $ref: '#/components/schemas/InvocationDuration'
-        logs:
-          type: array
-          items:
-            $ref: '#/components/schemas/RuntimeLogEntry'
-        exceptions:
-          type: array
-          items:
-            $ref: '#/components/schemas/ExceptionEntry'
-      required:
-      - id
-      - timestamp
-      - request
-      - response
-      - duration
-      - logs
-      - exceptions
       additionalProperties: false
-    RegistryError:
+      id: DeploymentLogEntryError
+    DeploymentError:
       type: object
       properties:
         error:
@@ -1317,6 +1291,31 @@ components:
       required:
       - error
       additionalProperties: false
+    StdioConnection:
+      type: object
+      properties:
+        type:
+          type: string
+          const: stdio
+        bundleUrl:
+          type: string
+          format: uri
+        runtime:
+          type: string
+          enum:
+          - node
+          - binary
+          - python
+          - bun
+        configSchema:
+          $ref: '#/components/schemas/ConfigSchema'
+      required:
+      - type
+      - bundleUrl
+      - runtime
+      - configSchema
+      additionalProperties: false
+      id: StdioConnection
     InvocationRequest:
       type: object
       properties:
@@ -1425,99 +1424,6 @@ components:
       - score
       additionalProperties: false
       id: ServerSummary
-    ServerSecurity:
-      type: object
-      properties:
-        scanPassed:
-          type: boolean
-          example: true
-      required:
-      - scanPassed
-      additionalProperties: false
-      id: ServerSecurity
-    DeploymentInfo:
-      type: object
-      properties:
-        id:
-          type: string
-          format: uuid
-          pattern: ^([0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[1-8][0-9a-fA-F]{3}-[89abAB][0-9a-fA-F]{3}-[0-9a-fA-F]{12}|00000000-0000-0000-0000-000000000000|ffffffff-ffff-ffff-ffff-ffffffffffff)$
-        status:
-          type: string
-          description: 'Current status: QUEUED, WORKING, SUCCESS, FAILURE, FAILURE_SCAN, AUTH_REQUIRED, AUTH_TIMEOUT, CANCELLED, or INTERNAL_ERROR.'
-        type:
-          type: string
-          description: 'Release type: hosted_shttp (Smithery-hosted), external_shttp (external URL), or stdio (local binary).'
-        commit:
-          description: Git commit SHA that triggered this release.
-          anyOf:
-          - type: string
-          - type: 'null'
-        commitMessage:
-          description: Git commit message associated with this release.
-          anyOf:
-          - type: string
-          - type: 'null'
-        branch:
-          description: Git branch this release was built from.
-          anyOf:
-          - type: string
-          - type: 'null'
-        upstreamUrl:
-          description: Upstream MCP server URL. Present only for external releases.
-          anyOf:
-          - type: string
-          - type: 'null'
-        logs:
-          description: Pipeline log entries. Only included when fetching a single release.
-          type: array
-          items:
-            $ref: '#/components/schemas/DeploymentLogEntry'
-        mcpUrl:
-          description: The MCP endpoint URL for connecting to this server.
-          type: string
-          format: uri
-        createdAt:
-          type: string
-          description: ISO 8601 timestamp of when the release was created.
-        updatedAt:
-          type: string
-          description: ISO 8601 timestamp of the last status change.
-      required:
-      - id
-      - status
-      - type
-      - createdAt
-      - updatedAt
-      additionalProperties: false
-    DeployResponse:
-      type: object
-      properties:
-        deploymentId:
-          type: string
-          format: uuid
-          pattern: ^([0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[1-8][0-9a-fA-F]{3}-[89abAB][0-9a-fA-F]{3}-[0-9a-fA-F]{12}|00000000-0000-0000-0000-000000000000|ffffffff-ffff-ffff-ffff-ffffffffffff)$
-          description: Unique identifier for this release.
-          example: 123e4567-e89b-12d3-a456-426614174000
-        status:
-          type: string
-          description: Initial status. Will be WORKING while the release is in progress.
-          example: WORKING
-        mcpUrl:
-          type: string
-          format: uri
-          description: The MCP endpoint URL for connecting to this server once published.
-          example: https://slug.run.tools
-        warnings:
-          description: Non-fatal warnings encountered during submission.
-          type: array
-          items:
-            type: string
-      required:
-      - deploymentId
-      - status
-      - mcpUrl
-      additionalProperties: false
     ExceptionEntry:
       type: object
       properties:
@@ -1535,94 +1441,67 @@ components:
       - name
       - message
       additionalProperties: false
-    RuntimeLogsResponse:
+    ToolOutputSchema:
+      id: ToolOutputSchema
       type: object
       properties:
-        invocations:
+        type:
+          type: string
+          const: object
+        properties:
+          $ref: '#/components/schemas/OutputSchemaProperties'
+        required:
           type: array
           items:
-            $ref: '#/components/schemas/Invocation'
-        total:
-          type: number
-          description: Total invocations matching query
+            type: string
       required:
-      - invocations
-      - total
+      - type
       additionalProperties: false
-    DeploymentLogEntry:
+    ConfigSchema:
+      type: object
+      propertyNames:
+        type: string
+      additionalProperties:
+        x-stainless-any: true
+    Invocation:
       type: object
       properties:
-        stage:
+        id:
           type: string
-          enum:
-          - deploy
-          - scan
-          - metadata
-          - publish
-          description: 'Pipeline stage: deploy (bundle upload), scan (security/OAuth check), metadata (tool discovery), publish (generated artifacts).'
-        level:
-          type: string
-          description: 'Log level: ''start'', ''end'', ''info'', ''success'', or ''failure''.'
-        message:
-          type: string
-          description: Human-readable log message.
-        timestamp:
-          type: string
-          description: ISO 8601 timestamp of the log entry.
-        error:
-          description: Error details, present only when the stage failed.
-          $ref: '#/components/schemas/DeploymentLogEntryError'
-      required:
-      - stage
-      - level
-      - message
-      - timestamp
-      additionalProperties: false
-    ResumeResponse:
-      type: object
-      properties:
-        status:
-          type: string
-          example: WORKING
-        deploymentId:
-          type: string
-          format: uuid
-          pattern: ^([0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[1-8][0-9a-fA-F]{3}-[89abAB][0-9a-fA-F]{3}-[0-9a-fA-F]{12}|00000000-0000-0000-0000-000000000000|ffffffff-ffff-ffff-ffff-ffffffffffff)$
-      required:
-      - status
-      - deploymentId
-      additionalProperties: false
-    InvocationDuration:
-      type: object
-      properties:
-        cpuMs:
-          type: number
-          example: 5
-        wallMs:
-          type: number
-          example: 743
-      required:
-      - cpuMs
-      - wallMs
-      additionalProperties: false
-      id: InvocationDuration
-    RuntimeLogEntry:
-      type: object
-      properties:
+          example: 625f9ce6-f179-4f23-b3e3-4de28b52b39d
         timestamp:
           type: string
           example: '2026-01-04 10:53:39'
-        level:
-          type: string
-          example: info
-        message:
-          type: string
-          example: Processing request...
+        request:
+          $ref: '#/components/schemas/InvocationRequest'
+        response:
+          $ref: '#/components/schemas/InvocationResponse'
+        duration:
+          $ref: '#/components/schemas/InvocationDuration'
+        logs:
+          type: array
+          items:
+            $ref: '#/components/schemas/RuntimeLogEntry'
+        exceptions:
+          type: array
+          items:
+            $ref: '#/components/schemas/ExceptionEntry'
       required:
+      - id
       - timestamp
-      - level
-      - message
+      - request
+      - response
+      - duration
+      - logs
+      - exceptions
       additionalProperties: false
+    InputSchemaProperties:
+      id: InputSchemaProperties
+      type: object
+      propertyNames:
+        type: string
+      additionalProperties:
+        x-stainless-any: true
     Server:
       type: object
       properties:
@@ -1689,136 +1568,15 @@ components:
       - resources
       - prompts
       additionalProperties: false
-    InputSchemaProperties:
-      id: InputSchemaProperties
-      type: object
-      propertyNames:
-        type: string
-      additionalProperties:
-        x-stainless-any: true
-    OutputSchemaProperties:
-      id: OutputSchemaProperties
-      type: object
-      propertyNames:
-        type: string
-      additionalProperties: {}
-    ToolOutputSchema:
-      id: ToolOutputSchema
+    ServersListError:
       type: object
       properties:
-        type:
+        error:
           type: string
-          const: object
-        properties:
-          $ref: '#/components/schemas/OutputSchemaProperties'
-        required:
-          type: array
-          items:
-            type: string
+          example: Server not found
       required:
-      - type
+      - error
       additionalProperties: false
-    StdioConnection:
-      type: object
-      properties:
-        type:
-          type: string
-          const: stdio
-        bundleUrl:
-          type: string
-          format: uri
-        runtime:
-          type: string
-          enum:
-          - node
-          - binary
-          - python
-          - bun
-        configSchema:
-          $ref: '#/components/schemas/ConfigSchema'
-      required:
-      - type
-      - bundleUrl
-      - runtime
-      - configSchema
-      additionalProperties: false
-      id: StdioConnection
-    ToolInputSchema:
-      type: object
-      properties:
-        type:
-          type: string
-          const: object
-        properties:
-          $ref: '#/components/schemas/InputSchemaProperties'
-      required:
-      - type
-      additionalProperties: false
-      id: ToolInputSchema
-    ServerResource:
-      type: object
-      properties:
-        name:
-          type: string
-          example: config://settings
-        uri:
-          type: string
-          example: config://app/settings
-        description:
-          example: Application settings
-          type: string
-        mimeType:
-          example: application/json
-          type: string
-      required:
-      - name
-      - uri
-      additionalProperties: false
-      id: ServerResource
-    InvocationResponse:
-      type: object
-      properties:
-        status:
-          type: number
-          example: 200
-        outcome:
-          type: string
-          example: ok
-      required:
-      - status
-      - outcome
-      additionalProperties: false
-      id: InvocationResponse
-    ServerPrompt:
-      type: object
-      properties:
-        name:
-          type: string
-          example: summarize
-        description:
-          example: Summarize the given text
-          type: string
-        arguments:
-          type: array
-          items:
-            type: object
-            properties:
-              name:
-                type: string
-                example: text
-              description:
-                example: The text to summarize
-                type: string
-              required:
-                example: true
-                type: boolean
-            required:
-            - name
-            additionalProperties: false
-      required:
-      - name
-      additionalProperties: false
-      id: ServerPrompt
     ServersListResponse:
       type: object
       properties:
@@ -1863,12 +1621,187 @@ components:
       - servers
       - pagination
       additionalProperties: false
-    ConfigSchema:
+    ServerResource:
       type: object
-      propertyNames:
-        type: string
-      additionalProperties:
-        x-stainless-any: true
+      properties:
+        name:
+          type: string
+          example: config://settings
+        uri:
+          type: string
+          example: config://app/settings
+        description:
+          example: Application settings
+          type: string
+        mimeType:
+          example: application/json
+          type: string
+      required:
+      - name
+      - uri
+      additionalProperties: false
+      id: ServerResource
+    DeployResponse:
+      type: object
+      properties:
+        deploymentId:
+          type: string
+          format: uuid
+          pattern: ^([0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[1-8][0-9a-fA-F]{3}-[89abAB][0-9a-fA-F]{3}-[0-9a-fA-F]{12}|00000000-0000-0000-0000-000000000000|ffffffff-ffff-ffff-ffff-ffffffffffff)$
+          description: Unique identifier for this release.
+          example: 123e4567-e89b-12d3-a456-426614174000
+        status:
+          type: string
+          description: Initial status. Will be WORKING while the release is in progress.
+          example: WORKING
+        mcpUrl:
+          type: string
+          format: uri
+          description: The MCP endpoint URL for connecting to this server once published.
+          example: https://slug.run.tools
+        warnings:
+          description: Non-fatal warnings encountered during submission.
+          type: array
+          items:
+            type: string
+      required:
+      - deploymentId
+      - status
+      - mcpUrl
+      additionalProperties: false
+    InvocationResponse:
+      type: object
+      properties:
+        status:
+          type: number
+          example: 200
+        outcome:
+          type: string
+          example: ok
+      required:
+      - status
+      - outcome
+      additionalProperties: false
+      id: InvocationResponse
+    ServerSecurity:
+      type: object
+      properties:
+        scanPassed:
+          type: boolean
+          example: true
+      required:
+      - scanPassed
+      additionalProperties: false
+      id: ServerSecurity
+    RegistryError:
+      type: object
+      properties:
+        error:
+          type: string
+          example: Server not found
+      required:
+      - error
+      additionalProperties: false
+    DeploymentInfo:
+      type: object
+      properties:
+        id:
+          type: string
+          format: uuid
+          pattern: ^([0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[1-8][0-9a-fA-F]{3}-[89abAB][0-9a-fA-F]{3}-[0-9a-fA-F]{12}|00000000-0000-0000-0000-000000000000|ffffffff-ffff-ffff-ffff-ffffffffffff)$
+        status:
+          type: string
+          description: 'Current status: QUEUED, WORKING, SUCCESS, FAILURE, FAILURE_SCAN, AUTH_REQUIRED, AUTH_TIMEOUT, CANCELLED, or INTERNAL_ERROR.'
+        type:
+          type: string
+          description: 'Release type: hosted_shttp (Smithery-hosted), external_shttp (external URL), or stdio (local binary).'
+        commit:
+          description: Git commit SHA that triggered this release.
+          anyOf:
+          - type: string
+          - type: 'null'
+        commitMessage:
+          description: Git commit message associated with this release.
+          anyOf:
+          - type: string
+          - type: 'null'
+        branch:
+          description: Git branch this release was built from.
+          anyOf:
+          - type: string
+          - type: 'null'
+        upstreamUrl:
+          description: Upstream MCP server URL. Present only for external releases.
+          anyOf:
+          - type: string
+          - type: 'null'
+        logs:
+          description: Pipeline log entries. Only included when fetching a single release.
+          type: array
+          items:
+            $ref: '#/components/schemas/DeploymentLogEntry'
+        mcpUrl:
+          description: The MCP endpoint URL for connecting to this server.
+          type: string
+          format: uri
+        createdAt:
+          type: string
+          description: ISO 8601 timestamp of when the release was created.
+        updatedAt:
+          type: string
+          description: ISO 8601 timestamp of the last status change.
+      required:
+      - id
+      - status
+      - type
+      - createdAt
+      - updatedAt
+      additionalProperties: false
+    RuntimeLogsResponse:
+      type: object
+      properties:
+        invocations:
+          type: array
+          items:
+            $ref: '#/components/schemas/Invocation'
+        total:
+          type: number
+          description: Total invocations matching query
+      required:
+      - invocations
+      - total
+      additionalProperties: false
+    RuntimeLogEntry:
+      type: object
+      properties:
+        timestamp:
+          type: string
+          example: '2026-01-04 10:53:39'
+        level:
+          type: string
+          example: info
+        message:
+          type: string
+          example: Processing request...
+      required:
+      - timestamp
+      - level
+      - message
+      additionalProperties: false
+    ResumeResponse:
+      type: object
+      properties:
+        status:
+          type: string
+          example: WORKING
+        deploymentId:
+          type: string
+          format: uuid
+          pattern: ^([0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[1-8][0-9a-fA-F]{3}-[89abAB][0-9a-fA-F]{3}-[0-9a-fA-F]{12}|00000000-0000-0000-0000-000000000000|ffffffff-ffff-ffff-ffff-ffffffffffff)$
+      required:
+      - status
+      - deploymentId
+      additionalProperties: false
     HttpConnection:
       type: object
       properties:
@@ -1885,15 +1818,82 @@ components:
       - configSchema
       additionalProperties: false
       id: HttpConnection
-    DeploymentError:
+    InvocationDuration:
       type: object
       properties:
-        error:
-          type: string
-          example: Server not found
+        cpuMs:
+          type: number
+          example: 5
+        wallMs:
+          type: number
+          example: 743
       required:
-      - error
+      - cpuMs
+      - wallMs
       additionalProperties: false
+      id: InvocationDuration
+    ServerTool:
+      type: object
+      properties:
+        name:
+          type: string
+          example: get_weather
+        description:
+          anyOf:
+          - type: string
+          - type: 'null'
+          example: Get current weather
+        inputSchema:
+          $ref: '#/components/schemas/ToolInputSchema'
+        outputSchema:
+          $ref: '#/components/schemas/ToolOutputSchema'
+      required:
+      - name
+      - description
+      - inputSchema
+      additionalProperties: false
+      id: ServerTool
+    DeploymentLogEntry:
+      type: object
+      properties:
+        stage:
+          type: string
+          enum:
+          - deploy
+          - scan
+          - metadata
+          - publish
+          description: 'Pipeline stage: deploy (bundle upload), scan (security/OAuth check), metadata (tool discovery), publish (generated artifacts).'
+        level:
+          type: string
+          description: 'Log level: ''start'', ''end'', ''info'', ''success'', or ''failure''.'
+        message:
+          type: string
+          description: Human-readable log message.
+        timestamp:
+          type: string
+          description: ISO 8601 timestamp of the log entry.
+        error:
+          description: Error details, present only when the stage failed.
+          $ref: '#/components/schemas/DeploymentLogEntryError'
+      required:
+      - stage
+      - level
+      - message
+      - timestamp
+      additionalProperties: false
+    ToolInputSchema:
+      type: object
+      properties:
+        type:
+          type: string
+          const: object
+        properties:
+          $ref: '#/components/schemas/InputSchemaProperties'
+      required:
+      - type
+      additionalProperties: false
+      id: ToolInputSchema
     DeploymentInfo_2:
       type: object
       properties:

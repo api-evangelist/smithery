@@ -803,270 +803,20 @@ paths:
     - url: https://api.smithery.ai
 components:
   schemas:
-    ConnectionsListResponse:
+    MockConfig:
       type: object
       properties:
-        connections:
-          type: array
-          items:
-            $ref: '#/components/schemas/Connection'
-        nextCursor:
-          anyOf:
-          - type: string
-          - type: 'null'
-          description: Cursor for next page, null if no more results
-      required:
-      - connections
-      - nextCursor
-      additionalProperties: false
-    ConnectionStatus:
-      oneOf:
-      - type: object
-        properties:
-          state:
-            type: string
-            const: connected
-        required:
-        - state
-        additionalProperties: false
-        title: ConnectionStatusConnected
-      - type: object
-        properties:
-          state:
-            type: string
-            const: disconnected
-        required:
-        - state
-        additionalProperties: false
-        title: ConnectionStatusDisconnected
-      - type: object
-        properties:
-          state:
-            type: string
-            const: auth_required
-          setupUrl:
-            description: Hosted Smithery URL for completing setup and OAuth
-            type: string
-            format: uri
-          authorizationUrl:
-            description: Deprecated compatibility alias for setupUrl
-            deprecated: true
-            type: string
-            format: uri
-        required:
-        - state
-        additionalProperties: false
-        title: ConnectionStatusAuthRequired
-      - type: object
-        properties:
-          state:
-            type: string
-            const: input_required
-          setupUrl:
-            description: Hosted Smithery URL for completing setup in the browser
-            type: string
-            format: uri
-          http:
-            $ref: '#/components/schemas/CredentialProfileHttp'
-          missing:
-            type: object
-            properties:
-              headers:
-                type: array
-                items:
-                  type: string
-              query:
-                type: array
-                items:
-                  type: string
-            required:
-            - headers
-            - query
-            additionalProperties: false
-        required:
-        - state
-        - http
-        - missing
-        additionalProperties: false
-        title: ConnectionStatusInputRequired
-      - type: object
-        properties:
-          state:
-            type: string
-            const: error
-          message:
-            type: string
-            description: Error message
-        required:
-        - state
-        - message
-        additionalProperties: false
-        title: ConnectionStatusError
-    DeleteTriggerRequest:
-      type: object
-      properties:
-        params:
-          default: {}
-          description: The same params used at subscribe time. Forms part of the subscription key.
-          $ref: '#/components/schemas/LooseObject'
-        delivery:
-          $ref: '#/components/schemas/UnsubscribeDelivery'
-      required:
-      - params
-      - delivery
-      additionalProperties: false
-    Connection:
-      type: object
-      properties:
-        connectionId:
-          type: string
-          description: Connection ID (auto-generated or developer-defined)
-          example: clever-dolphin-a9X3
-        name:
-          type: string
-          description: Human-readable name
-        transport:
-          description: Connection transport
-          type: string
-          enum:
-          - http
-          - uplink
-        mcpUrl:
-          anyOf:
-          - type: string
-          - type: 'null'
-          description: MCP server URL. Null for uplink connections.
-        metadata:
-          anyOf:
-          - type: object
-            propertyNames:
-              type: string
-            additionalProperties: {}
-          - type: 'null'
-        mock:
-          description: 'Mock-mode config: `{enabled: true, scenario?}` when LLM-simulated, absent otherwise.'
-          $ref: '#/components/schemas/MockConfig'
-        iconUrl:
-          anyOf:
-          - type: string
-          - type: 'null'
-        createdAt:
-          description: ISO 8601 timestamp
-          type: string
-        status:
-          description: Last known connection status
-          $ref: '#/components/schemas/ConnectionStatus'
-        serverInfo:
-          description: Server information from MCP initialization (name, version)
-          $ref: '#/components/schemas/ServerInfo'
-      required:
-      - connectionId
-      - name
-      - mcpUrl
-      - metadata
-      additionalProperties: false
-    ToolResponse:
-      anyOf:
-      - $ref: '#/components/schemas/Tool'
-      - $ref: '#/components/schemas/ToolList'
-    TriggerDelivery:
-      type: object
-      properties:
-        url:
-          type: string
-          description: HTTPS webhook destination where the upstream MCP server delivers events.
-          example: https://my-app.example.com/events
-        secret:
-          type: string
-          description: Standard Webhooks signing secret (whsec_<base64 of 24-64 random bytes>). The upstream MCP server signs each delivery with this.
-          example: whsec_dGVzdF9zZWNyZXRfMjRfYnl0ZXNfbWluaW11bSE=
-      required:
-      - url
-      - secret
-      additionalProperties: false
-    TriggerDefinition:
-      type: object
-      properties:
-        name:
-          type: string
-          description: Trigger name exposed by the MCP server
-          example: page.updated
-        description:
-          type: string
-        delivery:
-          type: array
-          items:
-            type: string
-          description: Supported delivery modes
-          example:
-          - webhook
-        inputSchema:
-          description: JSON Schema for the params required to create the trigger
-          $ref: '#/components/schemas/LooseObject'
-        payloadSchema:
-          description: JSON Schema for the event payload delivered by the trigger
-          $ref: '#/components/schemas/LooseObject'
-      required:
-      - name
-      - delivery
-      additionalProperties: false
-    HttpInputField:
-      type: object
-      properties:
-        label:
-          type: string
-        description:
-          type: string
-        required:
+        enabled:
           type: boolean
-      required:
-      - label
-      additionalProperties: false
-      id: HttpInputField
-    CreateTriggerRequest:
-      type: object
-      properties:
-        params:
-          default: {}
-          description: Trigger-specific parameters defined by the trigger inputSchema
-          $ref: '#/components/schemas/LooseObject'
-        delivery:
-          $ref: '#/components/schemas/TriggerDelivery'
-      required:
-      - params
-      - delivery
-      additionalProperties: false
-    LooseObject:
-      type: object
-      propertyNames:
-        type: string
-      additionalProperties:
-        x-stainless-any: true
-    ToolList:
-      type: object
-      properties:
-        tools:
-          type: array
-          items:
-            $ref: '#/components/schemas/Tool'
-      required:
-      - tools
-      additionalProperties: false
-    TriggerSubscription:
-      type: object
-      properties:
-        id:
+          description: Turn mock mode on for this connection.
+        scenario:
+          description: Natural-language starting-state for the simulator (threaded into the LLM system prompt so generated data is consistent with the scenario across calls).
+          example: 'Slack workspace with an active #community-ops channel containing recent event-planning messages, plus 50 Airtable candidate records with mixed tenure and interests.'
           type: string
-          description: Stable subscription id derived from (namespace, connection, name, params, delivery.url). Used by the receiver to route via X-MCP-Subscription-Id.
-          example: trg_01HW1234567890
-        refreshBefore:
-          type: string
-          description: ISO 8601 timestamp at which the subscription expires unless refreshed.
-          example: '2026-04-22T13:00:00.000Z'
       required:
-      - id
-      - refreshBefore
+      - enabled
       additionalProperties: false
+      id: MockConfig
     CreateConnectionRequest:
       type: object
       properties:
@@ -1112,156 +862,6 @@ components:
             enabled: true
             scenario: A developer inbox with 3 unread Q4 planning threads.
           $ref: '#/components/schemas/MockConfig'
-      additionalProperties: false
-    CredentialProfileHttp:
-      type: object
-      properties:
-        headers:
-          type: object
-          propertyNames:
-            type: string
-          additionalProperties:
-            $ref: '#/components/schemas/HttpInputField'
-        query:
-          type: object
-          propertyNames:
-            type: string
-          additionalProperties:
-            $ref: '#/components/schemas/HttpInputField'
-      additionalProperties: false
-      id: CredentialProfileHttp
-    ValidationError:
-      type: object
-      properties:
-        error:
-          type: string
-          const: validation_error
-        message:
-          type: string
-          example: Invalid request
-      required:
-      - error
-      - message
-      additionalProperties: false
-    MockConfig:
-      type: object
-      properties:
-        enabled:
-          type: boolean
-          description: Turn mock mode on for this connection.
-        scenario:
-          description: Natural-language starting-state for the simulator (threaded into the LLM system prompt so generated data is consistent with the scenario across calls).
-          example: 'Slack workspace with an active #community-ops channel containing recent event-planning messages, plus 50 Airtable candidate records with mixed tenure and interests.'
-          type: string
-      required:
-      - enabled
-      additionalProperties: false
-      id: MockConfig
-    Success:
-      type: object
-      properties:
-        success:
-          type: boolean
-          const: true
-      required:
-      - success
-      additionalProperties: false
-    UpsertConnectionRequest:
-      type: object
-      properties:
-        transport:
-          description: Connection transport. Defaults to the existing connection transport when updating.
-          example: http
-          type: string
-          enum:
-          - http
-          - uplink
-        mcpUrl:
-          description: URL of the MCP server. Required when creating a new connection. Optional when updating — omit to keep the existing URL.
-          example: https://mcp.example.com/sse
-          type: string
-          format: uri
-        name:
-          description: Human-readable name (optional, defaults to connection ID)
-          example: My MCP Server
-          type: string
-          minLength: 1
-          maxLength: 255
-        metadata:
-          description: Custom metadata for filtering connections
-          example:
-            userId: user123
-            team: engineering
-          type: object
-          propertyNames:
-            type: string
-          additionalProperties: {}
-        headers:
-          description: Custom headers to send with MCP requests (stored securely, not returned in responses)
-          example:
-            X-API-Key: secret-key
-          type: object
-          propertyNames:
-            type: string
-          additionalProperties:
-            type: string
-        mock:
-          description: Run this connection in mock mode. Only honored on first creation; ignored on updates to an existing connection.
-          example:
-            enabled: true
-          $ref: '#/components/schemas/MockConfig'
-      additionalProperties: false
-    UnsubscribeDelivery:
-      type: object
-      properties:
-        url:
-          type: string
-          description: The delivery URL of the subscription to remove. Together with name+params it forms the subscription key.
-          example: https://my-app.example.com/events
-      required:
-      - url
-      additionalProperties: false
-    TriggerDefinitionList:
-      type: array
-      items:
-        $ref: '#/components/schemas/TriggerDefinition'
-    ServerInfo:
-      type: object
-      properties:
-        name:
-          type: string
-        title:
-          type: string
-        icons:
-          type: array
-          items:
-            type: object
-            properties:
-              src:
-                type: string
-              mimeType:
-                type: string
-              sizes:
-                type: array
-                items:
-                  type: string
-              theme:
-                type: string
-                enum:
-                - light
-                - dark
-            required:
-            - src
-            additionalProperties: false
-        version:
-          type: string
-        websiteUrl:
-          type: string
-        description:
-          type: string
-      required:
-      - name
-      - version
       additionalProperties: false
     Error:
       type: object
@@ -1375,6 +975,439 @@ components:
       - name
       - inputSchema
       additionalProperties: false
+    ToolList:
+      type: object
+      properties:
+        tools:
+          type: array
+          items:
+            $ref: '#/components/schemas/Tool'
+      required:
+      - tools
+      additionalProperties: false
+    Connection:
+      type: object
+      properties:
+        connectionId:
+          type: string
+          description: Connection ID (auto-generated or developer-defined)
+          example: clever-dolphin-a9X3
+        name:
+          type: string
+          description: Human-readable name
+        transport:
+          description: Connection transport
+          type: string
+          enum:
+          - http
+          - uplink
+        mcpUrl:
+          anyOf:
+          - type: string
+          - type: 'null'
+          description: MCP server URL. Null for uplink connections.
+        metadata:
+          anyOf:
+          - type: object
+            propertyNames:
+              type: string
+            additionalProperties: {}
+          - type: 'null'
+        mock:
+          description: 'Mock-mode config: `{enabled: true, scenario?}` when LLM-simulated, absent otherwise.'
+          $ref: '#/components/schemas/MockConfig'
+        iconUrl:
+          anyOf:
+          - type: string
+          - type: 'null'
+        createdAt:
+          description: ISO 8601 timestamp
+          type: string
+        status:
+          description: Last known connection status
+          $ref: '#/components/schemas/ConnectionStatus'
+        serverInfo:
+          description: Server information from MCP initialization (name, version)
+          $ref: '#/components/schemas/ServerInfo'
+      required:
+      - connectionId
+      - name
+      - mcpUrl
+      - metadata
+      additionalProperties: false
+    CreateTriggerRequest:
+      type: object
+      properties:
+        params:
+          default: {}
+          description: Trigger-specific parameters defined by the trigger inputSchema
+          $ref: '#/components/schemas/LooseObject'
+        delivery:
+          $ref: '#/components/schemas/TriggerDelivery'
+      required:
+      - params
+      - delivery
+      additionalProperties: false
+    HttpInputField:
+      type: object
+      properties:
+        label:
+          type: string
+        description:
+          type: string
+        required:
+          type: boolean
+      required:
+      - label
+      additionalProperties: false
+      id: HttpInputField
+    ValidationError:
+      type: object
+      properties:
+        error:
+          type: string
+          const: validation_error
+        message:
+          type: string
+          example: Invalid request
+      required:
+      - error
+      - message
+      additionalProperties: false
+    TriggerSubscription:
+      type: object
+      properties:
+        id:
+          type: string
+          description: Stable subscription id derived from (namespace, connection, name, params, delivery.url). Used by the receiver to route via X-MCP-Subscription-Id.
+          example: trg_01HW1234567890
+        refreshBefore:
+          type: string
+          description: ISO 8601 timestamp at which the subscription expires unless refreshed.
+          example: '2026-04-22T13:00:00.000Z'
+      required:
+      - id
+      - refreshBefore
+      additionalProperties: false
+    ConnectionStatus:
+      oneOf:
+      - type: object
+        properties:
+          state:
+            type: string
+            const: connected
+        required:
+        - state
+        additionalProperties: false
+        title: ConnectionStatusConnected
+      - type: object
+        properties:
+          state:
+            type: string
+            const: disconnected
+        required:
+        - state
+        additionalProperties: false
+        title: ConnectionStatusDisconnected
+      - type: object
+        properties:
+          state:
+            type: string
+            const: auth_required
+          setupUrl:
+            description: Hosted Smithery URL for completing setup and OAuth
+            type: string
+            format: uri
+          authorizationUrl:
+            description: Deprecated compatibility alias for setupUrl
+            deprecated: true
+            type: string
+            format: uri
+        required:
+        - state
+        additionalProperties: false
+        title: ConnectionStatusAuthRequired
+      - type: object
+        properties:
+          state:
+            type: string
+            const: input_required
+          setupUrl:
+            description: Hosted Smithery URL for completing setup in the browser
+            type: string
+            format: uri
+          http:
+            $ref: '#/components/schemas/CredentialProfileHttp'
+          missing:
+            type: object
+            properties:
+              headers:
+                type: array
+                items:
+                  type: string
+              query:
+                type: array
+                items:
+                  type: string
+            required:
+            - headers
+            - query
+            additionalProperties: false
+        required:
+        - state
+        - http
+        - missing
+        additionalProperties: false
+        title: ConnectionStatusInputRequired
+      - type: object
+        properties:
+          state:
+            type: string
+            const: error
+          message:
+            type: string
+            description: Error message
+        required:
+        - state
+        - message
+        additionalProperties: false
+        title: ConnectionStatusError
+    LooseObject:
+      type: object
+      propertyNames:
+        type: string
+      additionalProperties:
+        x-stainless-any: true
+    ToolResponse:
+      anyOf:
+      - $ref: '#/components/schemas/Tool'
+      - $ref: '#/components/schemas/ToolList'
+    ServerInfo:
+      type: object
+      properties:
+        name:
+          type: string
+        title:
+          type: string
+        icons:
+          type: array
+          items:
+            type: object
+            properties:
+              src:
+                type: string
+              mimeType:
+                type: string
+              sizes:
+                type: array
+                items:
+                  type: string
+              theme:
+                type: string
+                enum:
+                - light
+                - dark
+            required:
+            - src
+            additionalProperties: false
+        version:
+          type: string
+        websiteUrl:
+          type: string
+        description:
+          type: string
+      required:
+      - name
+      - version
+      additionalProperties: false
+    DeleteTriggerRequest:
+      type: object
+      properties:
+        params:
+          default: {}
+          description: The same params used at subscribe time. Forms part of the subscription key.
+          $ref: '#/components/schemas/LooseObject'
+        delivery:
+          $ref: '#/components/schemas/UnsubscribeDelivery'
+      required:
+      - params
+      - delivery
+      additionalProperties: false
+    Success:
+      type: object
+      properties:
+        success:
+          type: boolean
+          const: true
+      required:
+      - success
+      additionalProperties: false
+    CredentialProfileHttp:
+      type: object
+      properties:
+        headers:
+          type: object
+          propertyNames:
+            type: string
+          additionalProperties:
+            $ref: '#/components/schemas/HttpInputField'
+        query:
+          type: object
+          propertyNames:
+            type: string
+          additionalProperties:
+            $ref: '#/components/schemas/HttpInputField'
+      additionalProperties: false
+      id: CredentialProfileHttp
+    TriggerDefinition:
+      type: object
+      properties:
+        name:
+          type: string
+          description: Trigger name exposed by the MCP server
+          example: page.updated
+        description:
+          type: string
+        delivery:
+          type: array
+          items:
+            type: string
+          description: Supported delivery modes
+          example:
+          - webhook
+        inputSchema:
+          description: JSON Schema for the params required to create the trigger
+          $ref: '#/components/schemas/LooseObject'
+        payloadSchema:
+          description: JSON Schema for the event payload delivered by the trigger
+          $ref: '#/components/schemas/LooseObject'
+      required:
+      - name
+      - delivery
+      additionalProperties: false
+    TriggerDefinitionList:
+      type: array
+      items:
+        $ref: '#/components/schemas/TriggerDefinition'
+    TriggerDelivery:
+      type: object
+      properties:
+        url:
+          type: string
+          description: HTTPS webhook destination where the upstream MCP server delivers events.
+          example: https://my-app.example.com/events
+        secret:
+          type: string
+          description: Standard Webhooks signing secret (whsec_<base64 of 24-64 random bytes>). The upstream MCP server signs each delivery with this.
+          example: whsec_dGVzdF9zZWNyZXRfMjRfYnl0ZXNfbWluaW11bSE=
+      required:
+      - url
+      - secret
+      additionalProperties: false
+    ConnectionsListResponse:
+      type: object
+      properties:
+        connections:
+          type: array
+          items:
+            $ref: '#/components/schemas/Connection'
+        nextCursor:
+          anyOf:
+          - type: string
+          - type: 'null'
+          description: Cursor for next page, null if no more results
+      required:
+      - connections
+      - nextCursor
+      additionalProperties: false
+    UnsubscribeDelivery:
+      type: object
+      properties:
+        url:
+          type: string
+          description: The delivery URL of the subscription to remove. Together with name+params it forms the subscription key.
+          example: https://my-app.example.com/events
+      required:
+      - url
+      additionalProperties: false
+    UpsertConnectionRequest:
+      type: object
+      properties:
+        transport:
+          description: Connection transport. Defaults to the existing connection transport when updating.
+          example: http
+          type: string
+          enum:
+          - http
+          - uplink
+        mcpUrl:
+          description: URL of the MCP server. Required when creating a new connection. Optional when updating — omit to keep the existing URL.
+          example: https://mcp.example.com/sse
+          type: string
+          format: uri
+        name:
+          description: Human-readable name (optional, defaults to connection ID)
+          example: My MCP Server
+          type: string
+          minLength: 1
+          maxLength: 255
+        metadata:
+          description: Custom metadata for filtering connections
+          example:
+            userId: user123
+            team: engineering
+          type: object
+          propertyNames:
+            type: string
+          additionalProperties: {}
+        headers:
+          description: Custom headers to send with MCP requests (stored securely, not returned in responses)
+          example:
+            X-API-Key: secret-key
+          type: object
+          propertyNames:
+            type: string
+          additionalProperties:
+            type: string
+        mock:
+          description: Run this connection in mock mode. Only honored on first creation; ignored on updates to an existing connection.
+          example:
+            enabled: true
+          $ref: '#/components/schemas/MockConfig'
+      additionalProperties: false
+    TriggerInstance:
+      type: object
+      properties:
+        id:
+          type: string
+          description: Stable trigger instance id generated by Smithery
+          example: trg_01HW1234567890
+        name:
+          type: string
+          description: Trigger name
+          example: page.updated
+        connection_id:
+          type: string
+          description: Connection id the trigger belongs to
+          example: notion
+        params:
+          description: Trigger instance parameters
+          $ref: '#/components/schemas/LooseObject'
+        created_at:
+          type: string
+          description: ISO 8601 timestamp
+          example: '2026-04-22T12:00:00.000Z'
+      required:
+      - id
+      - name
+      - connection_id
+      - params
+      - created_at
+      additionalProperties: false
+    SubscriptionList:
+      type: array
+      items:
+        $ref: '#/components/schemas/Subscription'
     Subscription:
       type: object
       properties:
@@ -1403,10 +1436,6 @@ components:
       - connection_id
       - created_at
       additionalProperties: false
-    SubscriptionList:
-      type: array
-      items:
-        $ref: '#/components/schemas/Subscription'
     CreateSubscriptionResponse:
       type: object
       properties:
@@ -1439,35 +1468,6 @@ components:
       - connection_id
       - created_at
       - secret
-      additionalProperties: false
-    TriggerInstance:
-      type: object
-      properties:
-        id:
-          type: string
-          description: Stable trigger instance id generated by Smithery
-          example: trg_01HW1234567890
-        name:
-          type: string
-          description: Trigger name
-          example: page.updated
-        connection_id:
-          type: string
-          description: Connection id the trigger belongs to
-          example: notion
-        params:
-          description: Trigger instance parameters
-          $ref: '#/components/schemas/LooseObject'
-        created_at:
-          type: string
-          description: ISO 8601 timestamp
-          example: '2026-04-22T12:00:00.000Z'
-      required:
-      - id
-      - name
-      - connection_id
-      - params
-      - created_at
       additionalProperties: false
   securitySchemes:
     bearerAuth:
