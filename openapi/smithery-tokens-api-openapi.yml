@@ -68,6 +68,18 @@ components:
       - token
       - expiresAt
       additionalProperties: false
+    TokenError:
+      type: object
+      properties:
+        error:
+          type: string
+          example: unauthorized
+        message:
+          example: Invalid API key
+          type: string
+      required:
+      - error
+      additionalProperties: false
     CreateTokenRequest:
       type: object
       properties:
@@ -166,18 +178,6 @@ components:
             maxLength: 500
       additionalProperties: false
       description: A policy constraint that restricts a token's scope. All specified fields within a single constraint are AND'd together. When multiple constraints are passed in the policy array, each is applied as an independent attenuation block.
-    TokenError:
-      type: object
-      properties:
-        error:
-          type: string
-          example: unauthorized
-        message:
-          example: Invalid API key
-          type: string
-      required:
-      - error
-      additionalProperties: false
   securitySchemes:
     bearerAuth:
       type: http

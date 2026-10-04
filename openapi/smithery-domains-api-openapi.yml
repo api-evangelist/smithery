@@ -135,15 +135,6 @@ components:
       required:
       - domains
       additionalProperties: false
-    DomainsError:
-      type: object
-      properties:
-        error:
-          type: string
-          example: Server not found
-      required:
-      - error
-      additionalProperties: false
     UpdateDomainRequest:
       type: object
       properties:
@@ -152,6 +143,15 @@ components:
           pattern: ^[a-z][a-z0-9-]{0,61}[a-z0-9]$
       required:
       - subdomain
+      additionalProperties: false
+    DomainsError:
+      type: object
+      properties:
+        error:
+          type: string
+          example: Server not found
+      required:
+      - error
       additionalProperties: false
   securitySchemes:
     bearerAuth:

@@ -296,24 +296,14 @@ paths:
     - url: https://api.smithery.ai
 components:
   schemas:
-    CreateServerError:
+    NamespaceSearchResult:
       type: object
       properties:
-        error:
+        name:
           type: string
-          example: 'Forbidden: You don''t own this server'
+          example: anthropic
       required:
-      - error
-      additionalProperties: false
-    CreateServerRequest:
-      type: object
-      properties:
-        displayName:
-          example: My Server
-          type: string
-        description:
-          example: A simple server
-          type: string
+      - name
       additionalProperties: false
     NamespacesError:
       type: object
@@ -321,6 +311,15 @@ components:
         error:
           type: string
           example: Unauthorized
+      required:
+      - error
+      additionalProperties: false
+    CreateServerError:
+      type: object
+      properties:
+        error:
+          type: string
+          example: 'Forbidden: You don''t own this server'
       required:
       - error
       additionalProperties: false
@@ -335,6 +334,41 @@ components:
           example: '2024-01-01T00:00:00.000Z'
       required:
       - name
+      - createdAt
+      additionalProperties: false
+    CreateServerRequest:
+      type: object
+      properties:
+        displayName:
+          example: My Server
+          type: string
+        description:
+          example: A simple server
+          type: string
+      additionalProperties: false
+    CreateServerResponse:
+      type: object
+      properties:
+        namespace:
+          type: string
+          example: myorg
+        server:
+          type: string
+          example: my-server
+        displayName:
+          type: string
+          example: My Server
+        description:
+          type: string
+          example: A simple server
+        createdAt:
+          type: string
+          example: '2024-01-01T00:00:00.000Z'
+      required:
+      - namespace
+      - server
+      - displayName
+      - description
       - createdAt
       additionalProperties: false
     NamespacesSearchResponse:
@@ -372,40 +406,6 @@ components:
       required:
       - namespaces
       - pagination
-      additionalProperties: false
-    NamespaceSearchResult:
-      type: object
-      properties:
-        name:
-          type: string
-          example: anthropic
-      required:
-      - name
-      additionalProperties: false
-    CreateServerResponse:
-      type: object
-      properties:
-        namespace:
-          type: string
-          example: myorg
-        server:
-          type: string
-          example: my-server
-        displayName:
-          type: string
-          example: My Server
-        description:
-          type: string
-          example: A simple server
-        createdAt:
-          type: string
-          example: '2024-01-01T00:00:00.000Z'
-      required:
-      - namespace
-      - server
-      - displayName
-      - description
-      - createdAt
       additionalProperties: false
   securitySchemes:
     bearerAuth:

@@ -77,36 +77,6 @@ paths:
         required: true
 components:
   schemas:
-    HttpInputField:
-      type: object
-      properties:
-        label:
-          type: string
-        description:
-          type: string
-        required:
-          type: boolean
-      required:
-      - label
-      additionalProperties: false
-      id: HttpInputField
-    CredentialProfileHttp:
-      type: object
-      properties:
-        headers:
-          type: object
-          propertyNames:
-            type: string
-          additionalProperties:
-            $ref: '#/components/schemas/HttpInputField'
-        query:
-          type: object
-          propertyNames:
-            type: string
-          additionalProperties:
-            $ref: '#/components/schemas/HttpInputField'
-      additionalProperties: false
-      id: CredentialProfileHttp
     JsonRpcError:
       type: object
       properties:
@@ -137,7 +107,7 @@ components:
       - id
       - error
       additionalProperties: false
-    AuthRequiredError:
+    JsonRpcResponse:
       type: object
       properties:
         jsonrpc:
@@ -148,33 +118,10 @@ components:
           - type: string
           - type: number
           - type: 'null'
-        error:
-          type: object
-          properties:
-            code:
-              type: number
-              const: -32001
-            message:
-              type: string
-              const: Authorization required
-            data:
-              type: object
-              properties:
-                authorizationUrl:
-                  type: string
-                  format: uri
-              required:
-              - authorizationUrl
-              additionalProperties: false
-          required:
-          - code
-          - message
-          - data
-          additionalProperties: false
+        result: {}
       required:
       - jsonrpc
       - id
-      - error
       additionalProperties: false
     InputRequiredError:
       type: object
@@ -230,7 +177,37 @@ components:
       - id
       - error
       additionalProperties: false
-    JsonRpcResponse:
+    CredentialProfileHttp:
+      type: object
+      properties:
+        headers:
+          type: object
+          propertyNames:
+            type: string
+          additionalProperties:
+            $ref: '#/components/schemas/HttpInputField'
+        query:
+          type: object
+          propertyNames:
+            type: string
+          additionalProperties:
+            $ref: '#/components/schemas/HttpInputField'
+      additionalProperties: false
+      id: CredentialProfileHttp
+    HttpInputField:
+      type: object
+      properties:
+        label:
+          type: string
+        description:
+          type: string
+        required:
+          type: boolean
+      required:
+      - label
+      additionalProperties: false
+      id: HttpInputField
+    AuthRequiredError:
       type: object
       properties:
         jsonrpc:
@@ -241,10 +218,33 @@ components:
           - type: string
           - type: number
           - type: 'null'
-        result: {}
+        error:
+          type: object
+          properties:
+            code:
+              type: number
+              const: -32001
+            message:
+              type: string
+              const: Authorization required
+            data:
+              type: object
+              properties:
+                authorizationUrl:
+                  type: string
+                  format: uri
+              required:
+              - authorizationUrl
+              additionalProperties: false
+          required:
+          - code
+          - message
+          - data
+          additionalProperties: false
       required:
       - jsonrpc
       - id
+      - error
       additionalProperties: false
   securitySchemes:
     bearerAuth:

@@ -913,6 +913,46 @@ components:
       required:
       - error
       additionalProperties: false
+    SkillsListResponse:
+      type: object
+      properties:
+        skills:
+          type: array
+          items:
+            $ref: '#/components/schemas/SkillSummary'
+        pagination:
+          type: object
+          properties:
+            currentPage:
+              type: integer
+              minimum: -9007199254740991
+              maximum: 9007199254740991
+              description: Current page number (1-indexed).
+            pageSize:
+              type: integer
+              minimum: -9007199254740991
+              maximum: 9007199254740991
+              description: Number of results per page.
+            totalPages:
+              type: integer
+              minimum: -9007199254740991
+              maximum: 9007199254740991
+              description: Total number of pages available.
+            totalCount:
+              type: integer
+              minimum: -9007199254740991
+              maximum: 9007199254740991
+              description: Total number of matching skills.
+          required:
+          - currentPage
+          - pageSize
+          - totalPages
+          - totalCount
+          additionalProperties: false
+      required:
+      - skills
+      - pagination
+      additionalProperties: false
     SkillSummary:
       type: object
       properties:
@@ -985,46 +1025,6 @@ components:
       - createdAt
       additionalProperties: false
       id: SkillSummary
-    SkillsListResponse:
-      type: object
-      properties:
-        skills:
-          type: array
-          items:
-            $ref: '#/components/schemas/SkillSummary'
-        pagination:
-          type: object
-          properties:
-            currentPage:
-              type: integer
-              minimum: -9007199254740991
-              maximum: 9007199254740991
-              description: Current page number (1-indexed).
-            pageSize:
-              type: integer
-              minimum: -9007199254740991
-              maximum: 9007199254740991
-              description: Number of results per page.
-            totalPages:
-              type: integer
-              minimum: -9007199254740991
-              maximum: 9007199254740991
-              description: Total number of pages available.
-            totalCount:
-              type: integer
-              minimum: -9007199254740991
-              maximum: 9007199254740991
-              description: Total number of matching skills.
-          required:
-          - currentPage
-          - pageSize
-          - totalPages
-          - totalCount
-          additionalProperties: false
-      required:
-      - skills
-      - pagination
-      additionalProperties: false
   securitySchemes:
     bearerAuth:
       type: http
