@@ -1,0 +1,12 @@
+{
+ "url": "https://smithery.ai/docs/openapi.json",
+ "requested_url": "https://smithery.ai/docs/openapi.json",
+ "status": 200,
+ "content_type": "application/json",
+ "bytes": 243198,
+ "sha256": "17463ce9a13a62136f13d7413bf1326bc0a071dae4c0c2a52bc9e05b47ccc145",
+ "fetched_at": "2026-10-04",
+ "fetched_by": "APIEvangelist-Harvest/1.0 (+https://apievangelist.com)",
+ "match": "equivalent",
+ "note": "Re-fetched from the provider by verify-openapi-sources.py; the provider's current document describes the same operations (Jaccard 1.0), but the bytes differ, so the archive is an earlier or reformatted copy."
+}
