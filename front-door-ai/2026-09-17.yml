@@ -1,0 +1,39 @@
+# Front Door AI Index — smithery — 2026-09-17
+# AI vocabulary counted on the provider's root page. Generated; do not edit.
+# `score` is null unless ownership is `own` — see front_door_ai.py.
+front_door_ai:
+  slug: smithery
+  lexicon_version: '1.0'
+  probed_at: '2026-09-25'
+  host: smithery.ai
+  final_host: smithery.ai
+  ownership: own
+  owner: smithery
+  shares_host_with: null
+  inherited_from: null
+  alias_of: null
+  verdict: scored
+  score: 133
+  band: 6
+  band_label: dominant
+  host_score: 133
+  density: 31.93
+  words: 4165
+  tiers:
+    agentic: 66
+    core: 48
+    model: 19
+  ambiguous: 58
+  top_terms:
+    agent: 51
+    AI: 42
+    MCP: 39
+    Claude: 16
+    AI agent: 12
+    intelligence: 7
+    AI assistant: 5
+    LLMs: 4
+    prompts: 4
+    ChatGPT: 2
+    agentic: 2
+    inference: 2
