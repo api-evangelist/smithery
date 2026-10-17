@@ -37,15 +37,6 @@ paths:
     - url: https://api.smithery.ai
 components:
   schemas:
-    HealthError:
-      type: object
-      properties:
-        error:
-          type: string
-          example: Service unhealthy
-      required:
-      - error
-      additionalProperties: false
     Health:
       type: object
       properties:
@@ -56,6 +47,15 @@ components:
       required:
       - status
       - timestamp
+      additionalProperties: false
+    HealthError:
+      type: object
+      properties:
+        error:
+          type: string
+          example: Service unhealthy
+      required:
+      - error
       additionalProperties: false
   securitySchemes:
     bearerAuth:

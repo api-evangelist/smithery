@@ -305,47 +305,6 @@ components:
       required:
       - name
       additionalProperties: false
-    NamespacesError:
-      type: object
-      properties:
-        error:
-          type: string
-          example: Unauthorized
-      required:
-      - error
-      additionalProperties: false
-    CreateServerError:
-      type: object
-      properties:
-        error:
-          type: string
-          example: 'Forbidden: You don''t own this server'
-      required:
-      - error
-      additionalProperties: false
-    CreateNamespaceResponse:
-      type: object
-      properties:
-        name:
-          type: string
-          example: myorg
-        createdAt:
-          type: string
-          example: '2024-01-01T00:00:00.000Z'
-      required:
-      - name
-      - createdAt
-      additionalProperties: false
-    CreateServerRequest:
-      type: object
-      properties:
-        displayName:
-          example: My Server
-          type: string
-        description:
-          example: A simple server
-          type: string
-      additionalProperties: false
     CreateServerResponse:
       type: object
       properties:
@@ -370,6 +329,47 @@ components:
       - displayName
       - description
       - createdAt
+      additionalProperties: false
+    CreateNamespaceResponse:
+      type: object
+      properties:
+        name:
+          type: string
+          example: myorg
+        createdAt:
+          type: string
+          example: '2024-01-01T00:00:00.000Z'
+      required:
+      - name
+      - createdAt
+      additionalProperties: false
+    NamespacesError:
+      type: object
+      properties:
+        error:
+          type: string
+          example: Unauthorized
+      required:
+      - error
+      additionalProperties: false
+    CreateServerError:
+      type: object
+      properties:
+        error:
+          type: string
+          example: 'Forbidden: You don''t own this server'
+      required:
+      - error
+      additionalProperties: false
+    CreateServerRequest:
+      type: object
+      properties:
+        displayName:
+          example: My Server
+          type: string
+        description:
+          example: A simple server
+          type: string
       additionalProperties: false
     NamespacesSearchResponse:
       type: object

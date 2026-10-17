@@ -77,52 +77,19 @@ paths:
         required: true
 components:
   schemas:
-    JsonRpcError:
+    HttpInputField:
       type: object
       properties:
-        jsonrpc:
+        label:
           type: string
-          const: '2.0'
-        id:
-          anyOf:
-          - type: string
-          - type: number
-          - type: 'null'
-        error:
-          type: object
-          properties:
-            code:
-              type: number
-              example: -32600
-            message:
-              type: string
-              example: Invalid Request
-            data: {}
-          required:
-          - code
-          - message
-          additionalProperties: false
-      required:
-      - jsonrpc
-      - id
-      - error
-      additionalProperties: false
-    JsonRpcResponse:
-      type: object
-      properties:
-        jsonrpc:
+        description:
           type: string
-          const: '2.0'
-        id:
-          anyOf:
-          - type: string
-          - type: number
-          - type: 'null'
-        result: {}
+        required:
+          type: boolean
       required:
-      - jsonrpc
-      - id
+      - label
       additionalProperties: false
+      id: HttpInputField
     InputRequiredError:
       type: object
       properties:
@@ -177,6 +144,22 @@ components:
       - id
       - error
       additionalProperties: false
+    JsonRpcResponse:
+      type: object
+      properties:
+        jsonrpc:
+          type: string
+          const: '2.0'
+        id:
+          anyOf:
+          - type: string
+          - type: number
+          - type: 'null'
+        result: {}
+      required:
+      - jsonrpc
+      - id
+      additionalProperties: false
     CredentialProfileHttp:
       type: object
       properties:
@@ -194,19 +177,36 @@ components:
             $ref: '#/components/schemas/HttpInputField'
       additionalProperties: false
       id: CredentialProfileHttp
-    HttpInputField:
+    JsonRpcError:
       type: object
       properties:
-        label:
+        jsonrpc:
           type: string
-        description:
-          type: string
-        required:
-          type: boolean
+          const: '2.0'
+        id:
+          anyOf:
+          - type: string
+          - type: number
+          - type: 'null'
+        error:
+          type: object
+          properties:
+            code:
+              type: number
+              example: -32600
+            message:
+              type: string
+              example: Invalid Request
+            data: {}
+          required:
+          - code
+          - message
+          additionalProperties: false
       required:
-      - label
+      - jsonrpc
+      - id
+      - error
       additionalProperties: false
-      id: HttpInputField
     AuthRequiredError:
       type: object
       properties:

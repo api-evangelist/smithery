@@ -803,6 +803,20 @@ paths:
     - url: https://api.smithery.ai
 components:
   schemas:
+    MockConfig:
+      type: object
+      properties:
+        enabled:
+          type: boolean
+          description: Turn mock mode on for this connection.
+        scenario:
+          description: Natural-language starting-state for the simulator (threaded into the LLM system prompt so generated data is consistent with the scenario across calls).
+          example: 'Slack workspace with an active #community-ops channel containing recent event-planning messages, plus 50 Airtable candidate records with mixed tenure and interests.'
+          type: string
+      required:
+      - enabled
+      additionalProperties: false
+      id: MockConfig
     DeleteTriggerRequest:
       type: object
       properties:
@@ -816,15 +830,194 @@ components:
       - params
       - delivery
       additionalProperties: false
-    ToolList:
+    CredentialProfileHttp:
       type: object
       properties:
-        tools:
+        headers:
+          type: object
+          propertyNames:
+            type: string
+          additionalProperties:
+            $ref: '#/components/schemas/HttpInputField'
+        query:
+          type: object
+          propertyNames:
+            type: string
+          additionalProperties:
+            $ref: '#/components/schemas/HttpInputField'
+      additionalProperties: false
+      id: CredentialProfileHttp
+    LooseObject:
+      type: object
+      propertyNames:
+        type: string
+      additionalProperties:
+        x-stainless-any: true
+    Error:
+      type: object
+      properties:
+        error:
+          type: string
+          example: not_found
+        message:
+          type: string
+          example: Resource not found
+      required:
+      - error
+      - message
+      additionalProperties: false
+    CreateConnectionRequest:
+      type: object
+      properties:
+        transport:
+          description: Connection transport. Use `uplink` for a local server paired over Smithery CLI.
+          example: http
+          type: string
+          enum:
+          - http
+          - uplink
+        mcpUrl:
+          description: URL of the MCP server. Required for HTTP connections. Omit for uplink connections.
+          example: https://mcp.example.com/sse
+          type: string
+          format: uri
+        name:
+          description: Human-readable name (optional, defaults to connection ID)
+          example: My MCP Server
+          type: string
+          minLength: 1
+          maxLength: 255
+        metadata:
+          description: Custom metadata for filtering connections
+          example:
+            userId: user123
+            team: engineering
+          type: object
+          propertyNames:
+            type: string
+          additionalProperties: {}
+        headers:
+          description: Custom headers to send with MCP requests (stored securely, not returned in responses)
+          example:
+            X-API-Key: secret-key
+          type: object
+          propertyNames:
+            type: string
+          additionalProperties:
+            type: string
+        mock:
+          description: Run this connection in mock mode. Tool calls are LLM-simulated against the registry's scanned schemas and never reach the upstream server. Provide an optional `scenario` to seed the simulator with a starting-state description. Registry servers only; frozen at creation (cannot be toggled via PUT).
+          example:
+            enabled: true
+            scenario: A developer inbox with 3 unread Q4 planning threads.
+          $ref: '#/components/schemas/MockConfig'
+      additionalProperties: false
+    ConnectionsListResponse:
+      type: object
+      properties:
+        connections:
           type: array
           items:
-            $ref: '#/components/schemas/Tool'
+            $ref: '#/components/schemas/Connection'
+        nextCursor:
+          anyOf:
+          - type: string
+          - type: 'null'
+          description: Cursor for next page, null if no more results
       required:
-      - tools
+      - connections
+      - nextCursor
+      additionalProperties: false
+    ValidationError:
+      type: object
+      properties:
+        error:
+          type: string
+          const: validation_error
+        message:
+          type: string
+          example: Invalid request
+      required:
+      - error
+      - message
+      additionalProperties: false
+    CreateTriggerRequest:
+      type: object
+      properties:
+        params:
+          default: {}
+          description: Trigger-specific parameters defined by the trigger inputSchema
+          $ref: '#/components/schemas/LooseObject'
+        delivery:
+          $ref: '#/components/schemas/TriggerDelivery'
+      required:
+      - params
+      - delivery
+      additionalProperties: false
+    Connection:
+      type: object
+      properties:
+        connectionId:
+          type: string
+          description: Connection ID (auto-generated or developer-defined)
+          example: clever-dolphin-a9X3
+        name:
+          type: string
+          description: Human-readable name
+        transport:
+          description: Connection transport
+          type: string
+          enum:
+          - http
+          - uplink
+        mcpUrl:
+          anyOf:
+          - type: string
+          - type: 'null'
+          description: MCP server URL. Null for uplink connections.
+        metadata:
+          anyOf:
+          - type: object
+            propertyNames:
+              type: string
+            additionalProperties: {}
+          - type: 'null'
+        mock:
+          description: 'Mock-mode config: `{enabled: true, scenario?}` when LLM-simulated, absent otherwise.'
+          $ref: '#/components/schemas/MockConfig'
+        iconUrl:
+          anyOf:
+          - type: string
+          - type: 'null'
+        createdAt:
+          description: ISO 8601 timestamp
+          type: string
+        status:
+          description: Last known connection status
+          $ref: '#/components/schemas/ConnectionStatus'
+        serverInfo:
+          description: Server information from MCP initialization (name, version)
+          $ref: '#/components/schemas/ServerInfo'
+      required:
+      - connectionId
+      - name
+      - mcpUrl
+      - metadata
+      additionalProperties: false
+    TriggerDelivery:
+      type: object
+      properties:
+        url:
+          type: string
+          description: HTTPS webhook destination where the upstream MCP server delivers events.
+          example: https://my-app.example.com/events
+        secret:
+          type: string
+          description: Standard Webhooks signing secret (whsec_<base64 of 24-64 random bytes>). The upstream MCP server signs each delivery with this.
+          example: whsec_dGVzdF9zZWNyZXRfMjRfYnl0ZXNfbWluaW11bSE=
+      required:
+      - url
+      - secret
       additionalProperties: false
     ConnectionStatus:
       oneOf:
@@ -909,21 +1102,6 @@ components:
         - message
         additionalProperties: false
         title: ConnectionStatusError
-    TriggerSubscription:
-      type: object
-      properties:
-        id:
-          type: string
-          description: Stable subscription id derived from (namespace, connection, name, params, delivery.url). Used by the receiver to route via X-MCP-Subscription-Id.
-          example: trg_01HW1234567890
-        refreshBefore:
-          type: string
-          description: ISO 8601 timestamp at which the subscription expires unless refreshed.
-          example: '2026-04-22T13:00:00.000Z'
-      required:
-      - id
-      - refreshBefore
-      additionalProperties: false
     UpsertConnectionRequest:
       type: object
       properties:
@@ -1007,189 +1185,34 @@ components:
       - name
       - version
       additionalProperties: false
-    MockConfig:
-      type: object
-      properties:
-        enabled:
-          type: boolean
-          description: Turn mock mode on for this connection.
-        scenario:
-          description: Natural-language starting-state for the simulator (threaded into the LLM system prompt so generated data is consistent with the scenario across calls).
-          example: 'Slack workspace with an active #community-ops channel containing recent event-planning messages, plus 50 Airtable candidate records with mixed tenure and interests.'
-          type: string
-      required:
-      - enabled
-      additionalProperties: false
-      id: MockConfig
-    TriggerDefinitionList:
-      type: array
-      items:
-        $ref: '#/components/schemas/TriggerDefinition'
-    UnsubscribeDelivery:
-      type: object
-      properties:
-        url:
-          type: string
-          description: The delivery URL of the subscription to remove. Together with name+params it forms the subscription key.
-          example: https://my-app.example.com/events
-      required:
-      - url
-      additionalProperties: false
     ToolResponse:
       anyOf:
       - $ref: '#/components/schemas/Tool'
       - $ref: '#/components/schemas/ToolList'
-    LooseObject:
-      type: object
-      propertyNames:
-        type: string
-      additionalProperties:
-        x-stainless-any: true
-    TriggerDefinition:
+    TriggerSubscription:
       type: object
       properties:
-        name:
+        id:
           type: string
-          description: Trigger name exposed by the MCP server
-          example: page.updated
-        description:
+          description: Stable subscription id derived from (namespace, connection, name, params, delivery.url). Used by the receiver to route via X-MCP-Subscription-Id.
+          example: trg_01HW1234567890
+        refreshBefore:
           type: string
-        delivery:
+          description: ISO 8601 timestamp at which the subscription expires unless refreshed.
+          example: '2026-04-22T13:00:00.000Z'
+      required:
+      - id
+      - refreshBefore
+      additionalProperties: false
+    ToolList:
+      type: object
+      properties:
+        tools:
           type: array
           items:
-            type: string
-          description: Supported delivery modes
-          example:
-          - webhook
-        inputSchema:
-          description: JSON Schema for the params required to create the trigger
-          $ref: '#/components/schemas/LooseObject'
-        payloadSchema:
-          description: JSON Schema for the event payload delivered by the trigger
-          $ref: '#/components/schemas/LooseObject'
+            $ref: '#/components/schemas/Tool'
       required:
-      - name
-      - delivery
-      additionalProperties: false
-    CreateConnectionRequest:
-      type: object
-      properties:
-        transport:
-          description: Connection transport. Use `uplink` for a local server paired over Smithery CLI.
-          example: http
-          type: string
-          enum:
-          - http
-          - uplink
-        mcpUrl:
-          description: URL of the MCP server. Required for HTTP connections. Omit for uplink connections.
-          example: https://mcp.example.com/sse
-          type: string
-          format: uri
-        name:
-          description: Human-readable name (optional, defaults to connection ID)
-          example: My MCP Server
-          type: string
-          minLength: 1
-          maxLength: 255
-        metadata:
-          description: Custom metadata for filtering connections
-          example:
-            userId: user123
-            team: engineering
-          type: object
-          propertyNames:
-            type: string
-          additionalProperties: {}
-        headers:
-          description: Custom headers to send with MCP requests (stored securely, not returned in responses)
-          example:
-            X-API-Key: secret-key
-          type: object
-          propertyNames:
-            type: string
-          additionalProperties:
-            type: string
-        mock:
-          description: Run this connection in mock mode. Tool calls are LLM-simulated against the registry's scanned schemas and never reach the upstream server. Provide an optional `scenario` to seed the simulator with a starting-state description. Registry servers only; frozen at creation (cannot be toggled via PUT).
-          example:
-            enabled: true
-            scenario: A developer inbox with 3 unread Q4 planning threads.
-          $ref: '#/components/schemas/MockConfig'
-      additionalProperties: false
-    TriggerDelivery:
-      type: object
-      properties:
-        url:
-          type: string
-          description: HTTPS webhook destination where the upstream MCP server delivers events.
-          example: https://my-app.example.com/events
-        secret:
-          type: string
-          description: Standard Webhooks signing secret (whsec_<base64 of 24-64 random bytes>). The upstream MCP server signs each delivery with this.
-          example: whsec_dGVzdF9zZWNyZXRfMjRfYnl0ZXNfbWluaW11bSE=
-      required:
-      - url
-      - secret
-      additionalProperties: false
-    CredentialProfileHttp:
-      type: object
-      properties:
-        headers:
-          type: object
-          propertyNames:
-            type: string
-          additionalProperties:
-            $ref: '#/components/schemas/HttpInputField'
-        query:
-          type: object
-          propertyNames:
-            type: string
-          additionalProperties:
-            $ref: '#/components/schemas/HttpInputField'
-      additionalProperties: false
-      id: CredentialProfileHttp
-    CreateTriggerRequest:
-      type: object
-      properties:
-        params:
-          default: {}
-          description: Trigger-specific parameters defined by the trigger inputSchema
-          $ref: '#/components/schemas/LooseObject'
-        delivery:
-          $ref: '#/components/schemas/TriggerDelivery'
-      required:
-      - params
-      - delivery
-      additionalProperties: false
-    ValidationError:
-      type: object
-      properties:
-        error:
-          type: string
-          const: validation_error
-        message:
-          type: string
-          example: Invalid request
-      required:
-      - error
-      - message
-      additionalProperties: false
-    ConnectionsListResponse:
-      type: object
-      properties:
-        connections:
-          type: array
-          items:
-            $ref: '#/components/schemas/Connection'
-        nextCursor:
-          anyOf:
-          - type: string
-          - type: 'null'
-          description: Cursor for next page, null if no more results
-      required:
-      - connections
-      - nextCursor
+      - tools
       additionalProperties: false
     Tool:
       type: object
@@ -1290,69 +1313,20 @@ components:
       - name
       - inputSchema
       additionalProperties: false
-    Connection:
+    UnsubscribeDelivery:
       type: object
       properties:
-        connectionId:
+        url:
           type: string
-          description: Connection ID (auto-generated or developer-defined)
-          example: clever-dolphin-a9X3
-        name:
-          type: string
-          description: Human-readable name
-        transport:
-          description: Connection transport
-          type: string
-          enum:
-          - http
-          - uplink
-        mcpUrl:
-          anyOf:
-          - type: string
-          - type: 'null'
-          description: MCP server URL. Null for uplink connections.
-        metadata:
-          anyOf:
-          - type: object
-            propertyNames:
-              type: string
-            additionalProperties: {}
-          - type: 'null'
-        mock:
-          description: 'Mock-mode config: `{enabled: true, scenario?}` when LLM-simulated, absent otherwise.'
-          $ref: '#/components/schemas/MockConfig'
-        iconUrl:
-          anyOf:
-          - type: string
-          - type: 'null'
-        createdAt:
-          description: ISO 8601 timestamp
-          type: string
-        status:
-          description: Last known connection status
-          $ref: '#/components/schemas/ConnectionStatus'
-        serverInfo:
-          description: Server information from MCP initialization (name, version)
-          $ref: '#/components/schemas/ServerInfo'
+          description: The delivery URL of the subscription to remove. Together with name+params it forms the subscription key.
+          example: https://my-app.example.com/events
       required:
-      - connectionId
-      - name
-      - mcpUrl
-      - metadata
+      - url
       additionalProperties: false
-    Error:
-      type: object
-      properties:
-        error:
-          type: string
-          example: not_found
-        message:
-          type: string
-          example: Resource not found
-      required:
-      - error
-      - message
-      additionalProperties: false
+    TriggerDefinitionList:
+      type: array
+      items:
+        $ref: '#/components/schemas/TriggerDefinition'
     HttpInputField:
       type: object
       properties:
@@ -1366,6 +1340,32 @@ components:
       - label
       additionalProperties: false
       id: HttpInputField
+    TriggerDefinition:
+      type: object
+      properties:
+        name:
+          type: string
+          description: Trigger name exposed by the MCP server
+          example: page.updated
+        description:
+          type: string
+        delivery:
+          type: array
+          items:
+            type: string
+          description: Supported delivery modes
+          example:
+          - webhook
+        inputSchema:
+          description: JSON Schema for the params required to create the trigger
+          $ref: '#/components/schemas/LooseObject'
+        payloadSchema:
+          description: JSON Schema for the event payload delivered by the trigger
+          $ref: '#/components/schemas/LooseObject'
+      required:
+      - name
+      - delivery
+      additionalProperties: false
     Success:
       type: object
       properties:
@@ -1375,10 +1375,35 @@ components:
       required:
       - success
       additionalProperties: false
-    SubscriptionList:
-      type: array
-      items:
-        $ref: '#/components/schemas/Subscription'
+    TriggerInstance:
+      type: object
+      properties:
+        id:
+          type: string
+          description: Stable trigger instance id generated by Smithery
+          example: trg_01HW1234567890
+        name:
+          type: string
+          description: Trigger name
+          example: page.updated
+        connection_id:
+          type: string
+          description: Connection id the trigger belongs to
+          example: notion
+        params:
+          description: Trigger instance parameters
+          $ref: '#/components/schemas/LooseObject'
+        created_at:
+          type: string
+          description: ISO 8601 timestamp
+          example: '2026-04-22T12:00:00.000Z'
+      required:
+      - id
+      - name
+      - connection_id
+      - params
+      - created_at
+      additionalProperties: false
     CreateSubscriptionResponse:
       type: object
       properties:
@@ -1412,6 +1437,10 @@ components:
       - created_at
       - secret
       additionalProperties: false
+    SubscriptionList:
+      type: array
+      items:
+        $ref: '#/components/schemas/Subscription'
     Subscription:
       type: object
       properties:
@@ -1438,35 +1467,6 @@ components:
       - id
       - url
       - connection_id
-      - created_at
-      additionalProperties: false
-    TriggerInstance:
-      type: object
-      properties:
-        id:
-          type: string
-          description: Stable trigger instance id generated by Smithery
-          example: trg_01HW1234567890
-        name:
-          type: string
-          description: Trigger name
-          example: page.updated
-        connection_id:
-          type: string
-          description: Connection id the trigger belongs to
-          example: notion
-        params:
-          description: Trigger instance parameters
-          $ref: '#/components/schemas/LooseObject'
-        created_at:
-          type: string
-          description: ISO 8601 timestamp
-          example: '2026-04-22T12:00:00.000Z'
-      required:
-      - id
-      - name
-      - connection_id
-      - params
       - created_at
       additionalProperties: false
   securitySchemes:
